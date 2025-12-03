@@ -84,7 +84,10 @@ export function navPc(sector) {
   return `
     <aside class="sidebar">
       <h3>Impresos Carnelli</h3>
-      <nav>${links}</nav>
+      <nav>      
+      ${links}  
+      <a href='../../public/api/login/logout.php'>Cerrar Sesion</a>      
+      </nav>
     </aside>
   `;
 }
@@ -94,6 +97,7 @@ export function navMobile(sector) {
   return `
     <nav class="mobile-menu" id="mobileMenu">
       ${links}
+      <a href='../../public/api/login/logout.php'>Cerrar Sesion</a>    
     </nav>
   `;
 }

@@ -14,6 +14,9 @@ if (!$username || !$password) {
 
 $conexion = conectar_bd();
 
+/* ===================== */
+/* OBTENER USUARIO */
+/* ===================== */
 $sql = "SELECT * FROM usuarios WHERE nombre = ?";
 $stmt = $conexion->prepare($sql);
 $stmt->bind_param("s", $username);
@@ -27,18 +30,52 @@ if ($result->num_rows === 0) {
 
 $user = $result->fetch_assoc();
 
+/* ===================== */
+/* VALIDAR PASSWORD */
+/* ===================== */
 if ($password !== $user['contrasenia']) {
     echo json_encode(["success" => false, "message" => "Contraseña incorrecta"]);
     exit;
 }
 
+/* ===================== */
+/* OBTENER SECTORES */
+/* ===================== */
+$sqlSectores = "SELECT * FROM sectores WHERE id_usr = ?";
+$stmt2 = $conexion->prepare($sqlSectores);
+$stmt2->bind_param("i", $user['id']);
+$stmt2->execute();
+$resultSectores = $stmt2->get_result();
+
+$sectoresDisponibles = [];
+
+if ($resultSectores->num_rows > 0) {
+    $row = $resultSectores->fetch_assoc();
+
+    foreach ($row as $sector => $valor) {
+        if ($valor == 1) {
+            $sectoresDisponibles[] = $sector;
+        }
+    }
+}
+
+/* ===================== */
+/* GUARDAR SESIÓN */
+/* ===================== */
 $_SESSION['user'] = [
     "id" => $user['id'],
     "nombre" => $user['nombre'],
     "rol" => $user['rol']
 ];
 
+$_SESSION["sectores"] = $sectoresDisponibles;
+$_SESSION["sector_actual"] = null;
+
+/* ===================== */
+/* RESPUESTA FRONT */
+/* ===================== */
 echo json_encode([
     "success" => true,
-    "user" => $_SESSION['user']
+    "user" => $_SESSION['user'],
+    "sectores" => $_SESSION["sectores"]
 ]);

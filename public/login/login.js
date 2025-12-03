@@ -16,27 +16,6 @@ btn.addEventListener('click', async (event) => {
 
     if (!result.success) return alert(result.message);
 
-    alert("Bienvenido " + result.user.nombre);
-/*
-    switch (result.user.rol) {
-        case "administrador":
-            window.location.href = "../admin/index.php";
-            break;
-        case "vendedor":
-            window.location.href = "../vendedor/index.php";
-            break;
-        case "diseñador":
-            window.location.href = "../disenio/index.php";
-            break;
-        case "offset":
-            window.location.href = "../offset/index.php";
-            break;
-        case "serigrafia":
-            window.location.href = "../serigrafia/index.php";
-            break;
-        case "expedicion":
-            window.location.href = "../expedicion/index.php";
-            break;
-    }
-            */
+    window.location.href = "http://localhost/ICSoftware/public/app/";
+
 });

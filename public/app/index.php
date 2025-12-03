@@ -4,7 +4,7 @@
 session_start();
 
 if (!isset($_SESSION['user'])) {
-    header("Location: login/login.php");
+    header("Location: ../login/login.php");
     exit;
 }
 ?>
@@ -22,9 +22,18 @@ if (!isset($_SESSION['user'])) {
     <main id="main"> 
 
     <section>
-        
+
     </section>
     </main>
+
+<script>
+  window.USER_SESSION = {
+    sectores: <?php echo json_encode($_SESSION["sectores"] ?? []); ?>,
+    actual: <?php echo json_encode($_SESSION["sector_actual"] ?? null); ?>
+  };
+  console.log("USER_SESSION:", window.USER_SESSION);
+</script>
+
 
 <script type="module" src="script.js"></script>
 </body>
