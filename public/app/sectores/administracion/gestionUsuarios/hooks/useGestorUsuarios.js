@@ -1,9 +1,8 @@
 import { FormCreateUser } from "../components/formCreateUser.js";
-import { FormModifyUser } from "../components/formModifyUser.js";
-import { UsersList } from "../components/usersList.js";
-import { getDataUsers } from "../services/getDataUsersService.js";
-
 import { createUserService } from "../services/setUserService.js";
+import { renderUsers } from "../components/renderUsers.js";
+import { bindCloseModal } from "../hooks/useCloseModal.js";
+
 
 export function gestionUsuarios() {
   const root = document.getElementById("section-sh");
@@ -17,10 +16,6 @@ export function gestionUsuarios() {
       <button id="btnNewUser" class="btn-primary">
         + Crear Nuevo Empleado
       </button>
-    </div>
-
-    <div class="users-search">
-      <input id="userSearch" type="text" placeholder="Buscar por nombre o usuario...">
     </div>
 
     <div id="usersTable"></div>
@@ -79,61 +74,5 @@ function bindCreateUser() {
 }
 
 
-function bindCloseModal() {
-  const btnCancel = document.getElementById("btnCancel");
-  const modal = document.getElementById("modalContainer");
 
-  if (!btnCancel) return;
 
-  btnCancel.addEventListener("click", () => {
-    modal.innerHTML = "";
-  });
-}
-
-async function renderUsers() {
-  const container = document.getElementById("usersTable");
-
-  try {
-    const result = await getDataUsers();
-
-    if (result.success) {
-      container.innerHTML = UsersList(result.users);
-     setupEventListeners(result.users);
-    } else {
-      container.innerHTML = `<p>Error cargando usuarios</p>`;
-    }
-
-  } catch (err) {
-    console.error(err);
-    container.innerHTML = `<p>Error del servidor</p>`;
-  }
-}
-
-function setupEventListeners(users) {
-  const table = document.querySelector(".user-list table");
-
-  if (!table) return;
-
-  table.addEventListener("click", (e) => {
-    const button = e.target.closest('button');
-    if (!button) return; 
-
-    const action = button.getAttribute('data-action');
-    const userId = button.getAttribute('data-id');
-
-    if (action === "edit") {
-      openEditModal(userId, users);
-    }
-  });
-}
-
-function openEditModal(userId, users) {
-  const user = users.find(u => u.id == userId);
-
-  if (user) {
-    const modalContainer = document.getElementById("modalContainer");
-    modalContainer.innerHTML = FormModifyUser(user); // Cargar el formulario con los datos del usuario
-   // bindCloseModal();  // Agregar el comportamiento de cierre del modal
-  //  bindModifyUserForm(user.id);  // Asociar la lógica de modificar usuario
-  }
-}

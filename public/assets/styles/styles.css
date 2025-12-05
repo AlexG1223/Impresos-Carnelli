@@ -174,17 +174,6 @@ body {
   margin-bottom: 20px;
 }
 
-.users-search {
-  margin-bottom: 20px;
-}
-
-.users-search input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
 
 /* ===== BOTONES ===== */
 .btn-primary {
