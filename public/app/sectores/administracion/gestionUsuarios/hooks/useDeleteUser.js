@@ -8,7 +8,11 @@ export async function useDeleteUser(user_id) {
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-
+ if (user_id === 1) {
+      alert("No se puede eliminar este usuario ");
+      document.getElementById("modalContainer").innerHTML = ""; 
+      return;  
+    }
     try {
       const result = await DeleteUserService(user_id);  
 

@@ -6,7 +6,7 @@ import { bindCloseModal } from "../hooks/useCloseModal.js";
 
 export function gestionUsuarios() {
   const root = document.getElementById("section-sh");
-
+root.innerHTML ='';
   root.innerHTML = `
     <div class="users-header">
       <div>

@@ -1,5 +1,5 @@
 import { gestionUsuarios } from "../sectores/administracion/gestionUsuarios/hooks/useGestorUsuarios.js";
-
+import { gestionRoles } from "../sectores/administracion/gestionRoles/hooks/useGestorRoles.js";
 
 export const useMenuActions = () => {
 
@@ -13,11 +13,13 @@ export const useMenuActions = () => {
     usuarios() {
      
       gestionUsuarios()
+
     },
 
     roles() {
-      console.log("Gestión de roles");
-      // loadRoles();
+
+      gestionRoles();
+
     },
 
     ots() {

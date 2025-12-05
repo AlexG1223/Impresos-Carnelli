@@ -10,6 +10,11 @@ if (!$data || empty($data['id'])) {
 
 $id = $data['id'];
 
+if ($id == 1) {
+    echo json_encode(["success" => false, "message" => "No se puede eliminar este usuario"]);
+    exit;
+}
+
 $conexion = conectar_bd();
 
 $sql = "DELETE FROM usuarios WHERE id = ?";
