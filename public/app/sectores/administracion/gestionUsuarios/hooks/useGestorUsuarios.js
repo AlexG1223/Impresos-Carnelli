@@ -1,5 +1,7 @@
 import { FormCreateUser } from "../components/formCreateUser.js";
-//import { usersList } from "./components/usersList.js";
+import { UsersList } from "../components/usersList.js";
+import { getDataUsers } from "../services/getDataUsersService.js";
+
 import { createUserService } from "../services/setUserService.js";
 
 export function gestionUsuarios() {
@@ -25,7 +27,7 @@ export function gestionUsuarios() {
     <div id="modalContainer"></div>
   `;
 
-  //renderUsers();
+renderUsers();
   bindCreateUser();
   //bindSearch();
 }
@@ -42,10 +44,8 @@ function bindCreateUserForm() {
 
     const user = {
       nombre: formData.get("nombre").trim(),
-      //usuario: formData.get("usuario").trim(),
       password: formData.get("password"),
       rol: formData.get("rol"),
-     // estado: formData.get("estado") ? 1 : 0
     };
 
     try {
@@ -54,7 +54,7 @@ function bindCreateUserForm() {
       if (result.success) {
         alert("Usuario creado correctamente ✅");
         document.getElementById("modalContainer").innerHTML = "";
-        // renderUsers();   // luego recargas la lista
+         renderUsers();   
       } else {
         alert(result.message || "Error al crear el usuario");
       }
@@ -87,4 +87,23 @@ function bindCloseModal() {
   btnCancel.addEventListener("click", () => {
     modal.innerHTML = "";
   });
+}
+
+async function renderUsers() {
+  const container = document.getElementById("usersTable");
+
+  try {
+    const result = await getDataUsers();
+
+    if (result.success) {
+      container.innerHTML = UsersList(result.users);
+      bindCreateUser(); 
+    } else {
+      container.innerHTML = `<p>Error cargando usuarios</p>`;
+    }
+
+  } catch (err) {
+    console.error(err);
+    container.innerHTML = `<p>Error del servidor</p>`;
+  }
 }
