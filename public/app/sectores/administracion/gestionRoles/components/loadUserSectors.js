@@ -1,4 +1,5 @@
 import { cachedUsers } from "../components/renderUsersRoles.js"; 
+import { saveUserSectorsService } from "../services/saveUserSectorsService.js";
 
 export function loadUserSectors(userId) {
   const container = document.getElementById("userPermiss");
@@ -57,18 +58,53 @@ export function loadUserSectors(userId) {
 
   setupPermissionEvents(user);
 }
+
+
+
 function setupPermissionEvents(user) {
   const container = document.getElementById("userPermiss");
 
   const saveBtn = container.querySelector(".permissions-save-btn");
-  saveBtn.addEventListener("click", () => {
+  saveBtn.addEventListener("click", async () => {
 
     const selected = [...container.querySelectorAll(".permissions-check:checked")]
       .map(el => el.dataset.sectorName);
 
     console.log("SECTORES A GUARDAR PARA", user.id, selected);
 
-    // ← acá harías tu fetch a PHP para guardar
-    // saveUserSectors(user.id, selected)
+    // 🔹 Guardar en el backend
+    const r = await saveUserSectorsService(user.id, selected);
+    console.log("Respuesta del backend:", r);
+
+    if (!r.success) {
+      alert("Error al guardar permisos");
+      return;
+    }
+
+    // 🔹 ACTUALIZAR cachedUsers dinámicamente
+    const index = cachedUsers.findIndex(u => u.id == user.id);
+    if (index !== -1) {
+      cachedUsers[index].sectores = selected;
+    }
+
+    // 🔹 Re-renderizar la vista de permisos SIN recargar la página
+    loadUserSectors(user.id);
+
+    // 🔹 Feedback opcional
+    showSavedFeedback();
   });
+}
+
+
+// --- Feedback visual ---
+function showSavedFeedback() {
+  const container = document.getElementById("userPermiss");
+  const msg = document.createElement("div");
+
+  msg.className = "saved-feedback";
+  msg.textContent = "Permisos guardados ✔️";
+
+  container.appendChild(msg);
+
+  setTimeout(() => msg.remove(), 1500);
 }
