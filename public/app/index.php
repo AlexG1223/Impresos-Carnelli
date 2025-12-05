@@ -29,7 +29,6 @@ if (!isset($_SESSION['user'])) {
     sectores: <?php echo json_encode($_SESSION["sectores"] ?? []); ?>,
     actual: <?php echo json_encode($_SESSION["sector_actual"] ?? null); ?>
   };
-  console.log("USER_SESSION:", window.USER_SESSION);
 </script>
 
 

@@ -3,6 +3,8 @@ import { getDataUsers } from "../services/getDataUsersService.js";
 import { FormModifyUser } from "../components/formModifyUser.js";
 import { useModifyUser } from "../hooks/useModifyUser.js";
 import { bindCloseModal } from "../hooks/useCloseModal.js";
+import { FormDeleteUser } from "../components/formDeleteUser.js";
+import { useDeleteUser } from "../hooks/useDeleteUser.js";
 export async function renderUsers() {
   const container = document.getElementById("usersTable");
   container.innerHTML = '';
@@ -39,6 +41,9 @@ function setupEventListeners(users) {
     if (action === "edit") {
       openEditModal(userId, users);
     }
+    if (action === "delete") {
+      openDeleteModal(userId, users);
+    }
   });
 }
 
@@ -52,5 +57,15 @@ function openEditModal(userId, users) {
   bindCloseModal();
   useModifyUser(user.id); 
 
+  }
+}
+function openDeleteModal(userId, users) {
+  const user = users.find(u => u.id == userId);
+
+  if (user) {
+    const modalContainer = document.getElementById("modalContainer");
+    modalContainer.innerHTML = FormDeleteUser(user);  
+    bindCloseModal();
+    useDeleteUser(user.id);  
   }
 }
