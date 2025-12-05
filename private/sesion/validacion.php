@@ -2,6 +2,8 @@
 session_start();
 require_once __DIR__ . "/../conexion.php";
 
+header("Content-Type: application/json");
+
 $data = json_decode(file_get_contents("php://input"), true);
 
 $username = $data['username'] ?? '';
@@ -14,9 +16,6 @@ if (!$username || !$password) {
 
 $conexion = conectar_bd();
 
-/* ===================== */
-/* OBTENER USUARIO */
-/* ===================== */
 $sql = "SELECT * FROM usuarios WHERE nombre = ?";
 $stmt = $conexion->prepare($sql);
 $stmt->bind_param("s", $username);
@@ -30,28 +29,27 @@ if ($result->num_rows === 0) {
 
 $user = $result->fetch_assoc();
 
-/* ===================== */
-/* VALIDAR PASSWORD */
-/* ===================== */
-if ($password !== $user['contrasenia']) {
+
+if (!password_verify($password, $user['contrasenia'])) {
     echo json_encode(["success" => false, "message" => "Contraseña incorrecta"]);
     exit;
 }
 
-/* ===================== */
-/* OBTENER SECTORES */
-/* ===================== */
-$sqlSectores = "SELECT * FROM sectores WHERE id_usr = ?";
+
+$sqlSectores = "SELECT ventas, serigrafia, offset, expedicion, `diseño`, administracion 
+                FROM sectores 
+                WHERE id_usr = ?";
+
 $stmt2 = $conexion->prepare($sqlSectores);
 $stmt2->bind_param("i", $user['id']);
 $stmt2->execute();
+
 $resultSectores = $stmt2->get_result();
 
 $sectoresDisponibles = [];
 
 if ($resultSectores->num_rows > 0) {
     $row = $resultSectores->fetch_assoc();
-
     foreach ($row as $sector => $valor) {
         if ($valor == 1) {
             $sectoresDisponibles[] = $sector;
@@ -59,9 +57,7 @@ if ($resultSectores->num_rows > 0) {
     }
 }
 
-/* ===================== */
-/* GUARDAR SESIÓN */
-/* ===================== */
+
 $_SESSION['user'] = [
     "id" => $user['id'],
     "nombre" => $user['nombre'],
@@ -71,9 +67,7 @@ $_SESSION['user'] = [
 $_SESSION["sectores"] = $sectoresDisponibles;
 $_SESSION["sector_actual"] = null;
 
-/* ===================== */
-/* RESPUESTA FRONT */
-/* ===================== */
+
 echo json_encode([
     "success" => true,
     "user" => $_SESSION['user'],

@@ -19,12 +19,10 @@ if (!isset($_SESSION['user'])) {
 </head>
 <body>
 
-    <main id="main"> 
+<main id="main" class="content">
+  <section id="section-sh"></section>
+</main>
 
-    <section>
-
-    </section>
-    </main>
 
 <script>
   window.USER_SESSION = {

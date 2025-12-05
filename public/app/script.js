@@ -1,5 +1,8 @@
 import { headerHTML, setupMobileMenu } from "./components/header.js";
-import { navPc, navMobile } from "./components/menu.js";
+import { navPc, navMobile, updateMenu } from "./components/menu.js";
+import { useMenuActions } from "./hooks/useMenuActions.js";
+
+
 
 const session = window.USER_SESSION;
 const mq = window.matchMedia("(max-width: 768px)");
@@ -12,7 +15,7 @@ const cleanMenus = () => {
 const loadLayout = () => {
   cleanMenus();
 
-  const sector = session.actual; // sector real desde sesión
+  const sector = session.actual; 
 
   if (mq.matches) {
     document.body.insertAdjacentHTML("afterbegin", navMobile({
@@ -30,31 +33,38 @@ const loadLayout = () => {
   setupSectorSelector();
 };
 
-// Cambiar sector
 const setupSectorSelector = () => {
   const select = document.getElementById("sectorSelect");
   if (!select) return;
 
   select.addEventListener("change", async e => {
     const sector = e.target.value;
+    if (!sector) return;
 
-    await fetch("api/setSector.php", {
+    await fetch("../../public/api/sectores/setSector.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ sector })
     });
-
-    location.reload();
+    session.actual = sector;
+    updateMenu(sector, mq.matches);
   });
 };
 
+
+
+
 const init = () => {
-  // Header solo una vez
+
   if (!document.querySelector(".header")) {
     document.body.insertAdjacentHTML("afterbegin", headerHTML);
   }
 
   loadLayout();
+
+  const { bindMenuActions } = useMenuActions();
+  bindMenuActions();
+
   mq.addEventListener("change", loadLayout);
 };
 
