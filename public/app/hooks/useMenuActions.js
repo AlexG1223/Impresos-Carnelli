@@ -1,5 +1,6 @@
 import { gestionUsuarios } from "../sectores/administracion/gestionUsuarios/hooks/useGestorUsuarios.js";
 import { gestionRoles } from "../sectores/administracion/gestionRoles/hooks/useGestorRoles.js";
+import { gestionClientes } from "../sectores/ventas/gestionClientes/hooks/useGestionClientes.js";
 
 export const useMenuActions = () => {
 
@@ -35,6 +36,10 @@ export const useMenuActions = () => {
     config() {
       console.log("Configuración");
       // loadConfig();
+    },
+    clientes () {
+      gestionClientes();
+
     }
 
   };
