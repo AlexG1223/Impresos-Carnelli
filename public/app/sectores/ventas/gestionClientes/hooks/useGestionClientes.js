@@ -44,6 +44,7 @@ export function bindCreateClientForm() {
       rut: fd.get("rut").trim(),
       razon_social: fd.get("razon_social").trim(),
       direccion: fd.get("direccion").trim(),
+      departamento: fd.get("departamento").trim(),
       localidad: fd.get("localidad").trim(),
       telefono: fd.get("telefono").trim(),
       observaciones: fd.get("observaciones")?.trim() || ""
@@ -55,10 +56,8 @@ export function bindCreateClientForm() {
       if (result.success) {
         alert("Cliente creado correctamente ✅");
 
-        // cerrar modal
         document.getElementById("modalContainer").innerHTML = "";
 
-        // refrescar listado de clientes
         if (typeof renderClients === "function") {
           renderClients();
         }

@@ -38,6 +38,11 @@ export function FormCreateClient() {
           </div>
 
           <div class="field">
+            <label>Departamento *</label>
+            <input name="departamento" type="text" required>
+          </div>
+
+          <div class="field">
             <label>Teléfono *</label>
             <input name="telefono" type="text" required>
           </div>
