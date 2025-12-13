@@ -4,6 +4,8 @@ import { createClientService } from "../services/createClientService.js";
 //import { renderUsers } from "../components/renderUsers.js";
 import { bindCloseModal } from "../../../administracion/gestionUsuarios/hooks/useCloseModal.js";
 import { FormCreateClient } from "../components/formCreateClient.js";
+import { useClients } from "../hooks/useClients.js";
+
 
 export function gestionClientes() {
   const root = document.getElementById("section-sh");
@@ -24,9 +26,8 @@ root.innerHTML ='';
     <div id="modalContainer"></div>
   `;
 
-//renderUsers();
   bindCreateClient();
-  //bindSearch();
+    useClients();
 }
 
 export function bindCreateClientForm() {
@@ -57,10 +58,8 @@ export function bindCreateClientForm() {
         alert("Cliente creado correctamente ✅");
 
         document.getElementById("modalContainer").innerHTML = "";
-
-        if (typeof renderClients === "function") {
-          renderClients();
-        }
+        
+     useClients()
 
       } else {
         alert(result.message || "Error al crear el cliente");
@@ -72,6 +71,8 @@ export function bindCreateClientForm() {
     }
   });
 }
+
+
 
 function bindCreateClient() {
   const btn = document.getElementById("btnNewClient");
