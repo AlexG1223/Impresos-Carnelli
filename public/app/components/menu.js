@@ -24,12 +24,12 @@ administracion: {
   ventas: {
     pc: `
     <a>Dashboard</a>
-    <a>Pedidos</a>
+    <a data-action="crearOT">Crear Orden de Trabajo</a>
     <a data-action="clientes">Clientes</a>
     `,
     mobile: `
     <a>Dashboard</a>
-    <a>Pedidos</a>
+    <a data-action="crearOT">Crear Orden de Trabajo</a>
     <a data-action="clientes">Clientes</a>
     `
   },

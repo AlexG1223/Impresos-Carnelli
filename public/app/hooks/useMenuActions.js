@@ -1,6 +1,7 @@
 import { gestionUsuarios } from "../sectores/administracion/gestionUsuarios/hooks/useGestorUsuarios.js";
 import { gestionRoles } from "../sectores/administracion/gestionRoles/hooks/useGestorRoles.js";
 import { gestionClientes } from "../sectores/ventas/gestionClientes/hooks/useGestionClientes.js";
+import { crearOrdenDeTrabajo } from "../sectores/ventas/crearOT/hooks/useCrearOTHook.js";
 
 export const useMenuActions = () => {
 
@@ -23,9 +24,8 @@ export const useMenuActions = () => {
 
     },
 
-    ots() {
-      console.log("Listado de OT");
-      // loadOTs();
+    crearOT() {
+      crearOrdenDeTrabajo();
     },
 
     reportes() {

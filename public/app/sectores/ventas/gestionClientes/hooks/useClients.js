@@ -1,4 +1,5 @@
-import { getAllClientsService, updateClientService } from "../services/updateClientService.js";
+import { updateClientService } from "../services/updateClientService.js";
+import { getAllClientsService } from "../services/getAllClientsServices.js";
 import { ClientCard } from "../components/clientCard.js";
 import { ClientViewModal } from "../components/clientViewModal.js";
 import { ClientEditModal } from "../components/clientEditModal.js";

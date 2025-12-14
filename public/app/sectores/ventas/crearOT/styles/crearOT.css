@@ -1,0 +1,286 @@
+/* =====================
+   VARIABLES
+===================== */
+:root {
+  --primary: #1e5eff;
+  --primary-hover: #1749c6;
+  --bg: #f5f7fb;
+  --card-bg: #ffffff;
+  --border: #e5e7eb;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --radius: 14px;
+}
+
+/* =====================
+   CONTENEDOR
+===================== */
+#section-sh {
+  padding: 30px;
+  background: var(--bg);
+}
+
+/* =====================
+   HEADER
+===================== */
+#section-sh h2 {
+  font-size: 22px;
+  margin-bottom: 4px;
+  color: var(--text);
+}
+
+#section-sh p {
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+/* =====================
+   FORM
+===================== */
+#crearOTForm {
+  background: var(--card-bg);
+  padding: 28px;
+  border-radius: var(--radius);
+  max-width: 900px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+}
+
+/* =====================
+   CAMPOS
+===================== */
+#crearOTForm label {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+#crearOTForm input,
+#crearOTForm select,
+#crearOTForm textarea {
+  width: 100%;
+  padding: 11px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  font-size: 14px;
+  margin-bottom: 18px;
+}
+
+#crearOTForm textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+#crearOTForm input:focus,
+#crearOTForm select:focus,
+#crearOTForm textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+/* =====================
+   GRID
+===================== */
+.ot-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* =====================
+   ARCHIVOS
+===================== */
+.ot-files {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 30px;
+  text-align: center;
+  margin-bottom: 24px;
+  color: var(--muted);
+}
+
+/* =====================
+   BOTONES
+===================== */
+.ot-actions {
+  display: flex;
+  gap: 14px;
+}
+
+#crearOTForm button {
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+#crearOTForm button[type="submit"] {
+  background: var(--primary);
+  color: white;
+}
+
+#crearOTForm button[type="submit"]:hover {
+  background: var(--primary-hover);
+}
+
+#crearOTForm button#cancelarOT {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+/* =====================
+   RESPONSIVE
+===================== */
+@media (max-width: 768px) {
+  .ot-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.cliente-selector {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.cliente-selector input {
+  flex: 1;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  width: 420px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.clientes-list {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0;
+}
+
+.clientes-list li {
+  padding: 10px;
+  border-bottom: 1px solid #e5e7eb;
+  cursor: pointer;
+}
+
+.clientes-list li:hover {
+  background: #f3f4f6;
+}
+/* ===== Overlay ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* ===== Modal ===== */
+.modal {
+  background: #ffffff;
+  width: 100%;
+  max-width: 520px;
+  border-radius: 10px;
+  padding: 20px 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  animation: fadeInScale 0.25s ease;
+}
+
+.modal h3 {
+  margin: 0 0 12px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #222;
+}
+
+/* ===== Lista de clientes ===== */
+.client-list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 20px;
+  max-height: 320px;
+  overflow-y: auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+}
+
+/* scrollbar suave */
+.client-list::-webkit-scrollbar {
+  width: 6px;
+}
+.client-list::-webkit-scrollbar-thumb {
+  background: #c7c7c7;
+  border-radius: 6px;
+}
+
+/* ===== Items ===== */
+.client-list li {
+  padding: 10px 14px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  transition: background 0.15s ease;
+}
+
+.client-list li:last-child {
+  border-bottom: none;
+}
+
+.client-list li:hover {
+  background: #f4f6f8;
+}
+
+.client-list li strong {
+  display: block;
+  font-size: 15px;
+  color: #111;
+}
+
+.client-list li small {
+  font-size: 12px;
+  color: #666;
+}
+
+/* ===== Botón cerrar ===== */
+#cerrarModalCliente {
+  display: block;
+  margin-left: auto;
+  padding: 8px 14px;
+  background: #e0e0e0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+#cerrarModalCliente:hover {
+  background: #d4d4d4;
+}
+
+/* ===== Animación ===== */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
