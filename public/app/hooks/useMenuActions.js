@@ -2,6 +2,7 @@ import { gestionUsuarios } from "../sectores/administracion/gestionUsuarios/hook
 import { gestionRoles } from "../sectores/administracion/gestionRoles/hooks/useGestorRoles.js";
 import { gestionClientes } from "../sectores/ventas/gestionClientes/hooks/useGestionClientes.js";
 import { crearOrdenDeTrabajo } from "../sectores/ventas/crearOT/hooks/useCrearOTHook.js";
+import { OTPendientesDisenio } from "../sectores/disenio/hooks/useOTPendientesDisenio.js";
 
 export const useMenuActions = () => {
 
@@ -28,9 +29,8 @@ export const useMenuActions = () => {
       crearOrdenDeTrabajo();
     },
 
-    reportes() {
-      console.log("Módulo reportes");
-      // loadReportes();
+    OTPendientesDisenio() {
+      OTPendientesDisenio();
     },
 
     config() {
