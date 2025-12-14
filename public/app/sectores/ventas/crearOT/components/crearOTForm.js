@@ -3,7 +3,7 @@ export function crearOTForm() {
     <h2>Crear Orden de Trabajo</h2>
     <p>Registra una nueva OT y envíala a Diseño</p>
 
-    <form id="crearOTForm">
+    <form id="crearOTForm" enctype="multipart/form-data">
 
       <label>Cliente *</label>
       <div class="cliente-selector">
@@ -46,6 +46,13 @@ export function crearOTForm() {
       </label>
 </div>
 
+      <label>Archivos del Cliente</label>
+      <input
+        type="file"
+        name="archivos[]"
+        multiple
+        accept=".pdf,.jpg,.jpeg,.png,.eps"
+      />
 
       <input type="hidden" name="sector_destino" value="DISEÑO" />
       <input type="hidden" name="etapa" value="INGRESADA" />

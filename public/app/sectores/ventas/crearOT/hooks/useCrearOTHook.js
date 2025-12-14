@@ -22,23 +22,18 @@ export async function crearOrdenDeTrabajo() {
   initSeleccionarCliente();
 
   section.addEventListener("submit", async (e) => {
-    if (e.target.id !== "crearOTForm") return;
-    e.preventDefault();
+  if (e.target.id !== "crearOTForm") return;
+  e.preventDefault();
 
-    const formData = Object.fromEntries(new FormData(e.target));
+  const form = e.target;
 
-    if (!formData.id_cliente) {
-      alert("Debe seleccionar un cliente");
-      return;
-    }
-    console.log(formData);
-    const res = await crearOTService(formData);
+  const res = await crearOTService(form);
 
-    if (res.success) {
-      alert("Orden de trabajo creada correctamente");
-      section.innerHTML = "";
-    } else {
-      alert(res.message || "Error al crear la OT");
-    }
-  });
+  if (res.success) {
+    alert("OT creada correctamente");
+    section.innerHTML = "";
+  } else {
+    alert(res.message || "Error al crear la OT");
+  }
+});
 }
