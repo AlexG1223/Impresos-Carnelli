@@ -1,6 +1,9 @@
 import { getOTPendientesService } from "../services/getOTPendientesService.js";
 import { OTPendientesTable } from "../components/OTPendientesTable.js";
 import { openOTModal, initOTDetalleModal } from "../components/OTDetalleModal.js";
+import { getOTDetalleService } from "../services/getOTDetalleService.js";
+
+
 // ⬆️ modal desacoplado
 
 function loadOTPendientesCSS() {
@@ -25,32 +28,20 @@ export async function OTPendientesDisenio() {
 
   section.innerHTML = OTPendientesTable(res.data);
 
-  // 🔹 Delegación de eventos para el botón 👁
-  section.addEventListener("click", async (e) => {
-    const btn = e.target.closest(".btn-ver");
-    if (!btn) return;
 
-    const idOT = btn.dataset.id;
+section.addEventListener("click", async (e) => {
+  const btn = e.target.closest(".btn-ver");
+  if (!btn) return;
 
-    // 🔜 luego será service real
-    const otDetalle = await obtenerDetalleOTMock(idOT);
+  const idOT = btn.dataset.id;
 
-    openOTModal(otDetalle);
-  });
+  const resDetalle = await getOTDetalleService(idOT);
+  if (!resDetalle.success) return;
 
-  // listeners globales del modal
+  openOTModal(resDetalle.data);
+});
+
+
   initOTDetalleModal();
 }
-async function obtenerDetalleOTMock(id) {
-  return {
-    id,
-    cliente_nombre: "Empresa ABC S.A.",
-    vendedor_nombre: "Juan Pérez",
-    fecha_prometida: "2024-01-25",
-    presupuesto: "PRES-2024-001",
-    archivos: [
-      { nombre: "catalogo_abc.pdf", url: "#" },
-      { nombre: "logo_abc.eps", url: "#" }
-    ]
-  };
-}
+
