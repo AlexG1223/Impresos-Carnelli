@@ -3,6 +3,7 @@ import { gestionRoles } from "../sectores/administracion/gestionRoles/hooks/useG
 import { gestionClientes } from "../sectores/ventas/gestionClientes/hooks/useGestionClientes.js";
 import { crearOrdenDeTrabajo } from "../sectores/ventas/crearOT/hooks/useCrearOTHook.js";
 import { OTPendientesDisenio } from "../sectores/disenio/hooks/useOTPendientesDisenio.js";
+import { useOffset } from "../sectores/offset/hooks/useOffset.js";
 
 export const useMenuActions = () => {
 
@@ -33,9 +34,8 @@ export const useMenuActions = () => {
       OTPendientesDisenio();
     },
 
-    config() {
-      console.log("Configuración");
-      // loadConfig();
+    Offset() {
+      useOffset();
     },
     clientes () {
       gestionClientes();

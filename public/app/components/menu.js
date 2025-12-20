@@ -47,8 +47,12 @@ administracion: {
   },
 
   offset: {
-    pc: `<a>OT Producción</a><a>Planchas</a>`,
-    mobile: `<a>OT Producción</a><a>Planchas</a>`
+    pc: `
+    <a>Dashboard</a>
+    <a data-action="Offset">Producción Offset</a>`,
+    mobile: `
+    <a>Dashboard</a>
+    <a data-action="Offset">Producción Offset</a>`
   },
 
   expedicion: {
