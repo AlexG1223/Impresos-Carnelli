@@ -2,20 +2,13 @@ import { getOTPendientesService } from "../services/getOTPendientesService.js";
 import { OTPendientesTable } from "../components/OTPendientesTable.js";
 import { openOTModal, initOTDetalleModal } from "../components/OTDetalleModal.js";
 import { getOTDetalleService } from "../services/getOTDetalleService.js";
+import { loadViewCSS } from "/ICSoftware/public/app/utils/viewCssManager.js";
 
-function loadOTPendientesCSS() {
-  if (document.getElementById("ot-pendientes-css")) return;
 
-  const link = document.createElement("link");
-  link.id = "ot-pendientes-css";
-  link.rel = "stylesheet";
-  link.href = "sectores/disenio/styles/OTPendientesDisenio.css";
 
-  document.head.appendChild(link);
-}
 
 export async function OTPendientesDisenio() {
-  loadOTPendientesCSS();
+loadViewCSS("sectores/disenio/styles/OTPendientesDisenio.css")
 
   const section = document.getElementById("section-sh");
   section.innerHTML = "";

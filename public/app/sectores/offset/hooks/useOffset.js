@@ -2,19 +2,10 @@ import { getOffsetService } from "../services/getOffsetService.js";
 import { startOffsetService } from "../services/startOffsetService.js";
 import { endOffsetService } from "../services/endOffsetService.js";
 import { offsetTable } from "../components/offsetTable.js";
-
-function loadOTPendientesCSS() {
-  if (document.getElementById("ot-pendientes-css")) return;
-
-  const link = document.createElement("link");
-  link.id = "ot-pendientes-css";
-  link.rel = "stylesheet";
-  link.href = "sectores/offset/styles/offsetTable.css";
-  document.head.appendChild(link);
-}
+import { loadViewCSS } from "/ICSoftware/public/app/utils/viewCssManager.js";
 
 export async function useOffset() {
-  loadOTPendientesCSS();
+  loadViewCSS("sectores/offset/styles/offsetTable.css");
 
   const section = document.getElementById("section-sh");
 

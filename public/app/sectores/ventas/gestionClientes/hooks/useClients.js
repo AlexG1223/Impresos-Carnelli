@@ -3,25 +3,17 @@ import { getAllClientsService } from "../services/getAllClientsServices.js";
 import { ClientCard } from "../components/clientCard.js";
 import { ClientViewModal } from "../components/clientViewModal.js";
 import { ClientEditModal } from "../components/clientEditModal.js";
+import { loadViewCSS } from "/ICSoftware/public/app/utils/viewCssManager.js";
+
 function closeModal(modalContainer) {
   modalContainer.innerHTML = "";
 }
 
-function loadClientsCSS() {
-  if (document.getElementById("clients-css")) return;
-
-  const link = document.createElement("link");
-  link.id = "clients-css";
-  link.rel = "stylesheet";
-  link.href = "sectores/ventas/gestionClientes/styles/clients.css";
-
-  document.head.appendChild(link);
-}
 
 
 
 export async function useClients() {
-    loadClientsCSS();
+    loadViewCSS("sectores/ventas/gestionClientes/styles/clients.css");
 
   const container = document.getElementById("clientTable");
   const modalContainer = document.getElementById("modalContainer");
