@@ -10,7 +10,7 @@ export function OTDetalleModal(ot) {
         <div class="modal-header">
 
           <h3>OT #${ot.id} - ${ot.cliente_nombre}</h3>
-          <button class="btn-cerrar-modal">✕</button>
+         <!-- <button class="btn-cerrar-modal">✕</button> -->
         </div>
 
         <div class="modal-info">
@@ -46,7 +46,6 @@ export function OTDetalleModal(ot) {
           ⚠️ Los archivos finales deben enviarse por el canal habitual (email/FTP).
         </div>
 
-        <!-- 🆕 ACLARACIONES -->
         <h4 class="modal-subtitle">Aclaraciones Técnicas para Impresión</h4>
 <textarea
   class="ot-textarea js-aclaraciones"
@@ -54,8 +53,6 @@ export function OTDetalleModal(ot) {
 ></textarea>
 
 
-
-        <!-- 🆕 SECTOR -->
         <h4 class="modal-subtitle">Enviar a</h4>
         <div class="ot-sectores">
           <div class="ot-sector" data-sector="OFFSET">
@@ -78,11 +75,14 @@ export function OTDetalleModal(ot) {
     </div>
   `;
 }
+let modalListenerInicializado = false;
 
 export function initOTDetalleModal() {
+  if (modalListenerInicializado) return; 
+  modalListenerInicializado = true;
+
   document.addEventListener("click", async (e) => {
 
-    // cerrar modal
     if (
       e.target.classList.contains("btn-cerrar-modal") ||
       e.target.id === "ot-modal-overlay"
@@ -91,7 +91,6 @@ export function initOTDetalleModal() {
       return;
     }
 
-    // seleccionar sector
     const sector = e.target.closest(".ot-sector");
     if (sector) {
       const modal = document.getElementById("ot-modal-overlay");
@@ -104,7 +103,6 @@ export function initOTDetalleModal() {
       return;
     }
 
-    // confirmar envío
     const btnConfirmar = e.target.closest(".btn-confirmar-envio");
     if (!btnConfirmar) return;
 
@@ -135,7 +133,7 @@ export function initOTDetalleModal() {
     if (res.success) {
       alert("OT enviada a producción");
       cerrarModalOT();
-      OTPendientesDisenio()
+      OTPendientesDisenio();
     } else {
       alert(res.message || "Error al enviar a producción");
       btnConfirmar.disabled = false;
@@ -149,6 +147,7 @@ export function openOTModal(ot) {
 
   const container = document.createElement("div");
   container.innerHTML = OTDetalleModal(ot);
+  console.log(ot);
   document.body.appendChild(container);
 }
 

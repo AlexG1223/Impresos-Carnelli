@@ -12,6 +12,7 @@ function loadCrearOTCSS() {
 
   document.head.appendChild(link);
 }
+let crearOTListenerInicializado = false;
 
 export async function crearOrdenDeTrabajo() {
   loadCrearOTCSS();
@@ -21,19 +22,23 @@ export async function crearOrdenDeTrabajo() {
 
   initSeleccionarCliente();
 
+  if (crearOTListenerInicializado) return; // 🔒
+  crearOTListenerInicializado = true;
+
   section.addEventListener("submit", async (e) => {
-  if (e.target.id !== "crearOTForm") return;
-  e.preventDefault();
+    if (e.target.id !== "crearOTForm") return;
 
-  const form = e.target;
+    e.preventDefault();
 
-  const res = await crearOTService(form);
+    const form = e.target;
 
-  if (res.success) {
-    alert("OT creada correctamente");
-    section.innerHTML = "";
-  } else {
-    alert(res.message || "Error al crear la OT");
-  }
-});
+    const res = await crearOTService(form);
+
+    if (res.success) {
+      alert("OT creada correctamente");
+      section.innerHTML = "";
+    } else {
+      alert(res.message || "Error al crear la OT");
+    }
+  });
 }

@@ -1,3 +1,8 @@
+function tieneHoraInicio(fecha) {
+  if (!fecha) return false;
+  return !fecha.includes("00:00:00");
+}
+
 export function offsetTable(data) {
 
   if (!data || data.length === 0) {
@@ -25,42 +30,37 @@ export function offsetTable(data) {
         </thead>
 
         <tbody>
-          ${data.map(ot => `
-            <tr>
-              <td>${ot.id}</td>
-              <td>${ot.cliente}</td>
-              <td>${ot.fecha_inicio_trabajo ?? "-"}</td>
-              <td>${ot.fecha_fin_trabajo ?? "-"}</td>
-              <td class="acciones">
+          ${data.map(ot => {
+            const iniciada = tieneHoraInicio(ot.fecha_inicio_trabajo);
 
-                <button 
-                  class="btn-iniciar"
-                  data-id="${ot.id}"
-                  title="Iniciar OT">
-                  ▶
-                </button>
+            return `
+              <tr>
+                <td>${ot.id}</td>
+                <td>${ot.cliente}</td>
+                <td>${ot.fecha_inicio_trabajo ?? "-"}</td>
+                <td>${ot.fecha_fin_trabajo ?? "-"}</td>
+                <td class="acciones">
 
-                <button 
-                  class="btn-finalizar"
-                  data-id="${ot.id}"
-                  title="Finalizar OT">
-                  ✔
-                </button>
+                  ${
+                    !iniciada
+                      ? `<button class="btn-iniciar" data-id="${ot.id}" title="Comenzar">▶</button>`
+                      : `<button class="btn-finalizar" data-id="${ot.id}" title="Finalizar">✔</button>`
+                  }
 
-                <button 
-                  class="btn-detalle"
-                  data-id="${ot.id}"
-                  title="Ver detalle">
-                  ℹ
-                </button>
+                  <button 
+                    class="btn-detalle"
+                    data-id="${ot.id}"
+                    title="Ver detalle">
+                    ℹ
+                  </button>
 
-              </td>
-            </tr>
-          `).join("")}
+                </td>
+              </tr>
+            `;
+          }).join("")}
         </tbody>
       </table>
 
-      <!-- Modal OT -->
       <div id="modal-ot" class="modal hidden">
         <div class="modal-content"></div>
       </div>

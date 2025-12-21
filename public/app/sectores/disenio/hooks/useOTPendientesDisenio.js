@@ -3,9 +3,6 @@ import { OTPendientesTable } from "../components/OTPendientesTable.js";
 import { openOTModal, initOTDetalleModal } from "../components/OTDetalleModal.js";
 import { getOTDetalleService } from "../services/getOTDetalleService.js";
 
-
-// ⬆️ modal desacoplado
-
 function loadOTPendientesCSS() {
   if (document.getElementById("ot-pendientes-css")) return;
 
