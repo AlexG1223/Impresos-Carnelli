@@ -1,6 +1,10 @@
 import { useGetLoginDataValidation } from './hooks/useGetLoginDataValidation.js';
 import { loguear } from './services/loginService.js';
 
+
+import { loadViewCSS } from "/ICSoftware/public/app/utils/viewCssManager.js";
+
+loadViewCSS("styles/login.css");
 const btn = document.getElementById('loginBtn');
 
 btn.addEventListener('click', async (event) => {

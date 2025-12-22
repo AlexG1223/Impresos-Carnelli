@@ -1,0 +1,116 @@
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Card del login */
+#loginForm {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  padding: 32px 28px;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Títulos */
+#loginForm::before {
+  content: "Impresos Carnelli";
+  display: block;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+#loginForm::after {
+  content: "Sistema de Gestión de Imprenta";
+  display: block;
+  text-align: center;
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 28px;
+}
+
+/* Labels */
+#loginForm label {
+  display: block;
+  font-size: 14px;
+  color: #334155;
+  margin-bottom: 6px;
+}
+
+/* Inputs */
+#loginForm input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#loginForm input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+/* Espaciado entre campos */
+#loginForm input + label,
+#loginForm label + input {
+  margin-bottom: 18px;
+}
+
+/* Botón */
+#loginBtn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.05s;
+}
+
+#loginBtn:hover {
+  background: #1e4fd8;
+}
+
+#loginBtn:active {
+  transform: scale(0.98);
+}
+
+/* Caja usuarios de prueba */
+.usuarios-prueba {
+  margin-top: 20px;
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 13px;
+  color: #475569;
+}
+
+.usuarios-prueba strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #334155;
+}
+
+.usuarios-prueba div {
+  margin-bottom: 4px;
+}
