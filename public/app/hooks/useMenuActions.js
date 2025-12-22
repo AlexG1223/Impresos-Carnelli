@@ -5,6 +5,8 @@ import { crearOrdenDeTrabajo } from "../sectores/ventas/crearOT/hooks/useCrearOT
 import { OTPendientesDisenio } from "../sectores/disenio/hooks/useOTPendientesDisenio.js";
 import { useOffset } from "../sectores/offset/hooks/useOffset.js";
 import { useSerigrafia } from "../sectores/serigrafia/hooks/useSerigrafia.js";
+import { useExpedicion } from "../sectores/expedicion/hooks/useExpedicion.js";
+import { useConfiguracionSistema } from "../sectores/administracion/config/hooks/useConfigs.js";
 export const useMenuActions = () => {
 
   const actions = {
@@ -44,6 +46,13 @@ export const useMenuActions = () => {
     clientes () {
       gestionClientes();
 
+    },
+    expedicion () {
+      useExpedicion();
+
+    },
+    config() {
+      useConfiguracionSistema();
     }
 
   };

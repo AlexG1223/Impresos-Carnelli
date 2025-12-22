@@ -60,8 +60,12 @@ administracion: {
   },
 
   expedicion: {
-    pc: `<a>Entregas</a><a>Despachos</a>`,
-    mobile: `<a>Entregas</a><a>Despachos</a>`
+    pc: `
+    <a>Dashboard</a>
+    <a data-action="expedicion">Trabajos Finalizados</a>`,
+    mobile: `
+    <a>Dashboard</a>
+    <a data-action="expedicion">Trabajos Finalizados</a>`
   }
 };
 
