@@ -103,3 +103,8 @@
     padding: 18px;
   }
 }
+
+.hidden {
+  display: none;
+}
+

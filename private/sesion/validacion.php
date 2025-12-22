@@ -36,6 +36,52 @@ if (!password_verify($password, $user['contrasenia'])) {
 }
 
 
+if ($user['rol'] !== 'Administrador') {
+
+    $sqlConfig = "SELECT Es24hs, Horario_Entrada, Horario_Salida 
+                  FROM configuracion_sistema 
+                  LIMIT 1";
+
+    $resultConfig = mysqli_query($conexion, $sqlConfig);
+
+    if (!$resultConfig || mysqli_num_rows($resultConfig) === 0) {
+        echo json_encode([
+            "success" => false,
+            "message" => "No existe configuración del sistema"
+        ]);
+        exit;
+    }
+
+    $config = mysqli_fetch_assoc($resultConfig);
+
+    if ((int)$config['Es24hs'] !== 1) {
+
+        $horaEntrada = $config['Horario_Entrada'];
+        $horaSalida  = $config['Horario_Salida'];
+
+        if (!$horaEntrada || !$horaSalida) {
+            echo json_encode([
+                "success" => false,
+                "message" => "Configuración horaria inválida"
+            ]);
+            exit;
+        }
+
+        $ahora = new DateTime("now");
+        $entrada = new DateTime($horaEntrada);
+        $salida  = new DateTime($horaSalida);
+
+        if ($ahora < $entrada || $ahora > $salida) {
+            echo json_encode([
+                "success" => false,
+                "message" => "Acceso denegado: fuera del horario de trabajo"
+            ]);
+            exit;
+        }
+    }
+}
+
+
 $sqlSectores = "SELECT ventas, serigrafia, offset, expedicion, `diseño`, administracion 
                 FROM sectores 
                 WHERE id_usr = ?";

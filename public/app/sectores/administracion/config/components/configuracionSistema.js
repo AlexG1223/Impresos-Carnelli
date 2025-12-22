@@ -1,7 +1,7 @@
 export function configuracionSistema(config = null) {
-  const horarioEntrada = config?.Horario_Entrada ?? "";
-  const horarioSalida = config?.Horario_Salida ?? "";
-  const es24hs = config?.Es24hs ?? false;
+  const horarioEntrada = config?.horaEntrada ?? "";
+  const horarioSalida = config?.horaSalida ?? "";
+  const es24hs = config?.es24hs ?? false;
 
   return `
     <div class="card">
@@ -10,36 +10,32 @@ export function configuracionSistema(config = null) {
 
       <form id="configuracionSistemaForm">
 
-        ${
-          !es24hs
-            ? `
-              <div class="field">
-                <label>Horario de Entrada</label>
-                <input 
-                  type="time" 
-                  name="horario_entrada"
-                  value="${horarioEntrada}"
-                />
-              </div>
+        <div id="horariosContainer" class="${es24hs ? "hidden" : ""}">
+          <div class="field">
+            <label>Horario de Entrada</label>
+            <input 
+              type="time" 
+              name="horario_entrada"
+              value="${horarioEntrada}"
+            />
+          </div>
 
-              <div class="field">
-                <label>Horario de Salida</label>
-                <input 
-                  type="time" 
-                  name="horario_salida"
-                  value="${horarioSalida}"
-                />
-              </div>
-            `
-            : ""
-        }
+          <div class="field">
+            <label>Horario de Salida</label>
+            <input 
+              type="time" 
+              name="horario_salida"
+              value="${horarioSalida}"
+            />
+          </div>
+        </div>
 
         <div class="checkbox">
           <input 
             type="checkbox" 
             id="es24hs"
+            name="es24hs"
             ${es24hs ? "checked" : ""}
-            disabled
           />
           <label for="es24hs">Acceso 24 hs</label>
         </div>
@@ -47,6 +43,8 @@ export function configuracionSistema(config = null) {
         <p class="info-text">
           Solo los administradores pueden modificar esta configuración.
         </p>
+
+        <button type="submit">Guardar Configuración</button>
 
       </form>
     </div>
