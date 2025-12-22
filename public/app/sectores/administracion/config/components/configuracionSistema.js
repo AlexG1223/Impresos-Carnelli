@@ -1,68 +1,54 @@
+export function configuracionSistema(config = null) {
+  const horarioEntrada = config?.Horario_Entrada ?? "";
+  const horarioSalida = config?.Horario_Salida ?? "";
+  const es24hs = config?.Es24hs ?? false;
 
-export function configuracionSistema({
-  es24hs = true,
-  horaInicio = "08:00",
-  horaFin = "18:00",
-  onChangeTipo,
-  onChangeInicio,
-  onChangeFin,
-  onGuardar
-}) {
   return `
-    <section class="configuracion">
+    <div class="card">
+      <h3>Configuración del Sistema</h3>
+      <p>Defina el horario de acceso de los empleados</p>
 
-      <header class="config-header">
-        <h2>Configuración General</h2>
-        <p>Administra la configuración del sistema</p>
-      </header>
-
-      <div class="config-card">
-
-        <div class="config-title">
-          <span class="icon">🕒</span>
-          <strong>Horarios de Acceso</strong>
-        </div>
-
-        <div class="config-field">
-          <label>Disponibilidad del Sistema</label>
-          <select id="tipoHorario">
-            <option value="24" ${es24hs ? "selected" : ""}>Disponible 24/7</option>
-            <option value="custom" ${!es24hs ? "selected" : ""}>Horario específico</option>
-          </select>
-        </div>
+      <form id="configuracionSistemaForm">
 
         ${
           !es24hs
             ? `
-              <div class="config-hours">
-                <div>
-                  <label>Hora de Inicio</label>
-                  <input type="time" id="horaInicio" value="${horaInicio}">
-                </div>
-                <div>
-                  <label>Hora de Fin</label>
-                  <input type="time" id="horaFin" value="${horaFin}">
-                </div>
+              <div class="field">
+                <label>Horario de Entrada</label>
+                <input 
+                  type="time" 
+                  name="horario_entrada"
+                  value="${horarioEntrada}"
+                />
+              </div>
+
+              <div class="field">
+                <label>Horario de Salida</label>
+                <input 
+                  type="time" 
+                  name="horario_salida"
+                  value="${horarioSalida}"
+                />
               </div>
             `
             : ""
         }
 
-        <div class="config-info">
-          ${
-            es24hs
-              ? "Los empleados pueden acceder al sistema en cualquier momento."
-              : `Los empleados podrán acceder al sistema entre las ${horaInicio} y las ${horaFin}.`
-          }
+        <div class="checkbox">
+          <input 
+            type="checkbox" 
+            id="es24hs"
+            ${es24hs ? "checked" : ""}
+            disabled
+          />
+          <label for="es24hs">Acceso 24 hs</label>
         </div>
 
-        <div class="config-actions">
-          <button id="guardarConfig" class="btn-primary">
-            Guardar configuración
-          </button>
-        </div>
+        <p class="info-text">
+          Solo los administradores pueden modificar esta configuración.
+        </p>
 
-      </div>
-    </section>
+      </form>
+    </div>
   `;
 }

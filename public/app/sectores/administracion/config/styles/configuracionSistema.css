@@ -1,0 +1,105 @@
+/* ================================
+   CONFIGURACIÓN DEL SISTEMA
+================================ */
+
+.config-sistema-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  max-width: 520px;
+}
+
+/* Título */
+.config-sistema-card h3 {
+  font-size: 18px;
+  margin-bottom: 6px;
+  color: #1f2937;
+}
+
+/* Subtítulo */
+.config-sistema-card p {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 18px;
+}
+
+/* ================================
+   FORM
+================================ */
+
+#configuracionSistemaForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Campos */
+#configuracionSistemaForm .field {
+  display: flex;
+  flex-direction: column;
+}
+
+#configuracionSistemaForm label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+#configuracionSistemaForm input[type="time"] {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+}
+
+#configuracionSistemaForm input[type="time"]:disabled {
+  background: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* ================================
+   CHECKBOX
+================================ */
+
+#configuracionSistemaForm .checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#configuracionSistemaForm .checkbox input {
+  width: 16px;
+  height: 16px;
+}
+
+#configuracionSistemaForm .checkbox label {
+  font-size: 14px;
+  color: #374151;
+  margin: 0;
+}
+
+/* ================================
+   INFO TEXTO
+================================ */
+
+#configuracionSistemaForm .info-text {
+  font-size: 13px;
+  color: #6b7280;
+  background: #f9fafb;
+  border-left: 4px solid #1e5eff;
+  padding: 10px 12px;
+  border-radius: 6px;
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 600px) {
+  .config-sistema-card {
+    padding: 18px;
+  }
+}
