@@ -4,7 +4,7 @@ import { gestionClientes } from "../sectores/ventas/gestionClientes/hooks/useGes
 import { crearOrdenDeTrabajo } from "../sectores/ventas/crearOT/hooks/useCrearOTHook.js";
 import { OTPendientesDisenio } from "../sectores/disenio/hooks/useOTPendientesDisenio.js";
 import { useOffset } from "../sectores/offset/hooks/useOffset.js";
-
+import { useSerigrafia } from "../sectores/serigrafia/hooks/useSerigrafia.js";
 export const useMenuActions = () => {
 
   const actions = {
@@ -36,6 +36,10 @@ export const useMenuActions = () => {
 
     Offset() {
       useOffset();
+    },
+     Serigrafia () {
+      useSerigrafia();
+
     },
     clientes () {
       gestionClientes();

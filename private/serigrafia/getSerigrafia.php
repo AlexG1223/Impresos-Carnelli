@@ -12,7 +12,6 @@ if (!isset($_SESSION["user"]["id"])) {
 require_once __DIR__ . "/../conexion.php";
 $conexion = conectar_bd();
 
-
 $sql = "
 SELECT 
     ot.id,
@@ -24,7 +23,7 @@ INNER JOIN clientes c
     ON c.id = ot.id_cliente
 LEFT JOIN detalle_produccion dp 
     ON dp.id_orden = ot.id
-WHERE ot.etapa = 'EN_PRODUCCION' and dp.sector_responsable = 'OFFSET'
+WHERE ot.etapa = 'EN_PRODUCCION' and dp.sector_responsable = 'SERIGRAFIA'
 ORDER BY ot.id DESC
 ";
 

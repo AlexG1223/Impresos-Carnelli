@@ -42,8 +42,12 @@ administracion: {
   },
 
   serigrafia: {
-    pc: `<a>OT Producción</a><a>Impresiones</a>`,
-    mobile: `<a>OT Producción</a><a>Impresiones</a>`
+    pc: `
+    <a>Dashboard</a>
+    <a data-action="Serigrafia">Producción Serigrafia</a>`,
+    mobile: `
+    <a>Dashboard</a>
+    <a data-action="Serigrafia">Producción Serigrafia</a>`
   },
 
   offset: {

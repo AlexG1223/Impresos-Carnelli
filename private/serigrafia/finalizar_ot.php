@@ -45,7 +45,7 @@ $stmt2->bind_param("i", $id_ot);
 $sql3 = "
 INSERT INTO historial_movimientos
 (id_orden, id_usuario, fecha_hora, accion_realizada)
-VALUES (?, ?, NOW(), 'Fin de Producción offset')
+VALUES (?, ?, NOW(), 'Fin de Producción serigrafia')
 ";
 
 $stmt3 = $conexion->prepare($sql3);
