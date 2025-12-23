@@ -4,8 +4,13 @@ import { endSerigrafiaService } from "../services/endSerigrafiaService.js";
 import { serigrafiaTable } from "../components/serigrafiaTable.js";
 import { loadViewCSS } from "/ICSoftware/public/app/utils/viewCssManager.js";
 
+
+import { getSerigrafiaDetalleService } from "../services/getSerigrafiaDetalleService.js";
+import { serigrafiaFinalizarModal } from "../components/serigrafiaFinalizarModal.js";
+
 export async function useSerigrafia() {
   loadViewCSS("sectores/serigrafia/styles/serigrafiaTable.css");
+  
   const section = document.getElementById("section-sh");
 
   async function render() {
@@ -28,12 +33,38 @@ export async function useSerigrafia() {
     return;
   }
 
-  if (btnFinalizar) {
-    const id = btnFinalizar.dataset.id;
-    await endSerigrafiaService(id);
-    await render();
+if (btnFinalizar) {
+  const id = btnFinalizar.dataset.id;
+
+  const modal = document.getElementById("modal-ot");
+  const modalContent = modal.querySelector(".modal-content");
+
+  const res = await getSerigrafiaDetalleService(id);
+  if (!res.success) {
+    alert(res.message);
     return;
   }
+
+  modalContent.innerHTML = serigrafiaFinalizarModal(res.data);
+  modal.classList.remove("hidden");
+
+  document
+    .getElementById("cancelarModal")
+    .addEventListener("click", () => {
+      modal.classList.add("hidden");
+    });
+
+  document
+    .getElementById("confirmarFinalizar")
+    .addEventListener("click", async () => {
+      await endSerigrafiaService(id);
+      modal.classList.add("hidden");
+      await render();
+    });
+
+  return;
+}
+
 });
 
 }

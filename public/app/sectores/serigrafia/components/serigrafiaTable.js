@@ -47,13 +47,7 @@ export function serigrafiaTable(data) {
                       : `<button class="btn-finalizar" data-id="${ot.id}" title="Finalizar">✔</button>`
                   }
 
-                  <button 
-                    class="btn-detalle"
-                    data-id="${ot.id}"
-                    title="Ver detalle">
-                    ℹ
-                  </button>
-
+                 
                 </td>
               </tr>
             `;
