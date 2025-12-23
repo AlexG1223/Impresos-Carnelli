@@ -3,6 +3,9 @@ import { startOffsetService } from "../services/startOffsetService.js";
 import { endOffsetService } from "../services/endOffsetService.js";
 import { offsetTable } from "../components/offsetTable.js";
 import { loadViewCSS } from "/ICSoftware/public/app/utils/viewCssManager.js";
+import { getOffsetDetalleService } from "../services/getOffsetDetalleService.js";
+import { offsetFinalizarModal } from "../components/offsetFinalizarModal.js";
+
 
 export async function useOffset() {
   loadViewCSS("sectores/offset/styles/offsetTable.css");
@@ -29,12 +32,38 @@ export async function useOffset() {
     return;
   }
 
-  if (btnFinalizar) {
-    const id = btnFinalizar.dataset.id;
-    await endOffsetService(id);
-    await render();
+if (btnFinalizar) {
+  const id = btnFinalizar.dataset.id;
+
+  const modal = document.getElementById("modal-ot");
+  const modalContent = modal.querySelector(".modal-content");
+
+  const res = await getOffsetDetalleService(id);
+  if (!res.success) {
+    alert(res.message);
     return;
   }
+
+  modalContent.innerHTML = offsetFinalizarModal(res.data);
+  modal.classList.remove("hidden");
+
+  document
+    .getElementById("cancelarModal")
+    .addEventListener("click", () => {
+      modal.classList.add("hidden");
+    });
+
+  document
+    .getElementById("confirmarFinalizar")
+    .addEventListener("click", async () => {
+      await endOffsetService(id);
+      modal.classList.add("hidden");
+      await render();
+    });
+
+  return;
+}
+
 });
 
 }

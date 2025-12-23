@@ -36,9 +36,9 @@ administracion: {
 
   diseño: {
     pc: `<a>Dashboard</a>
-          <a data-action="OTPendientesDisenio" >Trabajos Pendientes</a>`,
+          <a data-action="OTPendientesDisenio">Trabajos Pendientes</a>`,
     mobile: `<a>Dashboard</a>
-          <a data-action="OTPendientesDisenio >Trabajos Pendientes</a>`
+          <a data-action="OTPendientesDisenio">Trabajos Pendientes</a>`
   },
 
   serigrafia: {
