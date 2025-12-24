@@ -8,6 +8,8 @@ import { useSerigrafia } from "../sectores/serigrafia/hooks/useSerigrafia.js";
 import { useExpedicion } from "../sectores/expedicion/hooks/useExpedicion.js";
 import { useConfiguracionSistema } from "../sectores/administracion/config/hooks/useConfigs.js";
 import { useTodasOTs } from "../sectores/administracion/OTs/hooks/useTodasOTs.js";
+import { useReportes } from "../sectores/administracion/reportesYEstadisticas/hooks/useReportes.js";
+
 export const useMenuActions = () => {
 
   const actions = {
@@ -40,6 +42,9 @@ export const useMenuActions = () => {
     },
     ots() {
       useTodasOTs();
+    },
+    reportes() {
+      useReportes();
     }
   };
 
