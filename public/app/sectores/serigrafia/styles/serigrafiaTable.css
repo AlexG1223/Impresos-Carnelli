@@ -75,15 +75,7 @@
   background: #ffcdd2;
 }
 
-/* Botón detalle */
-.btn-detalle {
-  background: #e3f2fd;
-  color: #1565c0;
-}
-
-.btn-detalle:hover {
-  background: #bbdefb;
-}
+/*
 
 /* ===== MODAL ===== */
 .modal {

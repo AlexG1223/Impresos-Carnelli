@@ -1,8 +1,8 @@
 
 
-export async function getExpedicionService() {
+export async function getExpedicionDetalleService(id) {
   try {
-    const res = await fetch("/ICSoftware/public/api/expedicion/getExpedicion.php");
+    const res = await fetch(`/ICSoftware/public/api/expedicion/getExpedicionDetalle.php?id=${id}`);
 
     if (!res.ok) {
       throw new Error("Error al obtener OTs de expedición");
