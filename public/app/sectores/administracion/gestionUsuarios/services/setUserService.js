@@ -1,5 +1,5 @@
 export async function createUserService(user) {
-  const res = await fetch("/ICSoftware/public/api/users/create.php", {
+  const res = await fetch("http://trumanuy.com/ICSoftware/public/api/users/create.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"

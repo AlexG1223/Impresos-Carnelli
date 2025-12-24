@@ -1,7 +1,7 @@
 import { crearOTForm } from "../components/crearOTForm.js";
 import { crearOTService } from "../services/crearOTService.js";
 import { initSeleccionarCliente } from "./useSeleccionarCliente.js";
-import { loadViewCSS } from "/ICSoftware/public/app/utils/viewCssManager.js";
+import { loadViewCSS } from "http://trumanuy.com/ICSoftware/public/app/utils/viewCssManager.js";
 
 let crearOTListenerInicializado = false;
 

@@ -1,7 +1,7 @@
 export async function saveExpedicionService(data) {
   try {
     const res = await fetch(
-      "/ICSoftware/public/api/expedicion/saveExpedicion.php",
+      "http://trumanuy.com/ICSoftware/public/api/expedicion/saveExpedicion.php",
       {
         method: "POST",
         headers: {

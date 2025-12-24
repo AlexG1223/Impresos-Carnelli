@@ -1,7 +1,7 @@
 
 export async function getDataUsers() {
     try {
-        const response = await fetch('/ICSoftware/public/api/users/read.php', {
+        const response = await fetch('http://trumanuy.com/ICSoftware/public/api/users/read.php', {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
         });

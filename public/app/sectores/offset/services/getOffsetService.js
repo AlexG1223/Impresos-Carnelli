@@ -1,6 +1,6 @@
 export async function getOffsetService() {
   try {
-    const res = await fetch("/ICSoftware/public/api/offset/getOffset.php");
+    const res = await fetch("http://trumanuy.com/ICSoftware/public/api/offset/getOffset.php");
 
     if (!res.ok) {
       throw new Error("Error al obtener OTs de offset");

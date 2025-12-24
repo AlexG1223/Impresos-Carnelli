@@ -1,6 +1,6 @@
 
 export async function DeleteUserService(deletedUserId) {
- const res = await fetch("/ICSoftware/public/api/users/delete.php", {
+ const res = await fetch("http://trumanuy.com/ICSoftware/public/api/users/delete.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"

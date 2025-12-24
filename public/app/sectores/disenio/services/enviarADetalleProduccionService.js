@@ -1,6 +1,6 @@
 export async function enviarADetalleProduccionService(data) {
   const res = await fetch(
-    "/ICSoftware/public/api/detalle_produccion/create.php",
+    "http://trumanuy.com/ICSoftware/public/api/detalle_produccion/create.php",
     {
       method: "POST",
       headers: {

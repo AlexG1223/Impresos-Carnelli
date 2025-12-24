@@ -1,6 +1,6 @@
 export async function loguear(username, password) {
     try {
-        const response = await fetch('/ICSoftware/public/api/login/login.php', {
+        const response = await fetch('http://trumanuy.com/ICSoftware/public/api/login/login.php', {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, password })

@@ -1,7 +1,7 @@
 import { configuracionSistema } from "../components/configuracionSistema.js";
 import { getConfiguracionService } from "../services/getConfiguracionService.js";
 import { saveConfiguracionService } from "../services/saveConfiguracionService.js";
-import { loadViewCSS } from "/ICSoftware/public/app/utils/viewCssManager.js";
+import { loadViewCSS } from "http://trumanuy.com/ICSoftware/public/app/utils/viewCssManager.js";
 
 export async function useConfiguracionSistema() {
   loadViewCSS("sectores/administracion/config/styles/configuracionSistema.css");

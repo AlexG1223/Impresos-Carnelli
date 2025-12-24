@@ -1,7 +1,7 @@
 import { getExpedicionService } from "../services/expedicionService.js";
 import { expedicionTable } from "../components/expedicionTable.js";
 import { expedicionModal } from "../components/expedicionModal.js";
-import { loadViewCSS } from "/ICSoftware/public/app/utils/viewCssManager.js";
+import { loadViewCSS } from "http://trumanuy.com/ICSoftware/public/app/utils/viewCssManager.js";
 import { getExpedicionDetalleService } from "../services/getExpedicionDetalleService.js";
 import { saveExpedicionService } from "../services/saveExpedicionService.js";
 

@@ -5,9 +5,9 @@
 function conectar_bd(){
  //date_default_timezone_set('America/Argentina/Buenos_Aires');
 $servidor = "localhost";
-$bd = "ic";
-$usuario = "root";
-$pass = ""; 
+$bd = "u240116336_ICSoftware";
+$usuario = "u240116336_ICSoftware";
+$pass = "2TfXxpJ4"; 
 
 
 

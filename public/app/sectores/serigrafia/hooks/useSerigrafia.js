@@ -2,7 +2,7 @@ import { getSerigrafiaService } from "../services/getSerigrafiaService.js";
 import { startSerigrafiaService } from "../services/startSerigrafiaService.js";
 import { endSerigrafiaService } from "../services/endSerigrafiaService.js";
 import { serigrafiaTable } from "../components/serigrafiaTable.js";
-import { loadViewCSS } from "/ICSoftware/public/app/utils/viewCssManager.js";
+import { loadViewCSS } from "http://trumanuy.com/ICSoftware/public/app/utils/viewCssManager.js";
 
 
 import { getSerigrafiaDetalleService } from "../services/getSerigrafiaDetalleService.js";

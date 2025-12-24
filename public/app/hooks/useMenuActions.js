@@ -81,7 +81,7 @@ const showDefaultBackground = () => {
 
   main.innerHTML = `
     <div class="default-bg">
-      <img src="/ICSoftware/public/assets/img/ICLogo.jpeg" alt="IC Software">
+      <img src="http://trumanuy.com/ICSoftware/public/assets/img/ICLogo.jpeg" alt="IC Software">
     </div>
   `;
 };

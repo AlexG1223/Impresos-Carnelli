@@ -1,7 +1,7 @@
 
 export async function saveUserSectorsService(userId, sectores) {
   try {
-    const res = await fetch("/ICSoftware/public/api/sectores/saveSectors.php", {
+    const res = await fetch("http://trumanuy.com/ICSoftware/public/api/sectores/saveSectors.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

@@ -1,5 +1,5 @@
 
-import { loadViewCSS } from "/ICSoftware/public/app/utils/viewCssManager.js";
+import { loadViewCSS } from "http://trumanuy.com/ICSoftware/public/app/utils/viewCssManager.js";
 export async function useReportes() {
   loadViewCSS("sectores/administracion/reportesYEstadisticas/styles/reportes.css");
 

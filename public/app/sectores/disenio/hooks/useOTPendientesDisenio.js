@@ -2,7 +2,7 @@ import { getOTPendientesService } from "../services/getOTPendientesService.js";
 import { OTPendientesTable } from "../components/OTPendientesTable.js";
 import { openOTModal, initOTDetalleModal } from "../components/OTDetalleModal.js";
 import { getOTDetalleService } from "../services/getOTDetalleService.js";
-import { loadViewCSS } from "/ICSoftware/public/app/utils/viewCssManager.js";
+import { loadViewCSS } from "http://trumanuy.com/ICSoftware/public/app/utils/viewCssManager.js";
 
 
 

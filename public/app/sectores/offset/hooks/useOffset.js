@@ -2,7 +2,7 @@ import { getOffsetService } from "../services/getOffsetService.js";
 import { startOffsetService } from "../services/startOffsetService.js";
 import { endOffsetService } from "../services/endOffsetService.js";
 import { offsetTable } from "../components/offsetTable.js";
-import { loadViewCSS } from "/ICSoftware/public/app/utils/viewCssManager.js";
+import { loadViewCSS } from "http://trumanuy.com/ICSoftware/public/app/utils/viewCssManager.js";
 import { getOffsetDetalleService } from "../services/getOffsetDetalleService.js";
 import { offsetFinalizarModal } from "../components/offsetFinalizarModal.js";
 
