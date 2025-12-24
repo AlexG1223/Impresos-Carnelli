@@ -7,56 +7,41 @@ import { useOffset } from "../sectores/offset/hooks/useOffset.js";
 import { useSerigrafia } from "../sectores/serigrafia/hooks/useSerigrafia.js";
 import { useExpedicion } from "../sectores/expedicion/hooks/useExpedicion.js";
 import { useConfiguracionSistema } from "../sectores/administracion/config/hooks/useConfigs.js";
+import { useTodasOTs } from "../sectores/administracion/OTs/hooks/useTodasOTs.js";
 export const useMenuActions = () => {
 
   const actions = {
-
-    dashboard() {
-      console.log("Dashboard cargado");
-      // loadDashboard();
-    },
-
     usuarios() {
-     
-      gestionUsuarios()
-
+      gestionUsuarios();
     },
-
     roles() {
-
       gestionRoles();
-
     },
-
     crearOT() {
       crearOrdenDeTrabajo();
     },
-
     OTPendientesDisenio() {
       OTPendientesDisenio();
     },
-
     Offset() {
       useOffset();
     },
-     Serigrafia () {
+    Serigrafia() {
       useSerigrafia();
-
     },
-    clientes () {
+    clientes() {
       gestionClientes();
-
     },
-    expedicion () {
+    expedicion() {
       useExpedicion();
-
     },
     config() {
       useConfiguracionSistema();
+    },
+    ots() {
+      useTodasOTs();
     }
-
   };
-
 
   const executeAction = (action) => {
     const fn = actions[action];
@@ -69,8 +54,8 @@ export const useMenuActions = () => {
     fn();
   };
 
-
   const bindMenuActions = () => {
+    showDefaultBackground();
 
     document.addEventListener("click", e => {
       const btn = e.target.closest("[data-action]");
@@ -78,12 +63,20 @@ export const useMenuActions = () => {
 
       e.preventDefault();
 
-      const action = btn.dataset.action;
-      executeAction(action);
+      executeAction(btn.dataset.action);
     });
-
   };
 
-
   return { bindMenuActions };
+};
+
+const showDefaultBackground = () => {
+  const main = document.getElementById("section-sh");
+  if (!main) return;
+
+  main.innerHTML = `
+    <div class="default-bg">
+      <img src="/ICSoftware/public/assets/img/ICLogo.jpeg" alt="IC Software">
+    </div>
+  `;
 };

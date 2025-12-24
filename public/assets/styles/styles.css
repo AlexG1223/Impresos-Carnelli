@@ -49,7 +49,6 @@ body {
   cursor: pointer;
   display: none;
 }
-
 .sidebar {
   width: 220px;
   background: #0a1325;
@@ -59,6 +58,26 @@ body {
   position: fixed;
   left: 0;
   top: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* contenedor del menú */
+.sidebar #menuContent {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 20px;
+}
+
+/* scrollbar opcional (estético) */
+.sidebar #menuContent::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar #menuContent::-webkit-scrollbar-thumb {
+  background: #2a3cff;
+  border-radius: 4px;
 }
 
 .sidebar h3 {
@@ -422,4 +441,17 @@ body {
 .roles-users-icon {
   font-size: 20px;
   color: #7d9eff;
+}
+.default-bg {
+  width: 100%;
+  height: calc(100vh - 80px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.default-bg img {
+  max-width: 300px;
+  opacity: 0.15;
+  user-select: none;
 }

@@ -4,7 +4,6 @@
 const menus = {
 administracion: {
   pc: `
-    <a data-action="dashboard">Dashboard</a>
     <a data-action="usuarios">Gestión de Usuarios</a>
     <a data-action="roles">Roles y Permisos</a>
     <a data-action="ots">Todas las OT</a>
@@ -12,7 +11,6 @@ administracion: {
     <a data-action="config">Configuración</a>
   `,
     mobile: `
-    <a data-action="dashboard">Dashboard</a>
     <a data-action="usuarios">Gestión de Usuarios</a>
     <a data-action="roles">Roles y Permisos</a>
     <a data-action="ots">Todas las OT</a>
@@ -23,48 +21,48 @@ administracion: {
 
   ventas: {
     pc: `
-    <a>Dashboard</a>
+    
     <a data-action="crearOT">Crear Orden de Trabajo</a>
     <a data-action="clientes">Clientes</a>
     `,
     mobile: `
-    <a>Dashboard</a>
+    
     <a data-action="crearOT">Crear Orden de Trabajo</a>
     <a data-action="clientes">Clientes</a>
     `
   },
 
   diseño: {
-    pc: `<a>Dashboard</a>
+    pc: `
           <a data-action="OTPendientesDisenio">Trabajos Pendientes</a>`,
-    mobile: `<a>Dashboard</a>
+    mobile: `
           <a data-action="OTPendientesDisenio">Trabajos Pendientes</a>`
   },
 
   serigrafia: {
     pc: `
-    <a>Dashboard</a>
+    
     <a data-action="Serigrafia">Producción Serigrafia</a>`,
     mobile: `
-    <a>Dashboard</a>
+    
     <a data-action="Serigrafia">Producción Serigrafia</a>`
   },
 
   offset: {
     pc: `
-    <a>Dashboard</a>
+    
     <a data-action="Offset">Producción Offset</a>`,
     mobile: `
-    <a>Dashboard</a>
+    
     <a data-action="Offset">Producción Offset</a>`
   },
 
   expedicion: {
     pc: `
-    <a>Dashboard</a>
+    
     <a data-action="expedicion">Trabajos Finalizados</a>`,
     mobile: `
-    <a>Dashboard</a>
+    
     <a data-action="expedicion">Trabajos Finalizados</a>`
   }
 };
