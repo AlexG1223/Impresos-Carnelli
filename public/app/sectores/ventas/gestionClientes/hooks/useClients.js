@@ -1,0 +1,68 @@
+import { updateClientService } from "../services/updateClientService.js";
+import { getAllClientsService } from "../services/getAllClientsServices.js";
+import { ClientCard } from "../components/clientCard.js";
+import { ClientViewModal } from "../components/clientViewModal.js";
+import { ClientEditModal } from "../components/clientEditModal.js";
+import { loadViewCSS } from "/ICSoftware/public/app/utils/viewCssManager.js";
+
+function closeModal(modalContainer) {
+  modalContainer.innerHTML = "";
+}
+
+
+
+
+export async function useClients() {
+    loadViewCSS("sectores/ventas/gestionClientes/styles/clients.css");
+
+  const container = document.getElementById("clientTable");
+  const modalContainer = document.getElementById("modalContainer");
+container.innerHTML = 'Cargando...';
+
+  const res = await getAllClientsService();
+  if (!res.success) return;
+
+  const clients = res.data;
+
+  container.innerHTML = clients.map(ClientCard).join("");
+
+
+  container.addEventListener("click", e => {
+    const btn = e.target.closest("button");
+    if (!btn) return;
+
+    const { id, action } = btn.dataset;
+    const client = clients.find(c => c.id == id);
+
+    if (action === "view") {
+      modalContainer.innerHTML = ClientViewModal(client);
+    }
+
+    if (action === "edit") {
+      modalContainer.innerHTML = ClientEditModal(client);
+    }
+  });
+
+modalContainer.addEventListener("click", async e => {
+
+
+  if (e.target.id === "closeModal") {
+    closeModal(modalContainer);
+    return;
+  }
+
+
+  if (e.target.closest("#editClientForm")) {
+    e.preventDefault();
+
+    const form = e.target.closest("form");
+    const data = Object.fromEntries(new FormData(form));
+
+    const res = await updateClientService(data);
+
+    if (res.success) {
+      useClients();
+    }
+  }
+});
+}

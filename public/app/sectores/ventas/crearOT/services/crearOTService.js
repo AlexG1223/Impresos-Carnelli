@@ -1,0 +1,11 @@
+
+export async function crearOTService(formElement) {
+  const formData = new FormData(formElement);
+
+  const res = await fetch("/ICSoftware/public/api/ordenes_trabajo/create.php", {
+    method: "POST",
+    body: formData
+  });
+
+  return await res.json();
+}

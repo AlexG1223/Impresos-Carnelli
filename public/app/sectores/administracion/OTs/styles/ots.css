@@ -1,0 +1,210 @@
+/* ============================= */
+/* TABLA OTs */
+/* ============================= */
+
+.tabla-ots table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tabla-ots th,
+.tabla-ots td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.tabla-ots th {
+  font-weight: 600;
+  background: #f9fafb;
+}
+
+.acciones {
+  text-align: center;
+}
+
+.btn-ver {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* ============================= */
+/* BADGES ESTADOS */
+/* ============================= */
+
+.badge {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+/* Estados */
+.badge-diseno {
+  background: #ffe8b3;
+  color: #8a6d00;
+}
+
+.badge-offset {
+  background: #eadcff;
+  color: #5a3ea1;
+}
+
+.badge-serigrafia {
+  background: #f0d9ff;
+  color: #6b2fa1;
+}
+
+.badge-expedicion {
+  background: #e0ecff;
+  color: #1f4fbf;
+}
+
+.badge-entregado {
+  background: #d9fbe3;
+  color: #1e7f43;
+}
+
+/* ============================= */
+/* MODAL DETALLE OT */
+/* ============================= */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-card {
+  background: #fff;
+  width: 700px;
+  max-width: calc(100% - 30px);
+  border-radius: 12px;
+  overflow: hidden;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-header {
+  padding: 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+/* ============================= */
+/* DETALLE GRID */
+/* ============================= */
+
+.detalle-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.detalle-grid p {
+  margin: 4px 0 0;
+  font-weight: 500;
+}
+
+.label {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* Estado dentro del modal */
+.badge-estado {
+  display: inline-block;
+  background: #fde68a;
+  color: #92400e;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+/* ============================= */
+/* ARCHIVOS */
+/* ============================= */
+
+.archivos-section {
+  margin-top: 25px;
+}
+
+.archivo-item {
+  display: block;
+  padding: 10px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  margin-top: 8px;
+  text-decoration: none;
+  color: #111827;
+  background: #f9fafb;
+  transition: background 0.15s ease;
+}
+
+.archivo-item:hover {
+  background: #eef2ff;
+}
+
+.sin-archivos {
+  margin-top: 10px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* ============================= */
+/* FOOTER MODAL */
+/* ============================= */
+
+.modal-footer {
+  padding: 16px;
+  text-align: right;
+  border-top: 1px solid #e5e7eb;
+}
+
+.btn-cerrar {
+  background: #e5e7eb;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btn-cerrar:hover {
+  background: #d1d5db;
+}
+
+/* ============================= */
+/* ANIMACIONES */
+/* ============================= */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
