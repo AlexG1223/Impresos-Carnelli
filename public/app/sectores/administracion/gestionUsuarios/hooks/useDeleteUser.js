@@ -1,4 +1,4 @@
-import { DeleteUserService } from "../services/deleteUserService.js";
+import { DeleteUserService } from "../services/DeleteUserService.js";
 import { renderUsers } from "../components/renderUsers.js";
 
 export async function useDeleteUser(user_id) {

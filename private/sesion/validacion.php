@@ -2,7 +2,6 @@
 session_start();
 require_once __DIR__ . "/../conexion.php";
 
-header("Content-Type: application/json");
 
 $data = json_decode(file_get_contents("php://input"), true);
 
@@ -15,6 +14,16 @@ if (!$username || !$password) {
 }
 
 $conexion = conectar_bd();
+
+
+if (!$conexion || $conexion->connect_errno) {
+    http_response_code(500);
+    echo json_encode([
+        "success" => false,
+        "message" => "No se pudo establecer conexión con la base de datos"
+    ]);
+    exit;
+}
 
 $sql = "SELECT * FROM usuarios WHERE nombre = ?";
 $stmt = $conexion->prepare($sql);
@@ -82,7 +91,7 @@ if ($user['rol'] !== 'Administrador') {
 }
 
 
-$sqlSectores = "SELECT ventas, serigrafia, offset, expedicion, `diseño`, administracion 
+$sqlSectores = "SELECT `ventas`, `serigrafia`, `offset`, `expedicion`, `diseño`, administracion 
                 FROM sectores 
                 WHERE id_usr = ?";
 
