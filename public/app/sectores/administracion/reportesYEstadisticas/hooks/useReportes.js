@@ -2,7 +2,8 @@ import { loadViewCSS } from "/ICSoftware/public/app/utils/viewCssManager.js";
 import { renderReportes } from "../components/reportesComponent.js";
 import { generarReporteImpresiones } from "../services/generarReporteImpresiones.js";
 import { reporteImpresionesComponent } from "../components/reporteImpresionesComponent.js";
-//import { generarReporteVentas } from "../services/generarReporteVentas.js";
+import { generarReporteVentas } from "../services/generarReporteVentas.js";
+import { reporteVentasComponent } from "../components/reportesVentasComponent.js";
 //import { generarReporteComision } from "../services/generarReporteComision.js";
 
 export async function useReportes() {
@@ -43,8 +44,17 @@ document.getElementById("reporteResultado").innerHTML = "<p>Generando reporte...
       reporteImpresionesComponent(fechaInicio, fechaFin, res.data);
 
     }
-    if (tipoReporte === "comision") {
-      generarReporteComision(fechaInicio, fechaFin);
+    if (tipoReporte === "ventas") {
+       const res =  await generarReporteVentas(fechaInicio, fechaFin);
+
+      if (!res.success) {
+        alert(res.message || "Error al generar el reporte de ventas");
+        document.getElementById("reporteResultado").innerHTML = "<p>Error al generar el reporte.</p>";
+        return;
+      }
+      console.log("res.data ventas:", res.data);
+      reporteVentasComponent(fechaInicio, fechaFin, res.data);
+
     }
   });
 }

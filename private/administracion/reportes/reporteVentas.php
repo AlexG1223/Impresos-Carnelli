@@ -1,7 +1,4 @@
 <?php
-
-header('Content-Type: application/json; charset=utf-8');
-
 require_once __DIR__ . "/../../conexion.php";
 $conexion = conectar_bd();
 
@@ -24,7 +21,7 @@ try {
         SELECT 
             ot.id,
             ot.fecha_ingreso,
-            ot.cantidad_impresiones,
+            ot.presupuesto,
             de.fecha_lista_entrega
         FROM ordenes_trabajo ot
         INNER JOIN detalle_expedicion de 
@@ -41,27 +38,24 @@ try {
     $result = $stmt->get_result();
 
     $ordenes = [];
-    $totalImpresiones = 0;
+    $totalVentas = 0;
 
     while ($row = $result->fetch_assoc()) {
-        $cantidadImpresiones = (int)$row["cantidad_impresiones"];
-        $totalImpresiones += $cantidadImpresiones;
+        $presupuesto = (float)$row["presupuesto"];
+        $totalVentas += $presupuesto;
 
         $ordenes[] = [
             "id" => (int)$row["id"],
             "fechaIngreso" => $row["fecha_ingreso"],
             "fechaFinalizacion" => $row["fecha_lista_entrega"],
-            // ✅ cantidad de impresiones POR OT
-            "cantidadImpresiones" => $cantidadImpresiones
+            "presupuesto" => $presupuesto
         ];
     }
 
     echo json_encode([
         "success" => true,
         "data" => [
-            // ✅ total general
-            "totalImpresiones" => $totalImpresiones,
-            // ✅ detalle por OT
+            "totalVentas" => $totalVentas,
             "ordenes" => $ordenes
         ]
     ]);
@@ -70,7 +64,7 @@ try {
 } catch (Throwable $e) {
     echo json_encode([
         "success" => false,
-        "message" => "Error al generar reporte de impresiones"
+        "message" => "Error al generar reporte de ventas"
     ]);
     exit;
 }

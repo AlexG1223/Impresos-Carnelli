@@ -1,4 +1,4 @@
-export function reporteImpresionesComponent(fechaInicio, fechaFin, data) {
+export function reporteVentasComponent(fechaInicio, fechaFin, data) {
   const container = document.getElementById("section-sh");
   if (!container) return;
 
@@ -8,7 +8,7 @@ export function reporteImpresionesComponent(fechaInicio, fechaFin, data) {
           <td>#${ot.id}</td>
           <td>${ot.fechaIngreso}</td>
           <td>${ot.fechaFinalizacion ?? "-"}</td>
-          <td>${ot.cantidadImpresiones}</td>
+          <td>$ ${Number(ot.presupuesto).toFixed(2)}</td>
         </tr>
       `).join("")
     : `
@@ -20,16 +20,16 @@ export function reporteImpresionesComponent(fechaInicio, fechaFin, data) {
       `;
 
   container.innerHTML = `
-    <div class="reporte-impresiones">
+    <div class="reporte-ventas">
 
       <div class="reporte-header">
-        <h3>Reporte de Impresiones</h3>
+        <h3>Reporte de Ventas</h3>
         <p>Desde <strong>${fechaInicio}</strong> hasta <strong>${fechaFin}</strong></p>
       </div>
 
       <div class="reporte-resumen">
-        <span>Total de impresiones</span>
-        <strong>${data.totalImpresiones}</strong>
+        <span>Total de ventas</span>
+        <strong>$ ${Number(data.totalVentas).toFixed(2)}</strong>
       </div>
 
       <div class="reporte-tabla">
@@ -39,7 +39,7 @@ export function reporteImpresionesComponent(fechaInicio, fechaFin, data) {
               <th>ID OT</th>
               <th>Fecha de ingreso</th>
               <th>Fecha de finalización</th>
-              <th>Impresiones</th>
+              <th>Presupuesto</th>
             </tr>
           </thead>
           <tbody>
