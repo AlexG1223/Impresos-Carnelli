@@ -70,33 +70,24 @@ function setupPermissionEvents(user) {
     const selected = [...container.querySelectorAll(".permissions-check:checked")]
       .map(el => el.dataset.sectorName);
 
-    console.log("SECTORES A GUARDAR PARA", user.id, selected);
-
-    // 🔹 Guardar en el backend
     const r = await saveUserSectorsService(user.id, selected);
-    console.log("Respuesta del backend:", r);
 
     if (!r.success) {
       alert("Error al guardar permisos");
       return;
     }
 
-    // 🔹 ACTUALIZAR cachedUsers dinámicamente
     const index = cachedUsers.findIndex(u => u.id == user.id);
     if (index !== -1) {
       cachedUsers[index].sectores = selected;
     }
 
-    // 🔹 Re-renderizar la vista de permisos SIN recargar la página
     loadUserSectors(user.id);
 
-    // 🔹 Feedback opcional
     showSavedFeedback();
   });
 }
 
-
-// --- Feedback visual ---
 function showSavedFeedback() {
   const container = document.getElementById("userPermiss");
   const msg = document.createElement("div");

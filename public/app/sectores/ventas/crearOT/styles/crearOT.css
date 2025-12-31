@@ -284,3 +284,115 @@
     transform: scale(1);
   }
 }
+/* =====================
+   MODAL OT REPETIDA
+===================== */
+
+/* Contenedor */
+#modal-OTrepetida {
+  display: none;
+}
+
+#modal-OTrepetida.show {
+  display: block;
+}
+
+/* Overlay */
+.ot-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+}
+
+/* Modal */
+.ot-modal {
+  background: var(--card-bg);
+  width: 95%;
+  max-width: 900px;
+  max-height: 80vh;
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.18);
+  animation: fadeInScale 0.2s ease;
+}
+
+/* Header */
+.ot-modal-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ot-modal-header h5 {
+  margin: 0;
+  font-size: 18px;
+  color: var(--text);
+}
+
+/* Botón cerrar */
+.ot-modal-close {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: var(--muted);
+}
+
+.ot-modal-close:hover {
+  color: var(--text);
+}
+
+/* Body */
+.ot-modal-body {
+  padding: 18px;
+  overflow-y: auto;
+}
+
+/* Tabla */
+.ot-modal-body table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ot-modal-body th {
+  font-size: 13px;
+  color: var(--muted);
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.ot-modal-body td {
+  padding: 10px;
+  font-size: 14px;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Filas clickeables */
+.ot-row {
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.ot-row:hover {
+  background: #f3f6ff;
+}
+
+/* Scroll suave */
+.ot-modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ot-modal-body::-webkit-scrollbar-thumb {
+  background: #c7c7c7;
+  border-radius: 6px;
+}

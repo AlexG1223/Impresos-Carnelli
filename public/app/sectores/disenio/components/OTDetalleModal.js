@@ -147,7 +147,6 @@ export function openOTModal(ot) {
 
   const container = document.createElement("div");
   container.innerHTML = OTDetalleModal(ot);
-  console.log(ot);
   document.body.appendChild(container);
 }
 

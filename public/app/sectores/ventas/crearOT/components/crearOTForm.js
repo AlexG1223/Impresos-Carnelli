@@ -1,9 +1,15 @@
 export function crearOTForm() {
   return `
     <h2>Crear Orden de Trabajo</h2>
-    <p>Registra una nueva OT y envíala a Diseño</p>
+    <p id="ot-subtitle">Registra una nueva OT y envíala a Diseño</p>
 
-    <form id="crearOTForm" enctype="multipart/form-data">
+    <form id="crearOTForm" enctype="multipart/form-data" data-es-repetida="0">
+
+      <!-- INFO OT REPETIDA -->
+      <div id="otRepetidaInfo" style="display:none;" class="ot-repetida-info">
+        <strong>OT repetida</strong>
+        <span id="otRepetidaOrigen"></span>
+      </div>
 
       <label>Cliente *</label>
       <div class="cliente-selector">
@@ -39,13 +45,6 @@ export function crearOTForm() {
       <label>Cantidad de Impresiones</label>
       <input name="cantidad_impresiones" type="number" />
 
-      <div class="ot-repeticion">
-      <label>
-        <input type="checkbox" name="es_repeticion" value="1">
-        ¿Es un trabajo repetido?
-      </label>
-</div>
-
       <label>Archivos del Cliente</label>
       <input
         type="file"
@@ -54,16 +53,23 @@ export function crearOTForm() {
         accept=".pdf,.jpg,.jpeg,.png,.eps"
       />
 
-      <input type="hidden" name="sector_destino" value="DISEÑO" />
+      <!-- estos se pisan si es OT repetida -->
+      <input type="hidden" name="sector_destino" id="sector_destino" value="DISEÑO" />
       <input type="hidden" name="etapa" value="INGRESADA" />
+
+      <!-- metadata -->
+      <input type="hidden" name="ot_origen_id" id="ot_origen_id" />
 
       <div class="ot-actions">
         <button type="submit">Dar Alta de Trabajo (Enviar a Diseño)</button>
-        <button type="button" id="cancelarOT">Cancelar</button>
+        <button type="button" id="btnSeleccionarOTRepetida">
+          Seleccionar OT repetida
+        </button>
       </div>
 
     </form>
 
     <div id="modal-container"></div>
+    <div id="modal-OTrepetida"></div>
   `;
 }

@@ -1,0 +1,86 @@
+/* Contenedor principal */
+.user-list-container {
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #eef2f7;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+/* Tabla */
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+}
+
+.user-table th {
+  background-color: #f8fafc;
+  color: #475569;
+  font-weight: 600;
+  text-align: left;
+  padding: 16px;
+  border-bottom: 2px solid #edf2f7;
+}
+
+.user-table td {
+  padding: 16px;
+  color: #1e293b;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+/* Estilo de Nombre y Sectores */
+.user-name {
+  font-weight: 500;
+  color: #0f172a;
+}
+
+.user-sectors {
+  color: #64748b;
+  font-size: 13px;
+}
+
+/* Badge de Rol (Azul claro de la imagen) */
+.badge-rol {
+  background-color: #e0e7ff;
+  color: #4338ca;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+/* Acciones */
+.user-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.user-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  transition: transform 0.2s;
+  padding: 4px;
+}
+
+.btn-edit { color: #3b82f6; }
+.btn-delete { color: #ef4444; }
+
+.user-actions button:hover {
+  transform: scale(1.15);
+}
+
+/* Scroll para móviles */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+@media (max-width: 600px) {
+  .user-table { min-width: 500px; }
+}

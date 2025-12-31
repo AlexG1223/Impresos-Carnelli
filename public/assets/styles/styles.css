@@ -31,6 +31,16 @@ body {
   gap: 15px;
 }
 
+.header-left h2 {
+  font-size: 1.5rem;
+}
+
+@media (max-width: 758px) {
+  .header-left h2 {
+    font-size: 0.8rem;
+  } 
+}
+
 .header-right {
   display: flex;
   align-items: center;
@@ -104,7 +114,10 @@ body {
   margin-top: 80px;
   padding: 30px 35px;
   width: calc(100% - 220px);
+  overflow-x: auto;
+  overflow-y: hidden;
 }
+
 
 
 .mobile-menu {
