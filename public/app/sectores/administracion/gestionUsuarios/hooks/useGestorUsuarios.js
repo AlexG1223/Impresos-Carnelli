@@ -2,7 +2,7 @@ import { FormCreateUser } from "../components/formCreateUser.js";
 import { createUserService } from "../services/setUserService.js";
 import { renderUsers } from "../components/renderUsers.js";
 import { bindCloseModal } from "../hooks/useCloseModal.js";
-import { loadViewCSS } from "/ICSoftware/public/app/utils/viewCssManager.js";
+import { loadViewCSS } from "https://trumanuy.com/ICSoftware/public/app/utils/viewCssManager.js";
 
 
 export function gestionUsuarios() {

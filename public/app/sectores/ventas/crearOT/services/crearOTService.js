@@ -1,6 +1,6 @@
 
 export async function crearOTService(formData) {
-  const res = await fetch("/ICSoftware/public/api/ordenes_trabajo/create.php", {
+  const res = await fetch("https://trumanuy.com/ICSoftware/public/api/ordenes_trabajo/create.php", {
     method: "POST",
     body: formData
   });

@@ -1,7 +1,7 @@
 
 
 export async function generarReporteImpresiones(fechaInicio, fechaFin) {
- const res = await fetch("/ICSoftware/public/api/administracion/reportes/reporteImpresiones.php", {
+ const res = await fetch("https://trumanuy.com/ICSoftware/public/api/administracion/reportes/reporteImpresiones.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
