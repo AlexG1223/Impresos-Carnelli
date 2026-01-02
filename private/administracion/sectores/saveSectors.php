@@ -34,11 +34,11 @@ if ($result->num_rows > 0) {
 
     $sql = "
         UPDATE sectores SET
-            ventas = ?,
-            diseño = ?,
-            offset = ?,
-            serigrafia = ?,
-            expedicion = ?
+            `ventas` = ?,
+            `diseño` = ?,
+            `offset` = ?,
+            `serigrafia` = ?,
+            `expedicion` = ?
         WHERE id_usr = ?
     ";
 
@@ -50,7 +50,7 @@ if ($result->num_rows > 0) {
 } else {
 
     $sql = "
-        INSERT INTO sectores (id_usr, ventas, diseño, offset, serigrafia, expedicion)
+        INSERT INTO sectores (id_usr, `ventas`, `diseño`, `offset`, `serigrafia`, `expedicion`)
         VALUES (?, ?, ?, ?, ?, ?)
     ";
 

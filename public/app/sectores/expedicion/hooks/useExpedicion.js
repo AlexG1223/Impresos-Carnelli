@@ -63,7 +63,6 @@ async function abrirModalExpedicion(otId, section) {
         direccion_entrega_final: modal.querySelector("#direccion_entrega_final").value,
         estado_embalaje: modal.querySelector("#estado_embalaje").value
       };
-      console.log("Payload expedición:", payload);
       if (!payload.metodo_envio || !payload.estado_embalaje ) {
         alert("Completá los datos obligatorios.");
         return;

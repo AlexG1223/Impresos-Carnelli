@@ -2,9 +2,11 @@ import { FormCreateUser } from "../components/formCreateUser.js";
 import { createUserService } from "../services/setUserService.js";
 import { renderUsers } from "../components/renderUsers.js";
 import { bindCloseModal } from "../hooks/useCloseModal.js";
+import { loadViewCSS } from "/ICSoftware/public/app/utils/viewCssManager.js";
 
 
 export function gestionUsuarios() {
+  loadViewCSS("sectores/administracion/gestionUsuarios/styles/gestionUsuarios.css");
   const root = document.getElementById("section-sh");
 root.innerHTML ='';
   root.innerHTML = `

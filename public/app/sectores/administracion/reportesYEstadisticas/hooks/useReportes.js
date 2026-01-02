@@ -1,47 +1,60 @@
+import { loadViewCSS } from "/ICSoftware/public/app/utils/viewCssManager.js";
+import { renderReportes } from "../components/reportesComponent.js";
+import { generarReporteImpresiones } from "../services/generarReporteImpresiones.js";
+import { reporteImpresionesComponent } from "../components/reporteImpresionesComponent.js";
+import { generarReporteVentas } from "../services/generarReporteVentas.js";
+import { reporteVentasComponent } from "../components/reportesVentasComponent.js";
+//import { generarReporteComision } from "../services/generarReporteComision.js";
 
-import { loadViewCSS } from "http://trumanuy.com/ICSoftware/public/app/utils/viewCssManager.js";
 export async function useReportes() {
   loadViewCSS("sectores/administracion/reportesYEstadisticas/styles/reportes.css");
 
-  const container = document.getElementById("section-sh");
-  if (!container) return;
-    container.innerHTML = `<h2>Reportes y Estadísticas</h2>
-    <p>Análisis de rendimiento y estadísticas del sistema</p>
-    <div class="reporte-filtros">
+  renderReportes();
 
-  <div class="campo">
-    <label for="tipoReporte">Tipo de Reporte</label>
-    <select id="tipoReporte" name="tipoReporte">
-      <option value="impresiones">Impresiones</option>
-      <option value="ventas">Ventas</option>
-      <option value="comision">Comisiones</option>
-    </select>
-  </div>
+  const btnGenerar = document.querySelector(".btn-generar");
+  if (!btnGenerar) return;
 
-  <div class="campo">
-    <label for="fechaInicio">Fecha Inicio</label>
-    <input
-      type="date"
-      id="fechaInicio"
-      name="fechaInicio"
-    />
-  </div>
+  btnGenerar.addEventListener("click", async () => {
+    const tipoReporte = document.getElementById("tipoReporte")?.value;
+    const fechaInicio = document.getElementById("fechaInicio")?.value;
+    const fechaFin = document.getElementById("fechaFin")?.value;
 
-  <div class="campo">
-    <label for="fechaFin">Fecha Fin</label>
-    <input
-      type="date"
-      id="fechaFin"
-      name="fechaFin"
-    />
-  </div>
+    if (!tipoReporte || !fechaInicio || !fechaFin) {
+      console.warn("⚠️ Debes completar todos los campos");
+      alert("Debes completar todos los campos");
+      return;
+    }
 
-  <div class="campo campo-boton">
-    <button type="button" class="btn-generar">
-      ⬇ Generar Reporte
-    </button>
-  </div>
+    if (fechaInicio > fechaFin) {
+      console.warn("⚠️ La fecha inicio no puede ser mayor a la fecha fin");
+      alert("La fecha inicio no puede ser mayor a la fecha fin");
+      return;
+    }
 
-</div>`;
+document.getElementById("reporteResultado").innerHTML = "<p>Generando reporte...</p>";
 
+    if (tipoReporte === "impresiones") {
+     const res =  await generarReporteImpresiones(fechaInicio, fechaFin);
+
+      if (!res.success) {
+        alert(res.message || "Error al generar el reporte de impresiones");
+        document.getElementById("reporteResultado").innerHTML = "<p>Error al generar el reporte.</p>";
+        return;
+      }
+      reporteImpresionesComponent(fechaInicio, fechaFin, res.data);
+
+    }
+    if (tipoReporte === "ventas") {
+       const res =  await generarReporteVentas(fechaInicio, fechaFin);
+
+      if (!res.success) {
+        alert(res.message || "Error al generar el reporte de ventas");
+        document.getElementById("reporteResultado").innerHTML = "<p>Error al generar el reporte.</p>";
+        return;
+      }
+      console.log("res.data ventas:", res.data);
+      reporteVentasComponent(fechaInicio, fechaFin, res.data);
+
+    }
+  });
 }

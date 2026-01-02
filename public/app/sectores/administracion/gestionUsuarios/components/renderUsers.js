@@ -27,11 +27,16 @@ export async function renderUsers() {
 
 
 function setupEventListeners(users) {
-  const table = document.querySelector(".user-list table");
+  // Cambio de selector para coincidir con el nuevo HTML
+  const table = document.querySelector(".user-table");
 
-  if (!table) return;
+  if (!table) {
+    console.error("No se encontró la tabla .user-table");
+    return;
+  }
 
   table.addEventListener("click", (e) => {
+
     const button = e.target.closest('button');
     if (!button) return; 
 
@@ -46,7 +51,6 @@ function setupEventListeners(users) {
     }
   });
 }
-
 
 function openEditModal(userId, users) {
   const user = users.find(u => u.id == userId);

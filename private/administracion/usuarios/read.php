@@ -9,10 +9,10 @@ SELECT
     u.id,
     u.nombre,
     u.rol,
-    s.ventas,
-    s.serigrafia,
-    s.offset,
-    s.expedicion,
+    s.`ventas`,
+    s.`serigrafia`,
+    s.`offset`,
+    s.`expedicion`,
     s.`diseño`
 FROM usuarios u
 LEFT JOIN sectores s ON u.id = s.id_usr;

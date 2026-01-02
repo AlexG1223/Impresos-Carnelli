@@ -9,7 +9,6 @@ if (!isset($_SESSION["user"]["id"])) {
 require_once __DIR__ . "/../conexion.php";
 $conexion = conectar_bd();
 
-
 $id_cliente = (int)($_POST["id_cliente"] ?? 0);
 $fecha_ingreso = $_POST["fecha_ingreso"] ?? null;
 
@@ -23,12 +22,19 @@ $id_vendedor = (int)$_SESSION["user"]["id"];
 $detalle_trabajo = $_POST["detalle_trabajo"] ?? null;
 $presupuesto = $_POST["presupuesto"] ?? null;
 $fecha_prometida = $_POST["fecha_prometida"] ?? null;
-$es_repeticion = isset($_POST["es_repeticion"]) ? 1 : 0;
-
-$sector_destino = $_POST["sector_destino"] ?? "DISEÑO";
 $sena = $_POST["sena"] ?? null;
 $cantidad_impresiones = $_POST["cantidad_impresiones"] ?? null;
-$etapa = $_POST["etapa"] ?? "INGRESADA";
+
+$sector_destino = $_POST["sector_destino"] ?? "DISEÑO";
+$es_repeticion = isset($_POST["es_repeticion"]) ? 1 : 0;
+$ot_origen_id = isset($_POST["ot_origen_id"]) ? (int)$_POST["ot_origen_id"] : null;
+
+// Regla de negocio: etapa según repetición
+$etapa = $es_repeticion ? "EN_PRODUCCION" : ($_POST["etapa"] ?? "INGRESADA");
+
+
+$es_repeticion = isset($_POST["es_repeticion"]) ? 1 : 0;
+$ot_origen_id = isset($_POST["ot_origen_id"]) ? (int)$_POST["ot_origen_id"] : null;
 
 
 $sql = "
@@ -60,16 +66,25 @@ if (!$stmt->execute()) {
 
 $id_orden = $stmt->insert_id;
 
+$accion = $es_repeticion
+    ? "Creación de OT repetida (ingresa directamente a Producción desde OT #$ot_origen_id)"
+    : "Creación de OT";
+
 $sqlHistorial = "
 INSERT INTO historial_movimientos
 (id_orden, id_usuario, fecha_hora, accion_realizada, sector)
-VALUES (?, ?, NOW(), 'Creación de OT', ?)
+VALUES (?, ?, NOW(), ?, ?)
 ";
 
 $stmtH = $conexion->prepare($sqlHistorial);
-$stmtH->bind_param("iis", $id_orden, $id_vendedor, $sector_destino);
+$stmtH->bind_param(
+    "iiss",
+    $id_orden,
+    $id_vendedor,
+    $accion,
+    $sector_destino
+);
 $stmtH->execute();
-
 
 if (!empty($_FILES["archivos"]["name"][0])) {
 
@@ -113,5 +128,7 @@ if (!empty($_FILES["archivos"]["name"][0])) {
 
 echo json_encode([
     "success" => true,
-    "id_orden" => $id_orden
+    "id_orden" => $id_orden,
+    "es_repeticion" => $es_repeticion,
+    "ot_origen_id" => $ot_origen_id
 ]);

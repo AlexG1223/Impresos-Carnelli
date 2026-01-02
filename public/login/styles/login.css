@@ -37,7 +37,7 @@ body {
   content: "Sistema de Gestión de Imprenta";
   display: block;
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
   color: #64748b;
   margin-bottom: 28px;
 }
@@ -45,7 +45,7 @@ body {
 /* Labels */
 #loginForm label {
   display: block;
-  font-size: 14px;
+  font-size: 16px;
   color: #334155;
   margin-bottom: 6px;
 }
@@ -56,7 +56,7 @@ body {
   padding: 12px 14px;
   border-radius: 10px;
   border: 1px solid #cbd5e1;
-  font-size: 14px;
+  font-size: 16px;
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
@@ -64,11 +64,13 @@ body {
 #loginForm input:focus {
   border-color: #2563eb;
   box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+    font-size: 16px;
 }
 
 /* Espaciado entre campos */
 #loginForm input + label,
 #loginForm label + input {
+  font-size: 16px;
   margin-bottom: 18px;
 }
 
@@ -81,7 +83,7 @@ body {
   border: none;
   background: #2563eb;
   color: #ffffff;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   cursor: pointer;
   transition: background 0.2s, transform 0.05s;
@@ -93,24 +95,4 @@ body {
 
 #loginBtn:active {
   transform: scale(0.98);
-}
-
-/* Caja usuarios de prueba */
-.usuarios-prueba {
-  margin-top: 20px;
-  background: #f8fafc;
-  border-radius: 10px;
-  padding: 14px;
-  font-size: 13px;
-  color: #475569;
-}
-
-.usuarios-prueba strong {
-  display: block;
-  margin-bottom: 6px;
-  color: #334155;
-}
-
-.usuarios-prueba div {
-  margin-bottom: 4px;
 }
