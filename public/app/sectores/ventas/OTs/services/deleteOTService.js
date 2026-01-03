@@ -1,7 +1,7 @@
 export async function deleteOT(idOT) {
   try {
     const res = await fetch(
-      "/ICSoftware/public/api/ordenes_trabajo/delete.php",
+      "https://impresoscarnelli.com/public/api/ordenes_trabajo/delete.php",
       {
         method: "POST",
         headers: {

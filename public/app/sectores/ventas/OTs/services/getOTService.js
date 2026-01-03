@@ -1,7 +1,7 @@
 
 export async function getOTService(id_ot) {
   try {
-    const response = await fetch("/ICSoftware/public/api/ordenes_trabajo/getOTData.php", {
+    const response = await fetch("https://impresoscarnelli.com/public/api/ordenes_trabajo/getOTData.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

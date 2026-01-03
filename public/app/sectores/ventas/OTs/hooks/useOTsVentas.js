@@ -6,7 +6,7 @@ import {
   activarBuscadorOTsVendedor
 } from "../components/TablaOTsVendedor.js";
 import { deleteOT } from "../services/deleteOTService.js";
-import { loadViewCSS } from "/ICSoftware/public/app/utils/viewCssManager.js";
+import { loadViewCSS } from "https://impresoscarnelli.com/public/app/utils/viewCssManager.js";
 
 import { FormularioEditarOT } from "../components/FormularioEditarOT.js";
 import { editarOTService } from "../services/editarOTService.js"; 
