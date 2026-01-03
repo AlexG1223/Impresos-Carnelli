@@ -9,6 +9,7 @@ import { useExpedicion } from "../sectores/expedicion/hooks/useExpedicion.js";
 import { useConfiguracionSistema } from "../sectores/administracion/config/hooks/useConfigs.js";
 import { useTodasOTs } from "../sectores/administracion/OTs/hooks/useTodasOTs.js";
 import { useReportes } from "../sectores/administracion/reportesYEstadisticas/hooks/useReportes.js";
+import { useOTsVendedor } from "../sectores/ventas/OTs/hooks/useOTsVentas.js";
 
 export const useMenuActions = () => {
 
@@ -45,6 +46,9 @@ export const useMenuActions = () => {
     },
     reportes() {
       useReportes();
+    },
+    otsVentas() {
+      useOTsVendedor();
     }
   };
 

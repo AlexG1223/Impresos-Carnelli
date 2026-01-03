@@ -1,0 +1,24 @@
+
+export async function getOTService(id_ot) {
+  try {
+    const response = await fetch("/ICSoftware/public/api/ordenes_trabajo/getOTData.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ id_ot }) // Aquí estamos pasando el id_ot como JSON
+    });
+
+    const data = await response.json();
+
+    if (!data.success) {
+      throw new Error(data.message);
+    }
+
+    return data.data;  // Devuelve los datos de la OT
+
+  } catch (error) {
+    console.error("Error al obtener los datos de la OT:", error);
+  }
+}
+

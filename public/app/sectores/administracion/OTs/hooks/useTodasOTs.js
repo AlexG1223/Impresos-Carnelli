@@ -1,5 +1,5 @@
 import { getTodasOTs } from "../services/getTodasOTsService.js";
-import { TablaOTs } from "../components/TablaOTs.js";
+import { TablaOTs, activarBuscadorOTs } from "../components/TablaOTs.js";
 import { ModalDetalleOT } from "../components/ModalDetalleOT.js";
 import { loadViewCSS } from "http://impresoscarnelli.com/public/app/utils/viewCssManager.js";
 
@@ -19,7 +19,7 @@ export async function useTodasOTs() {
   const ots = response.data;
 
   container.innerHTML = TablaOTs(ots);
-
+activarBuscadorOTs()
   document.querySelectorAll(".btn-ver").forEach(btn => {
     btn.addEventListener("click", () => {
       const idOT = Number(btn.dataset.id);
