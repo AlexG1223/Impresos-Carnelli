@@ -2,7 +2,7 @@ export async function otSeleccionadaService(otId) {
 try {
     console.log("otSeleccionada otId:", otId);
     const res = await fetch(
-      "https://trumanuy.com/ICSoftware/public/api/ordenes_trabajo/getOTseleccionada.php",
+      "https://impresoscarnelli.com/public/api/ordenes_trabajo/getOTseleccionada.php",
  {
         method: "POST",
         headers: {

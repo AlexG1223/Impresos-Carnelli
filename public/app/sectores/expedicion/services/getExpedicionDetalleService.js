@@ -2,7 +2,7 @@
 
 export async function getExpedicionDetalleService(id) {
   try {
-    const res = await fetch(`http://trumanuy.com/ICSoftware/public/api/expedicion/getExpedicionDetalle.php?id=${id}`);
+    const res = await fetch(`http://impresoscarnelli.com/public/api/expedicion/getExpedicionDetalle.php?id=${id}`);
 
     if (!res.ok) {
       throw new Error("Error al obtener OTs de expedición");

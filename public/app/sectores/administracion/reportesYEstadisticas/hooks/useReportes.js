@@ -1,4 +1,4 @@
-import { loadViewCSS } from "https://trumanuy.com/ICSoftware/public/app/utils/viewCssManager.js";
+import { loadViewCSS } from "https://impresoscarnelli.com/public/app/utils/viewCssManager.js";
 import { renderReportes } from "../components/reportesComponent.js";
 import { generarReporteImpresiones } from "../services/generarReporteImpresiones.js";
 import { reporteImpresionesComponent } from "../components/reporteImpresionesComponent.js";

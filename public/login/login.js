@@ -3,7 +3,7 @@ import { loguear } from './services/loginService.js';
 
 
 
-import { loadViewCSS } from "http://trumanuy.com/ICSoftware/public/app/utils/viewCssManager.js";
+import { loadViewCSS } from "http://impresoscarnelli.com/public/app/utils/viewCssManager.js";
 
 loadViewCSS("styles/login.css");
 const btn = document.getElementById('loginBtn');
@@ -21,6 +21,6 @@ btn.addEventListener('click', async (event) => {
 
     if (!result.success) return alert(result.message);
 
-    window.location.href = "http://trumanuy.com/ICSoftware/public/app/";
+    window.location.href = "http://impresoscarnelli.com/public/app/";
 
 });

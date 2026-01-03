@@ -71,7 +71,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         $ots[$idOT]['archivos'][] = [
             'id' => $row['archivo_id'],
             'nombre' => basename($row['ruta_archivo']),
-            'url' => "http://trumanuy.com/ICSoftware/public/api/archivos/descargar.php?id=" . $row['archivo_id']
+            'url' => "https://impresoscarnelli.com/public/api/archivos/descargar.php?id=" . $row['archivo_id']
         ];
     }
 }

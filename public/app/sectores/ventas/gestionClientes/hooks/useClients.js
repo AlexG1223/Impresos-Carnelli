@@ -3,7 +3,7 @@ import { getAllClientsService } from "../services/getAllClientsServices.js";
 import { ClientCard } from "../components/clientCard.js";
 import { ClientViewModal } from "../components/clientViewModal.js";
 import { ClientEditModal } from "../components/clientEditModal.js";
-import { loadViewCSS } from "http://trumanuy.com/ICSoftware/public/app/utils/viewCssManager.js";
+import { loadViewCSS } from "http://impresoscarnelli.com/public/app/utils/viewCssManager.js";
 
 function closeModal(modalContainer) {
   modalContainer.innerHTML = "";

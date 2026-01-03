@@ -1,7 +1,7 @@
 import { getTodasOTs } from "../services/getTodasOTsService.js";
 import { TablaOTs } from "../components/TablaOTs.js";
 import { ModalDetalleOT } from "../components/ModalDetalleOT.js";
-import { loadViewCSS } from "http://trumanuy.com/ICSoftware/public/app/utils/viewCssManager.js";
+import { loadViewCSS } from "http://impresoscarnelli.com/public/app/utils/viewCssManager.js";
 
 export async function useTodasOTs() {
   loadViewCSS("sectores/administracion/OTs/styles/ots.css");

@@ -1,5 +1,5 @@
 export async function ModifyUserService(updatedUser) {
- const res = await fetch("http://trumanuy.com/ICSoftware/public/api/users/update.php", {
+ const res = await fetch("http://impresoscarnelli.com/public/api/users/update.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"

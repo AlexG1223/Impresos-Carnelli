@@ -2,7 +2,7 @@ export async function saveConfiguracionService(data) {
     
   try {
     const response = await fetch(
-      "http://trumanuy.com/ICSoftware/public/api/administracion/saveConfiguracion.php",
+      "http://impresoscarnelli.com/public/api/administracion/saveConfiguracion.php",
       {
         method: "POST",
         headers: {

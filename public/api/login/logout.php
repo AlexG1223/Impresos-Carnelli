@@ -4,4 +4,4 @@
 session_start();
 session_unset();
 session_destroy();
-header('Location: http://trumanuy.com/ICSoftware/public/app/');
+header('Location: http://impresoscarnelli.com/public/app/');

@@ -18,8 +18,7 @@ export const headerHTML = `
   </div>
 
   <div class="header-right">
-    <span class="user">Administrador</span>
-    <img src="https://ui-avatars.com/api/?name=Admin" />
+    <img src="http://impresoscarnelli.com/public/assets/img/ICLogo.jpeg" />
   </div>
 </header>
 `;

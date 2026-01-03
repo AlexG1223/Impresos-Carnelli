@@ -71,7 +71,7 @@ while ($row = $resArchivos->fetch_assoc()) {
     $archivos[] = [
         "id"     => $row["id"],
         "nombre" => basename($row["ruta_archivo"]),
-        "url" => "http://trumanuy.com/ICSoftware/public/api/archivos/descargar.php?id=" . $row["id"],
+        "url" => "http://impresoscarnelli.com/public/api/archivos/descargar.php?id=" . $row["id"],
         "tipo"   => $row["tipo"],
         "fecha"  => $row["fecha_subida"]
     ];

@@ -61,7 +61,7 @@ export function crearOTForm() {
       <input type="hidden" name="ot_origen_id" id="ot_origen_id" />
 
       <div class="ot-actions">
-        <button type="submit">Dar Alta de Trabajo (Enviar a Diseño)</button>
+        <button type="submit">Dar Alta de Trabajo</button>
         <button type="button" id="btnSeleccionarOTRepetida">
           Seleccionar OT repetida
         </button>

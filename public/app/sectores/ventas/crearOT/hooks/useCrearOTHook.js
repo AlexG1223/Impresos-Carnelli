@@ -1,7 +1,7 @@
 import { crearOTForm } from "../components/crearOTForm.js";
 import { crearOTService } from "../services/crearOTService.js";
 import { initSeleccionarCliente } from "./useSeleccionarCliente.js";
-import { loadViewCSS } from "https://trumanuy.com/ICSoftware/public/app/utils/viewCssManager.js";
+import { loadViewCSS } from "https://impresoscarnelli.com/public/app/utils/viewCssManager.js";
 import { initSeleccionarOTRepetida } from "../hooks/useSeleccionarOTRepetida.js";
 
 let crearOTListenerInicializado = false;
