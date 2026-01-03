@@ -1,4 +1,3 @@
-// components/otRepetidaModal.js
 export function modalSeleccionOTRepetida(otData) {
   const modalContainer = document.getElementById("modal-OTrepetida");
   if (!modalContainer) return;
@@ -13,6 +12,14 @@ export function modalSeleccionOTRepetida(otData) {
         </div>
 
         <div class="ot-modal-body">
+
+          <input
+            type="text"
+            id="buscadorOTRepetida"
+            class="buscador-ot-repetida"
+            placeholder="Buscar por ID, cliente o vendedor..."
+          />
+
           <table>
             <thead>
               <tr>
@@ -24,7 +31,7 @@ export function modalSeleccionOTRepetida(otData) {
                 <th>Archivos</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="tablaOTRepetidaBody">
   `;
 
   otData.forEach(ot => {
@@ -50,4 +57,20 @@ export function modalSeleccionOTRepetida(otData) {
   `;
 
   modalContainer.innerHTML = html;
+
+  activarBuscadorOTRepetida();
+}
+function activarBuscadorOTRepetida() {
+  const input = document.getElementById("buscadorOTRepetida");
+  if (!input) return;
+
+  input.addEventListener("input", () => {
+    const texto = input.value.toLowerCase();
+    const filas = document.querySelectorAll("#tablaOTRepetidaBody tr");
+
+    filas.forEach(fila => {
+      const contenido = fila.innerText.toLowerCase();
+      fila.style.display = contenido.includes(texto) ? "" : "none";
+    });
+  });
 }

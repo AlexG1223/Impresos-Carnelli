@@ -396,3 +396,17 @@
   background: #c7c7c7;
   border-radius: 6px;
 }
+.buscador-ot-repetida {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #d0d5dd;
+  font-size: 14px;
+  outline: none;
+}
+
+.buscador-ot-repetida:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}

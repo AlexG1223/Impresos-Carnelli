@@ -4,7 +4,7 @@ import { initSeleccionarCliente } from "./useSeleccionarCliente.js";
 import { loadViewCSS } from "/ICSoftware/public/app/utils/viewCssManager.js";
 import { initSeleccionarOTRepetida } from "../hooks/useSeleccionarOTRepetida.js";
 
-let crearOTListenerInicializado = false;
+
 
 export async function crearOrdenDeTrabajo() {
   loadViewCSS("sectores/ventas/crearOT/styles/crearOT.css");
@@ -14,36 +14,36 @@ export async function crearOrdenDeTrabajo() {
 
   initSeleccionarCliente();
 
-  if (crearOTListenerInicializado) return;
-  crearOTListenerInicializado = true;
-
-  // OT repetida
   document
     .getElementById("btnSeleccionarOTRepetida")
     .addEventListener("click", () => {
       initSeleccionarOTRepetida();
     });
 
-  section.addEventListener("submit", async (e) => {
-    if (e.target.id !== "crearOTForm") return;
+const form = document.getElementById("crearOTForm");
 
-    e.preventDefault();
+form.onsubmit = async (e) => {
+  e.preventDefault();
 
-    const form = e.target;
-    const formData = new FormData(form);
+  if (form.dataset.enviando === "1") return;
+  form.dataset.enviando = "1";
 
-    // 👉 detectar OT repetida
-    if (form.dataset.esRepetida === "1") {
-      formData.append("es_repeticion", "1");
-    }
+  const formData = new FormData(form);
 
-    const res = await crearOTService(formData);
+  if (form.dataset.esRepetida === "1") {
+    formData.append("es_repeticion", "1");
+  }
 
-    if (res.success) {
-      alert("OT creada correctamente");
-      section.innerHTML = "";
-    } else {
-      alert(res.message || "Error al crear la OT");
-    }
-  });
+  const res = await crearOTService(formData);
+
+  form.dataset.enviando = "0";
+
+  if (res.success) {
+    alert("OT creada correctamente");
+    document.getElementById("section-sh").innerHTML = "";
+  } else {
+    alert(res.message || "Error al crear la OT");
+  }
+};
+
 }

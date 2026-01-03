@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+header("Content-Type: application/json");
+
 if (!isset($_SESSION["user"]["id"])) {
     echo json_encode(["success" => false, "message" => "No autenticado"]);
     exit;
@@ -9,33 +11,33 @@ if (!isset($_SESSION["user"]["id"])) {
 require_once __DIR__ . "/../conexion.php";
 $conexion = conectar_bd();
 
-$id_cliente = (int)($_POST["id_cliente"] ?? 0);
-$fecha_ingreso = $_POST["fecha_ingreso"] ?? null;
+
+$id_cliente     = (int)($_POST["id_cliente"] ?? 0);
+$fecha_ingreso  = $_POST["fecha_ingreso"] ?? null;
 
 if (!$id_cliente || !$fecha_ingreso) {
     echo json_encode(["success" => false, "message" => "Datos incompletos"]);
     exit;
 }
 
+
 $id_vendedor = (int)$_SESSION["user"]["id"];
 
-$detalle_trabajo = $_POST["detalle_trabajo"] ?? null;
-$presupuesto = $_POST["presupuesto"] ?? null;
-$fecha_prometida = $_POST["fecha_prometida"] ?? null;
-$sena = $_POST["sena"] ?? null;
-$cantidad_impresiones = $_POST["cantidad_impresiones"] ?? null;
+$detalle_trabajo        = $_POST["detalle_trabajo"] ?? null;
+$presupuesto            = $_POST["presupuesto"] ?? null;
+$fecha_prometida        = $_POST["fecha_prometida"] ?? null;
+$sena                   = $_POST["sena"] ?? null;
+$cantidad_impresiones   = $_POST["cantidad_impresiones"] ?? null;
 
 $sector_destino = $_POST["sector_destino"] ?? "DISEÑO";
-$es_repeticion = isset($_POST["es_repeticion"]) ? 1 : 0;
-$ot_origen_id = isset($_POST["ot_origen_id"]) ? (int)$_POST["ot_origen_id"] : null;
-
-// Regla de negocio: etapa según repetición
-$etapa = $es_repeticion ? "EN_PRODUCCION" : ($_POST["etapa"] ?? "INGRESADA");
-
 
 $es_repeticion = isset($_POST["es_repeticion"]) ? 1 : 0;
-$ot_origen_id = isset($_POST["ot_origen_id"]) ? (int)$_POST["ot_origen_id"] : null;
+$ot_origen_id  = isset($_POST["ot_origen_id"]) ? (int)$_POST["ot_origen_id"] : null;
 
+
+$etapa = $es_repeticion
+    ? "EN_PRODUCCION"
+    : ($_POST["etapa"] ?? "INGRESADA");
 
 $sql = "
 INSERT INTO ordenes_trabajo
@@ -67,7 +69,7 @@ if (!$stmt->execute()) {
 $id_orden = $stmt->insert_id;
 
 $accion = $es_repeticion
-    ? "Creación de OT repetida (ingresa directamente a Producción desde OT #$ot_origen_id)"
+    ? "Creación de OT repetida (desde OT #$ot_origen_id)"
     : "Creación de OT";
 
 $sqlHistorial = "
@@ -85,6 +87,62 @@ $stmtH->bind_param(
     $sector_destino
 );
 $stmtH->execute();
+
+
+if ($es_repeticion && $ot_origen_id) {
+
+    $sqlArchivosOrigen = "
+        SELECT ruta_archivo, tipo, etapa_origen
+        FROM archivos
+        WHERE id_orden = ?
+    ";
+
+    $stmtOrigen = $conexion->prepare($sqlArchivosOrigen);
+    $stmtOrigen->bind_param("i", $ot_origen_id);
+    $stmtOrigen->execute();
+    $result = $stmtOrigen->get_result();
+
+    if ($result->num_rows > 0) {
+
+        $destinoBase = __DIR__ . "/../../uploads/ordenes/$id_orden/";
+        if (!is_dir($destinoBase)) {
+            mkdir($destinoBase, 0777, true);
+        }
+
+        while ($archivo = $result->fetch_assoc()) {
+
+            $rutaOrigenBD = $archivo["ruta_archivo"];
+            $rutaOrigenFS = __DIR__ . "/../../" . $rutaOrigenBD;
+
+            if (!file_exists($rutaOrigenFS)) continue;
+
+            $extension = pathinfo($rutaOrigenFS, PATHINFO_EXTENSION);
+            $nuevoNombre = uniqid("archivo_") . "." . $extension;
+            $rutaDestinoFS = $destinoBase . $nuevoNombre;
+
+            if (copy($rutaOrigenFS, $rutaDestinoFS)) {
+
+                $rutaDestinoBD = "uploads/ordenes/$id_orden/" . $nuevoNombre;
+
+                $sqlInsertArchivo = "
+                    INSERT INTO archivos
+                    (id_orden, ruta_archivo, tipo, etapa_origen)
+                    VALUES (?, ?, ?, ?)
+                ";
+
+                $stmtInsert = $conexion->prepare($sqlInsertArchivo);
+                $stmtInsert->bind_param(
+                    "isss",
+                    $id_orden,
+                    $rutaDestinoBD,
+                    $archivo["tipo"],
+                    $archivo["etapa_origen"]
+                );
+                $stmtInsert->execute();
+            }
+        }
+    }
+}
 
 if (!empty($_FILES["archivos"]["name"][0])) {
 

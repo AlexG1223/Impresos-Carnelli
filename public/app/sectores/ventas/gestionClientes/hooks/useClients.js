@@ -24,8 +24,21 @@ container.innerHTML = 'Cargando...';
 
   const clients = res.data;
 
-  container.innerHTML = clients.map(ClientCard).join("");
+container.innerHTML = `
+  <div class="clients-header">
+    <input
+      type="text"
+      id="buscadorClientes"
+      class="buscador-clientes"
+      placeholder="Buscar cliente, razón social, RUT o localidad..."
+    />
+  </div>
 
+  <div id="clientsGrid">
+    ${clients.map(ClientCard).join("")}
+  </div>
+`;
+activarBuscadorClientes();
 
   container.addEventListener("click", e => {
     const btn = e.target.closest("button");
@@ -65,4 +78,19 @@ modalContainer.addEventListener("click", async e => {
     }
   }
 });
+}
+
+function activarBuscadorClientes() {
+  const input = document.getElementById("buscadorClientes");
+  if (!input) return;
+
+  input.addEventListener("input", () => {
+    const texto = input.value.toLowerCase();
+    const cards = document.querySelectorAll("#clientsGrid .client-card");
+
+    cards.forEach(card => {
+      const contenido = card.innerText.toLowerCase();
+      card.style.display = contenido.includes(texto) ? "" : "none";
+    });
+  });
 }
