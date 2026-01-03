@@ -8,7 +8,6 @@ export async function generarReporteImpresiones(fechaInicio, fechaFin) {
     },
      body: JSON.stringify({ fechaInicio, fechaFin }) 
   });
-  console.log("generarReporteImpresiones res:", res.data);
   return await res.json();
 
 }

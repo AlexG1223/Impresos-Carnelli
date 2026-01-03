@@ -1,4 +1,4 @@
-// hooks/useOTsVendedor.js
+
 import { getTodasOTs } from "../../../administracion/OTs/services/getTodasOTsService.js";
 import { ModalDetalleOT } from "../../../administracion/OTs/components/ModalDetalleOT.js";
 import {
@@ -7,6 +7,10 @@ import {
 } from "../components/TablaOTsVendedor.js";
 import { deleteOT } from "../services/deleteOTService.js";
 import { loadViewCSS } from "/ICSoftware/public/app/utils/viewCssManager.js";
+
+import { FormularioEditarOT } from "../components/FormularioEditarOT.js";
+import { editarOTService } from "../services/editarOTService.js"; 
+import { getOTService } from "../services/getOTService.js";
 
 export async function useOTsVendedor() {
   loadViewCSS("sectores/ventas/OTs/styles/otsVendedor.css");
@@ -23,12 +27,11 @@ export async function useOTsVendedor() {
   }
 
   const ots = res.data;
-  console.log("OTs del vendedor:", ots);
 
   container.innerHTML = TablaOTsVendedor(ots);
   activarBuscadorOTsVendedor();
 
-  container.addEventListener("click", e => {
+  container.addEventListener("click", async (e) => {
     const btn = e.target.closest("button");
     if (!btn) return;
 
@@ -36,49 +39,79 @@ export async function useOTsVendedor() {
     const idOT = Number(fila.dataset.id);
     const accion = btn.dataset.action;
 
-    const ot = ots.find(o => Number(o.id_ot) === idOT);
+    const ot = ots.find((o) => Number(o.id_ot) === idOT);
     if (!ot) return;
 
     switch (accion) {
-  case "view":
-  document.body.insertAdjacentHTML(
-    "beforeend",
-    ModalDetalleOT(ot)
-  );
+      case "view":
+        document.body.insertAdjacentHTML("beforeend", ModalDetalleOT(ot));
 
-  document
-    .getElementById("cerrarModalOT")
-    ?.addEventListener("click", cerrarModalOT);
+        document
+          .getElementById("cerrarModalOT")
+          ?.addEventListener("click", cerrarModalOT);
 
-  document
-    .getElementById("modalDetalleOT")
-    ?.addEventListener("click", e => {
-      if (e.target.id === "modalDetalleOT") cerrarModalOT();
-    });
-  break;
-
+        document
+          .getElementById("modalDetalleOT")
+          ?.addEventListener("click", (e) => {
+            if (e.target.id === "modalDetalleOT") cerrarModalOT();
+          });
+        break;
 
       case "edit":
-        console.log("Editar OT", ot);
+     const container = document.getElementById("section-sh");
+  if (!container) return;
+
+
+  const modalContainer = document.createElement("div");
+  modalContainer.id = "modal-container";
+  container.appendChild(modalContainer); 
+
+  const dataOT = await getOTService(ot.id_ot);
+  console.log("Datos OT para editar:", dataOT);
+
+  modalContainer.innerHTML = FormularioEditarOT(ot);
+
+  modalContainer.classList.add("modal-container");
+/*
+  modalContainer.addEventListener("click", (e) => {
+    if (e.target === modalContainer) {
+      cerrarModalOT();
+    }
+  });
+
+        const form = document.getElementById("editarOTForm");
+
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const formData = new FormData(form);
+          const res = await editarOTService(formData);
+
+          if (res.success) {
+            alert("OT actualizada correctamente");
+            modalContainer.innerHTML = "";
+          } else {
+            alert(res.message || "Error al actualizar la OT");
+          }
+        });
+*/
         break;
 
       case "delete":
-case "delete":
-  if (!confirm(`¿Eliminar OT #${idOT}?`)) return;
+        if (!confirm(`¿Eliminar OT #${idOT}?`)) return;
 
-  deleteOT(idOT).then(res => {
-    if (!res.success) {
-      alert(res.message || "Error al eliminar la OT");
-      return;
-    }
-    fila.remove();
-    const index = ots.findIndex(o => Number(o.id_ot) === idOT);
-    if (index !== -1) ots.splice(index, 1);
+        deleteOT(idOT).then((res) => {
+          if (!res.success) {
+            alert(res.message || "Error al eliminar la OT");
+            return;
+          }
 
-    alert("OT eliminada correctamente");
-  });
+          fila.remove();
+          const index = ots.findIndex((o) => Number(o.id_ot) === idOT);
+          if (index !== -1) ots.splice(index, 1);
 
-  break;
+          alert("OT eliminada correctamente");
+        });
 
         break;
     }

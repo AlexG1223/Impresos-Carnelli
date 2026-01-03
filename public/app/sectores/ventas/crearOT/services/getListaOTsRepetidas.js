@@ -14,7 +14,6 @@ try {
       throw new Error("Error en la petición");
     }
     const data = await res.json();
-    console.log("getListaOTsRepetidas data:", data);
     return data;
 
   } catch (error) {

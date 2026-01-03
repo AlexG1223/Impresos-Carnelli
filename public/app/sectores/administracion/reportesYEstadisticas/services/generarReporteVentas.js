@@ -8,7 +8,6 @@ export async function generarReporteVentas(fechaInicio, fechaFin) {
     },
      body: JSON.stringify({ fechaInicio, fechaFin }) 
   });
-  console.log("generarReporteVentas res:", res.data);
   return await res.json();
 
 }

@@ -52,7 +52,6 @@ document.getElementById("reporteResultado").innerHTML = "<p>Generando reporte...
         document.getElementById("reporteResultado").innerHTML = "<p>Error al generar el reporte.</p>";
         return;
       }
-      console.log("res.data ventas:", res.data);
       reporteVentasComponent(fechaInicio, fechaFin, res.data);
 
     }

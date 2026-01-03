@@ -87,9 +87,6 @@ function cargarOTRepetidaEnFormulario(data) {
 
   document.getElementById("ot_origen_id").value = orden_trabajo.id;
 
-  if (archivos.length > 0) {
-    console.log("Archivos heredados de OT:", archivos);
 
-  }
 
 }
