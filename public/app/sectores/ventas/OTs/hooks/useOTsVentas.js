@@ -11,7 +11,6 @@ import { loadViewCSS } from "/ICSoftware/public/app/utils/viewCssManager.js";
 import { FormularioEditarOT } from "../components/FormularioEditarOT.js";
 import { editarOTService } from "../services/editarOTService.js"; 
 import { getOTService } from "../services/getOTService.js";
-
 export async function useOTsVendedor() {
   loadViewCSS("sectores/ventas/OTs/styles/otsVendedor.css");
 
@@ -58,29 +57,12 @@ export async function useOTsVendedor() {
         break;
 
       case "edit":
-     const container = document.getElementById("section-sh");
-  if (!container) return;
+         const dataOT = await getOTService(ot.id_ot);
+       container.innerHTML = "cargando formulario de edición...";
+       container.innerHTML = FormularioEditarOT(dataOT)
 
-
-  const modalContainer = document.createElement("div");
-  modalContainer.id = "modal-container";
-  container.appendChild(modalContainer); 
-
-  const dataOT = await getOTService(ot.id_ot);
-  console.log("Datos OT para editar:", dataOT);
-
-  modalContainer.innerHTML = FormularioEditarOT(ot);
-
-  modalContainer.classList.add("modal-container");
-/*
-  modalContainer.addEventListener("click", (e) => {
-    if (e.target === modalContainer) {
-      cerrarModalOT();
-    }
-  });
 
         const form = document.getElementById("editarOTForm");
-
         form.addEventListener("submit", async (e) => {
           e.preventDefault();
 
@@ -89,12 +71,13 @@ export async function useOTsVendedor() {
 
           if (res.success) {
             alert("OT actualizada correctamente");
-            modalContainer.innerHTML = "";
+            container.innerHTML = ""; 
+            container.innerHTML = TablaOTsVendedor(ots);
           } else {
             alert(res.message || "Error al actualizar la OT");
           }
         });
-*/
+
         break;
 
       case "delete":
@@ -110,7 +93,6 @@ export async function useOTsVendedor() {
           const index = ots.findIndex((o) => Number(o.id_ot) === idOT);
           if (index !== -1) ots.splice(index, 1);
 
-          alert("OT eliminada correctamente");
         });
 
         break;

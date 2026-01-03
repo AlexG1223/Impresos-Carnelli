@@ -1,7 +1,7 @@
 export function FormularioEditarOT(ot) {
   return `
     <h2>Editar Orden de Trabajo</h2>
-    <form id="editarOTForm" enctype="multipart/form-data">
+    <form id="editarOTForm" class="form" enctype="multipart/form-data">
       <label>Cliente *</label>
       <input type="text" id="clienteNombre" value="${ot.cliente_nombre}" readonly required />
 
@@ -12,7 +12,7 @@ export function FormularioEditarOT(ot) {
       <input name="presupuesto" type="number" step="0.01" value="${ot.presupuesto}" />
 
       <label>Fecha de Ingreso *</label>
-      <input name="fecha_ingreso" type="date" value="${ot.fecha_ingreso}" required />
+      <input name="fecha_ingreso" type="datetime" value="${ot.fecha_ingreso}" required />
 
       <label>Fecha Prometida</label>
       <input name="fecha_prometida" type="date" value="${ot.fecha_prometida}" />
@@ -26,11 +26,11 @@ export function FormularioEditarOT(ot) {
       <label>Cantidad de Impresiones</label>
       <input name="cantidad_impresiones" type="number" value="${ot.cantidad_impresiones}" />
 
-      <label>Sector Destino</label>
-      <input name="sector_destino" type="text" value="${ot.sector_destino}" />
-
-      <label>Etapa</label>
-      <input name="etapa" type="text" value="${ot.etapa}" />
+ <label>Sector Destino</label>
+      <select name="sector_destino" required>
+        <option value="OFFSET" ${ot.sector_destino === "OFFSET" ? "selected" : ""}>OFFSET</option>
+        <option value="SERIGRAFIA" ${ot.sector_destino === "SERIGRAFIA" ? "selected" : ""}>SERIGRAFIA</option>
+      </select>
 
       <div class="ot-actions">
         <button type="submit">Actualizar OT</button>

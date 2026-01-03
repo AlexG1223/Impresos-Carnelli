@@ -46,6 +46,7 @@ export function TablaOTsVendedor(ots) {
         </tbody>
       </table>
     </div>
+    <div id="modalEditarOT" "></div>
   `;
 }
 

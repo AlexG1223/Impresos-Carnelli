@@ -1,20 +1,23 @@
-// services/editarOTService.js
-
 export async function editarOTService(formData) {
   try {
-    const response = await fetch("", {
-      method: "POST",
+    console.log('Enviando datos de OT para editar:', Array.from(formData.entries()));
+    const response = await fetch('/ICSoftware/public/api/ordenes_trabajo/edit.php', {
+      method: 'POST',
       body: formData
     });
+    if (!response.ok) {
+      return { success: false, message: 'Error al contactar el servidor' };
+    }
 
     const data = await response.json();
 
-    if (!response.ok || !data.success) {
-      throw new Error(data.message || "Error al editar la OT");
+    if (data.success) {
+      return { success: true };
+    } else {
+      return { success: false, message: data.message };
     }
-
-    return { success: true, message: "OT actualizada correctamente" };
   } catch (error) {
-    return { success: false, message: error.message };
+    console.error('Error en la solicitud:', error);
+    return { success: false, message: 'Error de conexión o servidor' };
   }
 }
