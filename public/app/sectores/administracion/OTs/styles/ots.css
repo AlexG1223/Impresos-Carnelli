@@ -208,3 +208,33 @@
     transform: scale(1);
   }
 }
+
+.tabla-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
+
+.buscador-ots {
+  width: 280px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #d0d5dd;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease;
+  background-color: #fff;
+}
+
+.buscador-ots:hover {
+  border-color: #a0a7b0;
+}
+
+.buscador-ots:focus {
+  border-color: #2563eb; 
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+.buscador-ots::placeholder {
+  color: #9ca3af;
+}

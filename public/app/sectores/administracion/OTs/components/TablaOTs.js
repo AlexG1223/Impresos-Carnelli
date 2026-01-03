@@ -1,6 +1,16 @@
 export function TablaOTs(ots) {
   return `
     <div class="tabla-ots">
+
+      <div class="tabla-header">
+        <input
+          type="text"
+          id="buscadorOTs"
+          placeholder="Buscar OT, cliente, vendedor o estado..."
+          class="buscador-ots"
+        />
+      </div>
+
       <table>
         <thead>
           <tr>
@@ -13,7 +23,7 @@ export function TablaOTs(ots) {
             <th>Acciones</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="tablaOTsBody">
           ${ots.map(ot => `
             <tr>
               <td>${ot.id_ot}</td>
@@ -56,3 +66,18 @@ function getEstadoClass(estado) {
       return 'badge-default';
   }
 }
+export function activarBuscadorOTs() {
+  const input = document.getElementById('buscadorOTs');
+  if (!input) return;
+
+  input.addEventListener('keyup', () => {
+    const texto = input.value.toLowerCase();
+    const filas = document.querySelectorAll('#tablaOTsBody tr');
+
+    filas.forEach(fila => {
+      const contenido = fila.innerText.toLowerCase();
+      fila.style.display = contenido.includes(texto) ? '' : 'none';
+    });
+  });
+}
+

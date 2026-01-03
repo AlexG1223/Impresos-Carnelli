@@ -41,20 +41,21 @@ administracion: {
 
   serigrafia: {
     pc: `
-    
-    <a data-action="Serigrafia">Producción Serigrafia</a>`,
+    <a data-action="Serigrafia">Producción Serigrafia</a>
+    <a data-action="ots">Ver Ordenes</a>`,
     mobile: `
+    <a data-action="Serigrafia">Producción Serigrafia</a>
+     <a data-action="ots">Ver Ordenes</a>`
     
-    <a data-action="Serigrafia">Producción Serigrafia</a>`
   },
 
   offset: {
-    pc: `
-    
-    <a data-action="Offset">Producción Offset</a>`,
-    mobile: `
-    
-    <a data-action="Offset">Producción Offset</a>`
+    pc: ` 
+    <a data-action="Offset">Producción Offset</a>
+    <a data-action="ots">Ver Ordenes</a>`,
+    mobile: `    
+    <a data-action="Offset">Producción Offset</a>
+    <a data-action="ots">Ver Ordenes</a>`
   },
 
   expedicion: {
