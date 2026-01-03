@@ -24,11 +24,13 @@ administracion: {
     
     <a data-action="crearOT">Crear Orden de Trabajo</a>
     <a data-action="clientes">Clientes</a>
+    <a data-action="otsVentas">Ver Ordenes</a>
     `,
     mobile: `
     
     <a data-action="crearOT">Crear Orden de Trabajo</a>
     <a data-action="clientes">Clientes</a>
+    <a data-action="otsVentas">Ver Ordenes</a>
     `
   },
 
