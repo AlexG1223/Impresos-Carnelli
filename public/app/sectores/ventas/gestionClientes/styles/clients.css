@@ -31,6 +31,7 @@
   box-shadow: 0 8px 20px rgba(0,0,0,0.05);
   display: flex;
   flex-direction: column;
+  margin: 3px;
   gap: 16px;
 }
 
@@ -216,7 +217,7 @@
 }
 .clients-header {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   margin-bottom: 16px;
 }
 
