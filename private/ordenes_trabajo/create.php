@@ -91,6 +91,38 @@ $stmtH->execute();
 
 if ($es_repeticion && $ot_origen_id) {
 
+    $sqlDetalleProduccion = "
+        SELECT especificaciones_tecnicas, sector_responsable
+        FROM detalle_produccion
+        WHERE id_orden = ?
+    ";
+
+    $stmtDetalle = $conexion->prepare($sqlDetalleProduccion);
+    $stmtDetalle->bind_param("i", $ot_origen_id);
+    $stmtDetalle->execute();
+    $resultDetalle = $stmtDetalle->get_result();
+
+    if ($resultDetalle->num_rows > 0) {
+        $detalle = $resultDetalle->fetch_assoc();
+        $especificaciones_tecnicas = $detalle["especificaciones_tecnicas"];
+        $sector_responsable = $detalle["sector_responsable"];
+
+        $sqlInsertDetalleProduccion = "
+            INSERT INTO detalle_produccion
+            (id_orden, especificaciones_tecnicas, sector_responsable)
+            VALUES (?, ?, ?)
+        ";
+
+        $stmtInsertDetalle = $conexion->prepare($sqlInsertDetalleProduccion);
+        $stmtInsertDetalle->bind_param(
+            "iss",
+            $id_orden,
+            $especificaciones_tecnicas,
+            $sector_responsable
+        );
+        $stmtInsertDetalle->execute();
+    }
+
     $sqlArchivosOrigen = "
         SELECT ruta_archivo, tipo, etapa_origen
         FROM archivos
@@ -103,14 +135,12 @@ if ($es_repeticion && $ot_origen_id) {
     $result = $stmtOrigen->get_result();
 
     if ($result->num_rows > 0) {
-
         $destinoBase = __DIR__ . "/../../uploads/ordenes/$id_orden/";
         if (!is_dir($destinoBase)) {
             mkdir($destinoBase, 0777, true);
         }
 
         while ($archivo = $result->fetch_assoc()) {
-
             $rutaOrigenBD = $archivo["ruta_archivo"];
             $rutaOrigenFS = __DIR__ . "/../../" . $rutaOrigenBD;
 
@@ -121,7 +151,6 @@ if ($es_repeticion && $ot_origen_id) {
             $rutaDestinoFS = $destinoBase . $nuevoNombre;
 
             if (copy($rutaOrigenFS, $rutaDestinoFS)) {
-
                 $rutaDestinoBD = "uploads/ordenes/$id_orden/" . $nuevoNombre;
 
                 $sqlInsertArchivo = "
@@ -143,6 +172,7 @@ if ($es_repeticion && $ot_origen_id) {
         }
     }
 }
+
 
 if (!empty($_FILES["archivos"]["name"][0])) {
 

@@ -14,9 +14,11 @@ import { getOTService } from "../services/getOTService.js";
 export async function useOTsVendedor() {
   loadViewCSS("sectores/ventas/OTs/styles/otsVendedor.css");
 
-  const container = document.getElementById("section-sh");
-  if (!container) return;
+const oldContainer = document.getElementById("section-sh");
+  if (!oldContainer) return;
 
+  const container = oldContainer.cloneNode(false); 
+  oldContainer.parentNode.replaceChild(container, oldContainer);
   container.innerHTML = "Cargando OTs...";
 
   const res = await getTodasOTs();

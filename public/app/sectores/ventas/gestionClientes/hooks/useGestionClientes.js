@@ -16,6 +16,15 @@ root.innerHTML ='';
         <h1>Gestión de Clientes</h1>
       </div>
 
+       <div class="clients-header">
+    <input
+      type="text"
+      id="buscadorClientes"
+      class="buscador-clientes"
+      placeholder="Buscar cliente, razón social, RUT o localidad..."
+    />
+  </div>
+
       <button id="btnNewClient" class="btn-primary">
         + Crear Nuevo Cliente
       </button>

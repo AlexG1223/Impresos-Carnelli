@@ -25,14 +25,6 @@ container.innerHTML = 'Cargando...';
   const clients = res.data;
 
 container.innerHTML = `
-  <div class="clients-header">
-    <input
-      type="text"
-      id="buscadorClientes"
-      class="buscador-clientes"
-      placeholder="Buscar cliente, razón social, RUT o localidad..."
-    />
-  </div>
 
   <div id="clientsGrid">
     ${clients.map(ClientCard).join("")}
