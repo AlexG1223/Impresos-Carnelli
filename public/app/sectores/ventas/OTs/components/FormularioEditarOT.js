@@ -26,11 +26,17 @@ export function FormularioEditarOT(ot) {
       <label>Cantidad de Impresiones</label>
       <input name="cantidad_impresiones" type="number" value="${ot.cantidad_impresiones}" />
 
- <label>Sector Destino</label>
+      <label>Sector Destino</label>
       <select name="sector_destino" required>
         <option value="OFFSET" ${ot.sector_destino === "OFFSET" ? "selected" : ""}>OFFSET</option>
         <option value="SERIGRAFIA" ${ot.sector_destino === "SERIGRAFIA" ? "selected" : ""}>SERIGRAFIA</option>
       </select>
+
+      <label>
+        <input type="checkbox" name="total_pago" ${ot.total_pago ? "checked" : ""} />
+        Pagada en su totalidad
+      </label>
+      
 
       <div class="ot-actions">
         <button type="submit">Actualizar OT</button>

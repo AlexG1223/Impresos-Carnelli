@@ -6,7 +6,7 @@ export async function getOTService(id_ot) {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ id_ot }) // Aquí estamos pasando el id_ot como JSON
+      body: JSON.stringify({ id_ot })
     });
 
     const data = await response.json();
@@ -15,7 +15,7 @@ export async function getOTService(id_ot) {
       throw new Error(data.message);
     }
 
-    return data.data;  // Devuelve los datos de la OT
+    return data.data;  
 
   } catch (error) {
     console.error("Error al obtener los datos de la OT:", error);
