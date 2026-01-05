@@ -17,17 +17,20 @@ if (!$fechaInicio || !$fechaFin) {
 
 try {
 
+    // Obtener las órdenes de trabajo
     $sql = "
         SELECT 
             ot.id,
             ot.fecha_ingreso,
             ot.presupuesto,
-            de.fecha_lista_entrega
+            de.fecha_lista_entrega,
+            ot.id_vendedor
         FROM ordenes_trabajo ot
         INNER JOIN detalle_expedicion de 
             ON de.id_orden = ot.id
         WHERE ot.fecha_ingreso BETWEEN ? AND ?
           AND de.fecha_lista_entrega IS NOT NULL
+          AND ot.total_pago = 1
         ORDER BY ot.fecha_ingreso ASC
     ";
 
@@ -39,10 +42,18 @@ try {
 
     $ordenes = [];
     $totalVentas = 0;
+    $ventasPorVendedor = [];
 
     while ($row = $result->fetch_assoc()) {
         $presupuesto = (float)$row["presupuesto"];
         $totalVentas += $presupuesto;
+
+        // Acumular ventas por vendedor
+        $idVendedor = $row["id_vendedor"];
+        if (!isset($ventasPorVendedor[$idVendedor])) {
+            $ventasPorVendedor[$idVendedor] = 0;
+        }
+        $ventasPorVendedor[$idVendedor] += $presupuesto;
 
         $ordenes[] = [
             "id" => (int)$row["id"],
@@ -52,11 +63,30 @@ try {
         ];
     }
 
+    // Obtener el nombre de los vendedores
+    $vendedores = [];
+    foreach ($ventasPorVendedor as $idVendedor => $totalVendedor) {
+        $sqlVendedor = "SELECT nombre FROM usuarios WHERE id = ?";
+        $stmtVendedor = $conexion->prepare($sqlVendedor);
+        $stmtVendedor->bind_param("i", $idVendedor);
+        $stmtVendedor->execute();
+        $resultVendedor = $stmtVendedor->get_result();
+        $vendedor = $resultVendedor->fetch_assoc();
+        
+        if ($vendedor) {
+            $vendedores[] = [
+                "nombre" => $vendedor['nombre'],
+                "totalVentas" => $totalVendedor
+            ];
+        }
+    }
+
     echo json_encode([
         "success" => true,
         "data" => [
             "totalVentas" => $totalVentas,
-            "ordenes" => $ordenes
+            "ordenes" => $ordenes,
+            "ventasPorVendedor" => $vendedores
         ]
     ]);
     exit;

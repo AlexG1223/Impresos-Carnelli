@@ -4,7 +4,6 @@ import { generarReporteImpresiones } from "../services/generarReporteImpresiones
 import { reporteImpresionesComponent } from "../components/reporteImpresionesComponent.js";
 import { generarReporteVentas } from "../services/generarReporteVentas.js";
 import { reporteVentasComponent } from "../components/reportesVentasComponent.js";
-//import { generarReporteComision } from "../services/generarReporteComision.js";
 
 export async function useReportes() {
   loadViewCSS("sectores/administracion/reportesYEstadisticas/styles/reportes.css");

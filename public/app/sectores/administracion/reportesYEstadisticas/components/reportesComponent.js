@@ -13,7 +13,6 @@ container.innerHTML = `<h2>Reportes y Estadísticas</h2>
     <select id="tipoReporte" name="tipoReporte">
       <option value="impresiones">Impresiones</option>
       <option value="ventas">Ventas</option>
-      <option value="comision">Comisiones</option>
     </select>
   </div>
 

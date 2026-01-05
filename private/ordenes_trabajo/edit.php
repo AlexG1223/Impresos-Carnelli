@@ -16,6 +16,8 @@ $sena = $_POST['sena'] ?? 0;
 $cantidad_impresiones = $_POST['cantidad_impresiones'] ?? 0;
 $sector_destino = $_POST['sector_destino'];
 
+$total_pago = isset($_POST['total_pago']) && $_POST['total_pago'] === 'on' ? 1 : 0;
+
 if ($sector_destino !== 'OFFSET' && $sector_destino !== 'SERIGRAFIA') {
     echo json_encode(["success" => false, "message" => "Sector destino no válido"]);
     exit;
@@ -28,12 +30,13 @@ $sql = "UPDATE ordenes_trabajo SET
             detalle_trabajo = ?, 
             sena = ?, 
             cantidad_impresiones = ?, 
-            sector_destino = ? 
+            sector_destino = ?, 
+            total_pago = ?  
         WHERE id = ?";
 
 $stmt = $conexion->prepare($sql);
 $stmt->bind_param(
-    "dssssdsi", 
+    "dssssdsii", 
     $presupuesto, 
     $fecha_ingreso, 
     $fecha_prometida, 
@@ -41,6 +44,7 @@ $stmt->bind_param(
     $sena, 
     $cantidad_impresiones, 
     $sector_destino, 
+    $total_pago,  
     $id_ot
 );
 

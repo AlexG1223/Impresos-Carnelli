@@ -2,6 +2,7 @@
   background: #fff;
   border-radius: 10px;
   padding: 20px;
+  overflow-x: auto;
 }
 
 .tabla-header {
@@ -15,12 +16,13 @@
   width: 280px;
   border-radius: 6px;
   border: 1px solid #ccc;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
 th {
@@ -28,12 +30,14 @@ th {
   text-align: left;
   padding: 10px;
   font-size: 13px;
+  word-wrap: break-word;
 }
 
 td {
   padding: 10px;
   border-bottom: 1px solid #e5e7eb;
-  font-size: 14px;
+  font-size: 16px;
+  word-wrap: break-word;
 }
 
 .acciones {
@@ -256,4 +260,30 @@ td {
 
 .form button:hover {
   background-color: #45a049;
+}
+
+@media (max-width: 768px) {
+  .tabla-ots {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    width: 100%;
+    table-layout: auto; 
+  }
+
+  th, td {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .acciones {
+    flex-direction: column; 
+  }
+
+  .acciones button {
+    width: 100%; 
+    margin-bottom: 5px; 
+  }
 }

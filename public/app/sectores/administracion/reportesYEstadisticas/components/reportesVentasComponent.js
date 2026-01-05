@@ -19,6 +19,21 @@ export function reporteVentasComponent(fechaInicio, fechaFin, data) {
         </tr>
       `;
 
+  const ventasPorVendedor = data.ventasPorVendedor && data.ventasPorVendedor.length
+    ? data.ventasPorVendedor.map(vendedor => `
+        <tr>
+          <td>${vendedor.nombre}</td>
+          <td>$ ${Number(vendedor.totalVentas).toFixed(2)}</td>
+        </tr>
+      `).join("")
+    : `
+        <tr>
+          <td colspan="2" class="sin-datos">
+            No hay ventas por vendedor
+          </td>
+        </tr>
+      `;
+
   container.innerHTML = `
     <div class="reporte-ventas">
 
@@ -33,6 +48,22 @@ export function reporteVentasComponent(fechaInicio, fechaFin, data) {
       </div>
 
       <div class="reporte-tabla">
+        <h4>Ventas por Vendedor</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Vendedor</th>
+              <th>Total Ventas</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${ventasPorVendedor}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="reporte-tabla">
+        <h4>Órdenes de Trabajo</h4>
         <table>
           <thead>
             <tr>

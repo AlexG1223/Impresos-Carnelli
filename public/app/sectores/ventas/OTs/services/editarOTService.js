@@ -1,6 +1,5 @@
 export async function editarOTService(formData) {
   try {
-    console.log('Enviando datos de OT para editar:', Array.from(formData.entries()));
     const response = await fetch('/ICSoftware/public/api/ordenes_trabajo/edit.php', {
       method: 'POST',
       body: formData
