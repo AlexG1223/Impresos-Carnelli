@@ -1,4 +1,5 @@
 export function ModalDetalleOT(ot) {
+  console.log(ot);
   return `
     <div class="modal-overlay" id="modalDetalleOT">
       <div class="modal-card">
@@ -29,6 +30,16 @@ export function ModalDetalleOT(ot) {
               <span class="label">Fecha Prometida</span>
               <p>${ot.fecha_prometida}</p>
             </div>
+
+<div>
+  <span class="label">Detalle del Trabajo</span>
+  <p>
+    ${ot.detalle_trabajo?.trim()
+      ? ot.detalle_trabajo
+      : "No hay detalles en este trabajo"}
+  </p>
+</div>
+
 
             <div>
               <span class="label">Estado</span>

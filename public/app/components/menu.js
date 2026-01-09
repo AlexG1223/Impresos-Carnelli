@@ -36,9 +36,11 @@ administracion: {
 
   diseño: {
     pc: `
-          <a data-action="OTPendientesDisenio">Trabajos Pendientes</a>`,
+          <a data-action="OTPendientesDisenio">Trabajos Pendientes</a>
+          <a data-action="ots">Ver Ordenes</a>`,
     mobile: `
-          <a data-action="OTPendientesDisenio">Trabajos Pendientes</a>`
+          <a data-action="OTPendientesDisenio">Trabajos Pendientes</a>
+          <a data-action="ots">Ver Ordenes</a>`
   },
 
   serigrafia: {
@@ -63,10 +65,13 @@ administracion: {
   expedicion: {
     pc: `
     
-    <a data-action="expedicion">Trabajos Finalizados</a>`,
+    <a data-action="expedicion">Trabajos Finalizados</a>
+       <a data-action="ots">Ver Ordenes</a>`,
+    
     mobile: `
     
-    <a data-action="expedicion">Trabajos Finalizados</a>`
+    <a data-action="expedicion">Trabajos Finalizados</a>
+       <a data-action="ots">Ver Ordenes</a>`
   }
 };
 

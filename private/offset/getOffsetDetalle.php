@@ -19,6 +19,8 @@ $conexion = conectar_bd();
 $sql = "
 SELECT 
   ot.id AS ot_id,
+  ot.detalle_trabajo,
+  ot.cantidad_impresiones,
   c.nombre_empresa,
   dp.fecha_inicio_trabajo,
   dp.especificaciones_tecnicas

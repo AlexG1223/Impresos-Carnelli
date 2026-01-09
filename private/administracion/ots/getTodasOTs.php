@@ -5,18 +5,12 @@ header('Content-Type: application/json');
 require_once __DIR__ . '/../../conexion.php';
 $conexion = conectar_bd();
 
-/* ===== Seguridad ===== */
 if (!isset($_SESSION['user'])) {
     echo json_encode(['success' => false, 'message' => 'No autenticado']);
     exit;
 }
 
-if ($_SESSION['user']['rol'] !== 'Administrador') {
-    echo json_encode(['success' => false, 'message' => 'Acceso denegado']);
-    exit;
-}
 
-/* ===== Query ===== */
 $sql = "
     SELECT
         ot.id AS id_ot,
@@ -24,6 +18,7 @@ $sql = "
         u.nombre AS vendedor,
         DATE(ot.fecha_ingreso) AS fecha_ingreso,
         ot.fecha_prometida,
+        ot.detalle_trabajo,
 
         CASE
             WHEN ot.etapa IN ('PRODUCCION', 'EN_PRODUCCION') THEN ot.sector_destino
@@ -48,7 +43,6 @@ if (!$result) {
     exit;
 }
 
-/* ===== Armado estructurado ===== */
 $ots = [];
 
 while ($row = mysqli_fetch_assoc($result)) {
@@ -56,15 +50,17 @@ while ($row = mysqli_fetch_assoc($result)) {
     $idOT = $row['id_ot'];
 
     if (!isset($ots[$idOT])) {
-        $ots[$idOT] = [
-            'id_ot' => $row['id_ot'],
-            'cliente' => $row['cliente'],
-            'vendedor' => $row['vendedor'],
-            'fecha_ingreso' => $row['fecha_ingreso'],
-            'fecha_prometida' => $row['fecha_prometida'],
-            'estado' => $row['estado'],
-            'archivos' => []
-        ];
+       $ots[$idOT] = [
+    'id_ot' => $row['id_ot'],
+    'cliente' => $row['cliente'],
+    'vendedor' => $row['vendedor'],
+    'fecha_ingreso' => $row['fecha_ingreso'],
+    'fecha_prometida' => $row['fecha_prometida'],
+    'estado' => $row['estado'],
+    'detalle_trabajo' => $row['detalle_trabajo'],
+    'archivos' => []
+];
+
     }
 
     if ($row['archivo_id']) {
