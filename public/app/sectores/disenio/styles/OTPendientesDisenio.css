@@ -366,6 +366,23 @@
   gap: 16px;
   font-size: 14px;
 }
+/* Detalle del trabajo ocupa todo el ancho */
+.modal-info > div:has(.detalle-texto) {
+  grid-column: 1 / -1;
+}
+
+.detalle-texto {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #374151;
+  white-space: pre-wrap;
+}
+
 
 .modal-info strong {
   display: block;

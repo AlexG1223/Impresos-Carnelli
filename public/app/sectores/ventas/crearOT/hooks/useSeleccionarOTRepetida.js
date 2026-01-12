@@ -66,6 +66,8 @@ function cargarOTRepetidaEnFormulario(data) {
 
   document.getElementById("btnSeleccionarCliente").disabled = true;
 
+  form.querySelector('[name="direccion_entrega"]').value =
+    orden_trabajo.direccion_entrega || "";
 
   form.querySelector('[name="detalle_trabajo"]').value =
     orden_trabajo.detalle_trabajo || "";

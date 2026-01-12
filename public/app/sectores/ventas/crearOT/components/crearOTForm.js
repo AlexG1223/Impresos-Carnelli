@@ -39,6 +39,10 @@ export function crearOTForm() {
       <label>Detalle del Trabajo</label>
       <textarea name="detalle_trabajo"></textarea>
 
+      <label>Dirección de Entrega</label>
+      <input name="direccion_entrega" type="text" />
+
+
       <label>Seña</label>
       <input name="sena" type="number" step="0.01" />
 

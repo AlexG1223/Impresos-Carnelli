@@ -23,6 +23,20 @@ export function expedicionModal(detalle) {
             <label>Fecha Prometida</label>
             <p>${detalle.fecha_prometida || "-"}</p>
           </div>
+          <div>
+          <label>Dirección Final</label>
+            <p>${detalle.direccion_entrega || "-"}</p>
+          </div>
+          <div>
+          <label>Detalle del Trabajo</label>
+            <p>${detalle.detalle_trabajo || "-"}</p>
+          </div>
+
+          <div>
+          <label>Cantidad de Impresiones</label>
+            <p>${detalle.cantidad_impresiones || "-"}</p>
+          </div>
+
         </div>
 
         <!-- FORM -->
@@ -35,11 +49,7 @@ export function expedicionModal(detalle) {
             <option value="RETIRO" ${detalle.metodo_envio === "RETIRO" ? "selected" : ""}>Retiro</option>
           </select>
 
-          <label>Dirección Final</label>
-          <textarea
-            id="direccion_entrega_final"
-            placeholder="Dirección completa de envío..."
-          >${detalle.direccion_entrega_final || ""}</textarea>
+
 
           <label>Estado de Embalaje</label>
           <select id="estado_embalaje">

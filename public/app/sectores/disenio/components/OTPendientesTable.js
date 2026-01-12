@@ -1,4 +1,5 @@
 import { OTPendienteRow } from "./OTPendienteRow.js";
+
 export function OTPendientesTable(ordenes) {
   return `
     <div class="ot-pendientes">
@@ -20,7 +21,13 @@ export function OTPendientesTable(ordenes) {
             </tr>
           </thead>
           <tbody>
-            ${ordenes.map(OTPendienteRow).join("")}
+            ${
+              ordenes.length === 0
+                ? `<tr>
+                    <td colspan="7">No hay órdenes pendientes de diseño.</td>
+                  </tr>`
+                : ordenes.map(OTPendienteRow).join("")
+            }
           </tbody>
         </table>
       </div>

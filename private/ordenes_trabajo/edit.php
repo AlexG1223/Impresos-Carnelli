@@ -15,6 +15,7 @@ $detalle_trabajo = $_POST['detalle_trabajo'] ?? '';
 $sena = $_POST['sena'] ?? 0;
 $cantidad_impresiones = $_POST['cantidad_impresiones'] ?? 0;
 $sector_destino = $_POST['sector_destino'];
+$direccion_entrega = $_POST['direccion_entrega'];
 
 $total_pago = isset($_POST['total_pago']) && $_POST['total_pago'] === 'on' ? 1 : 0;
 
@@ -31,12 +32,13 @@ $sql = "UPDATE ordenes_trabajo SET
             sena = ?, 
             cantidad_impresiones = ?, 
             sector_destino = ?, 
-            total_pago = ?  
+            total_pago = ?, 
+            direccion_entrega = ?
         WHERE id = ?";
 
 $stmt = $conexion->prepare($sql);
 $stmt->bind_param(
-    "dssssdsii", 
+    "dssssdsisi", 
     $presupuesto, 
     $fecha_ingreso, 
     $fecha_prometida, 
@@ -45,6 +47,7 @@ $stmt->bind_param(
     $cantidad_impresiones, 
     $sector_destino, 
     $total_pago,  
+    $direccion_entrega,
     $id_ot
 );
 

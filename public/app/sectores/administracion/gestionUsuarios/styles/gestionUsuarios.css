@@ -12,7 +12,7 @@
   width: 100%;
   border-collapse: collapse;
   font-family: 'Inter', sans-serif;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .user-table th {
@@ -39,7 +39,7 @@
 
 .user-sectors {
   color: #64748b;
-  font-size: 13px;
+  font-size: 16px;
 }
 
 /* Badge de Rol (Azul claro de la imagen) */
@@ -48,7 +48,7 @@
   color: #4338ca;
   padding: 4px 12px;
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 500;
   display: inline-block;
 }
