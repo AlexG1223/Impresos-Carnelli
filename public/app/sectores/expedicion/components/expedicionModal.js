@@ -28,9 +28,12 @@ export function expedicionModal(detalle) {
             <p>${detalle.direccion_entrega || "-"}</p>
           </div>
           <div>
+        <div class="detalle-trabajo">
           <label>Detalle del Trabajo</label>
-            <p>${detalle.detalle_trabajo || "-"}</p>
+          <p>${detalle.detalle_trabajo || "-"}</p>
           </div>
+        </div>
+
 
           <div>
           <label>Cantidad de Impresiones</label>
