@@ -23,7 +23,8 @@ $sqlOT = "
     presupuesto,
     es_repeticion,
     sector_destino,
-    cantidad_impresiones
+    cantidad_impresiones,
+    direccion_entrega
   FROM ordenes_trabajo
   WHERE id = ?
   LIMIT 1

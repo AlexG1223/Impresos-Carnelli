@@ -29,6 +29,9 @@ SELECT
   c.nombre_empresa AS cliente,
   u.nombre AS vendedor,
   ot.fecha_prometida,
+  ot.direccion_entrega,
+  ot.detalle_trabajo,
+  ot.cantidad_impresiones,
 
   -- DETALLE EXPEDICION (puede ser NULL)
   de.metodo_envio,

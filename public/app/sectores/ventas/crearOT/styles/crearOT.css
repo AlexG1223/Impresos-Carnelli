@@ -62,7 +62,7 @@
   padding: 11px;
   border-radius: 10px;
   border: 1px solid var(--border);
-  font-size: 14px;
+  font-size: 16px;
   margin-bottom: 18px;
 }
 
@@ -402,7 +402,7 @@
   padding: 8px 12px;
   border-radius: 8px;
   border: 1px solid #d0d5dd;
-  font-size: 14px;
+  font-size: 16x;
   outline: none;
 }
 

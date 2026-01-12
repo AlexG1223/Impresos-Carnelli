@@ -19,6 +19,8 @@ $sql = "
         DATE(ot.fecha_ingreso) AS fecha_ingreso,
         ot.fecha_prometida,
         ot.detalle_trabajo,
+        ot.cantidad_impresiones,
+        ot.direccion_entrega,
 
         CASE
             WHEN ot.etapa IN ('PRODUCCION', 'EN_PRODUCCION') THEN ot.sector_destino
@@ -58,6 +60,8 @@ while ($row = mysqli_fetch_assoc($result)) {
     'fecha_prometida' => $row['fecha_prometida'],
     'estado' => $row['estado'],
     'detalle_trabajo' => $row['detalle_trabajo'],
+    'cantidad_impresiones' => $row['cantidad_impresiones'],
+    'direccion_entrega' => $row['direccion_entrega'] ?? null,
     'archivos' => []
 ];
 

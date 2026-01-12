@@ -1,5 +1,4 @@
 export function ModalDetalleOT(ot) {
-  console.log(ot);
   return `
     <div class="modal-overlay" id="modalDetalleOT">
       <div class="modal-card">
@@ -31,6 +30,16 @@ export function ModalDetalleOT(ot) {
               <p>${ot.fecha_prometida}</p>
             </div>
 
+            <div>
+              <span class="label">Cantidad de Impresiones</span>
+              <p>${ot.cantidad_impresiones}</p>
+            </div>
+
+            <div>
+              <span class="label">Dirección de Entrega</span>
+              <p>${ot.direccion_entrega || "No hay dirección de entrega"}</p>
+            </div>
+
 <div>
   <span class="label">Detalle del Trabajo</span>
   <p>
@@ -47,21 +56,32 @@ export function ModalDetalleOT(ot) {
             </div>
 
           </div>
+<div class="archivos-section">
+  <span class="label">Archivos</span>
 
-          <div class="archivos-section">
-            <span class="label">Archivos</span>
+  ${
+    ot.archivos.length
+      ? ot.archivos.map(a => {
+          if (esImagen(a.nombre)) {
+            return `
+              <a class="archivo-item imagen-preview" href="${a.url}" target="_blank">
+                <img src="${a.url}" alt="${a.nombre}" />
+                <span>${a.nombre}</span>
+              </a>
+            `;
+          }
 
-            ${
-              ot.archivos.length
-                ? ot.archivos.map(a => `
-                  <a class="archivo-item" href="${a.url}">
-                    ${a.nombre}
-                  </a>
-                `).join('')
-                : `<p class="sin-archivos">No hay archivos adjuntos</p>`
-            }
+          return `
+            <a class="archivo-item" href="${a.url}" target="_blank">
+              ${a.nombre}
+            </a>
+          `;
+        }).join('')
+      : `<p class="sin-archivos">No hay archivos adjuntos</p>`
+  }
 
-          </div>
+</div>
+
         </div>
 
         <div class="modal-footer">
@@ -71,4 +91,7 @@ export function ModalDetalleOT(ot) {
       </div>
     </div>
   `;
+}
+function esImagen(nombre) {
+  return /\.(jpg|jpeg|png|gif|webp)$/i.test(nombre);
 }

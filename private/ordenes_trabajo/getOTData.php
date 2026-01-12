@@ -31,6 +31,7 @@ SELECT
     ot.sector_destino,
     ot.es_repeticion,
     ot.etapa,
+    ot.direccion_entrega,
     ot.total_pago, 
     c.nombre_empresa AS cliente_nombre,
     u.nombre AS vendedor_nombre

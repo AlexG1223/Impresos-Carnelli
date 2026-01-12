@@ -28,6 +28,7 @@ $presupuesto            = $_POST["presupuesto"] ?? null;
 $fecha_prometida        = $_POST["fecha_prometida"] ?? null;
 $sena                   = $_POST["sena"] ?? null;
 $cantidad_impresiones   = $_POST["cantidad_impresiones"] ?? null;
+$direccion_entrega      = $_POST["direccion_entrega"] ?? null;
 
 $sector_destino = $_POST["sector_destino"] ?? "DISEÑO";
 
@@ -41,13 +42,13 @@ $etapa = $es_repeticion
 
 $sql = "
 INSERT INTO ordenes_trabajo
-(id_cliente, id_vendedor, detalle_trabajo, presupuesto, fecha_ingreso, fecha_prometida, es_repeticion, sector_destino, sena, cantidad_impresiones, etapa)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+(id_cliente, id_vendedor, detalle_trabajo, presupuesto, fecha_ingreso, fecha_prometida, es_repeticion, sector_destino, sena, cantidad_impresiones, etapa, direccion_entrega)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 ";
 
 $stmt = $conexion->prepare($sql);
 $stmt->bind_param(
-    "iisdssisdis",
+    "iisdssisdiss",
     $id_cliente,
     $id_vendedor,
     $detalle_trabajo,
@@ -58,7 +59,8 @@ $stmt->bind_param(
     $sector_destino,
     $sena,
     $cantidad_impresiones,
-    $etapa
+    $etapa,
+    $direccion_entrega
 );
 
 if (!$stmt->execute()) {

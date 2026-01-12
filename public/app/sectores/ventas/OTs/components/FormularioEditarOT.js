@@ -23,6 +23,10 @@ export function FormularioEditarOT(ot) {
       <label>Seña</label>
       <input name="sena" type="number" step="0.01" value="${ot.sena}" />
 
+      <label>Dirección de Entrega</label>
+      <input name="direccion_entrega" type="text" id="direccion_entrega" value="${ot.direccion_entrega}" required />
+
+
       <label>Cantidad de Impresiones</label>
       <input name="cantidad_impresiones" type="number" value="${ot.cantidad_impresiones}" />
 
