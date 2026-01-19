@@ -114,7 +114,8 @@
 
 .modal-expedicion {
   background: #fff;
-  width: 520px;      
+  max-width: calc(100% - 30px);
+  height: 90vh;
   overflow-y: auto;     
   border-radius: 12px;
   padding: 20px;
@@ -127,9 +128,8 @@
 .detalle-trabajo p {
   max-height: 140px;     /* límite visual sano */
   overflow-y: auto;
-  font-size: 13px;
+  font-size: 20px;
   font-weight: 400;
-  color: #6b7280;
   line-height: 1.5;
 }
 

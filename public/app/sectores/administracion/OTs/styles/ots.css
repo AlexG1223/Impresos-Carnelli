@@ -87,8 +87,8 @@
 
 .modal-card {
   background: #fff;
-  width: 700px;
   max-width: calc(100% - 30px);
+  width: 100%;
   max-height: 90vh;          
   border-radius: 12px;
   overflow: hidden;         
@@ -128,10 +128,11 @@
 .detalle-grid p {
   margin: 4px 0 0;
   font-weight: 500;
+  font-size: 24px;
 }
 
 .label {
-  font-size: 13px;
+  font-size: 16px;
   color: #6b7280;
 }
 
@@ -152,11 +153,17 @@
 /* ============================= */
 
 .archivos-section {
+
+  align-items: center;
   margin-top: 25px;
 }
 
+
+
 .archivo-item {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding: 10px 14px;
   border: 1px solid #e5e7eb;
   border-radius: 6px;
@@ -259,8 +266,7 @@
 }
 
 .imagen-preview img {
-  width: 80px;
-  height: 80px;
+  max-width: calc(100% - 10px);
   object-fit: cover;
   border-radius: 6px;
   border: 1px solid #ddd;
