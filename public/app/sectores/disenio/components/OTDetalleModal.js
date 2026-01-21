@@ -90,77 +90,66 @@ export function OTDetalleModal(ot) {
 
 let modalListenerInicializado = false;
 
-export function initOTDetalleModal() {
-  if (modalListenerInicializado) return; 
-  modalListenerInicializado = true;
+export function openOTModal(ot) {
+  cerrarModalOT();
+ const modalContainer = document.getElementById("ModalContenedor");
+  modalContainer.innerHTML = OTDetalleModal(ot);
 
-  document.addEventListener("click", async (e) => {
+  const modal = document.getElementById("ot-modal-overlay");
 
+  // Cerrar modal
+  modal.addEventListener("click", (e) => {
     if (
       e.target.classList.contains("btn-cerrar-modal") ||
       e.target.id === "ot-modal-overlay"
     ) {
-      cerrarModalOT();
-      return;
+      modalContainer.innerHTML = "";
     }
+  });
 
-    const sector = e.target.closest(".ot-sector");
-    if (sector) {
-      const modal = document.getElementById("ot-modal-overlay");
-      if (!modal) return;
-
+  // Selección de sector
+  modal.querySelectorAll(".ot-sector").forEach(sector => {
+    sector.addEventListener("click", () => {
       modal.querySelectorAll(".ot-sector")
         .forEach(s => s.classList.remove("activo"));
 
       sector.classList.add("activo");
-      return;
-    }
-
-    const btnConfirmar = e.target.closest(".btn-confirmar-envio");
-    if (!btnConfirmar) return;
-
-    const modal = document.getElementById("ot-modal-overlay");
-    if (!modal) return;
-
-    const idOrden = modal.dataset.idOrden;
-    const aclaraciones = modal.querySelector(".js-aclaraciones").value;
-
-    const sectorActivo = modal.querySelector(".ot-sector.activo");
-    const sectorSeleccionado = sectorActivo
-      ? sectorActivo.dataset.sector
-      : null;
-
-    if (!sectorSeleccionado) {
-      alert("Debe seleccionar el sector");
-      return;
-    }
-
-    btnConfirmar.disabled = true;
-
-    const res = await enviarADetalleProduccionService({
-      id_orden: idOrden,
-      especificaciones_tecnicas: aclaraciones,
-      sector_responsable: sectorSeleccionado
     });
-
-    if (res.success) {
-      alert("OT enviada a producción");
-      cerrarModalOT();
-      OTPendientesDisenio();
-    } else {
-      alert(res.message || "Error al enviar a producción");
-      btnConfirmar.disabled = false;
-    }
   });
+
+  // Confirmar envío
+  modal.querySelector(".btn-confirmar-envio")
+    .addEventListener("click", async () => {
+
+      const idOrden = modal.dataset.idOrden;
+      const aclaraciones = modal.querySelector(".js-aclaraciones").value;
+
+      const sectorActivo = modal.querySelector(".ot-sector.activo");
+      if (!sectorActivo) {
+        alert("Debe seleccionar el sector");
+        return;
+      }
+
+      const btn = modal.querySelector(".btn-confirmar-envio");
+      btn.disabled = true;
+
+      const res = await enviarADetalleProduccionService({
+        id_orden: idOrden,
+        especificaciones_tecnicas: aclaraciones,
+        sector_responsable: sectorActivo.dataset.sector
+      });
+
+      if (res.success) {
+        alert("OT enviada a producción");
+         modalContainer.innerHTML = "";
+        OTPendientesDisenio();
+      } else {
+        alert(res.message || "Error al enviar a producción");
+        btn.disabled = false;
+      }
+    });
 }
 
-
-export function openOTModal(ot) {
-  cerrarModalOT();
-  const container = document.createElement("div");
-  container.innerHTML = OTDetalleModal(ot);
-  document.body.appendChild(container);
-}
 
 function cerrarModalOT() {
   const modal = document.getElementById("ot-modal-overlay");

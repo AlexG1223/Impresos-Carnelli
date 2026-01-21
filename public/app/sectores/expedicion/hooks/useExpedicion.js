@@ -28,15 +28,14 @@ async function renderExpedicionTable(section) {
 async function abrirModalExpedicion(otId, section) {
   const detalleRes = await getExpedicionDetalleService(otId);
 
+   const modalContainer = document.getElementById("ModalContenedor");
+
   if (!detalleRes.success) {
     alert(detalleRes.message);
     return;
   }
 
-  document.body.insertAdjacentHTML(
-    "beforeend",
-    expedicionModal(detalleRes.data)
-  );
+  modalContainer.innerHTML = expedicionModal(detalleRes.data);
 
   const modal = document.getElementById("expedicion-modal-overlay");
 

@@ -24,6 +24,8 @@ if (!isset($_SESSION['user'])) {
   <section id="section-sh"></section>
 </main>
 
+<div id="ModalContenedor"></div>
+
 
 <script>
   window.USER_SESSION = {

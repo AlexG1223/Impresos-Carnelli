@@ -7,7 +7,11 @@ export async function useTodasOTs() {
   loadViewCSS("sectores/administracion/OTs/styles/ots.css");
 
   const container = document.getElementById("section-sh");
+  const modalContainer = document.getElementById("ModalContenedor");
+
   if (!container) return;
+
+  
 
   const response = await getTodasOTs();
   if (!response.success) {
@@ -33,7 +37,7 @@ export async function useTodasOTs() {
     if (!ot) return;
 
     // 2. Insertar modal
-    document.body.insertAdjacentHTML("beforeend", ModalDetalleOT(ot));
+    modalContainer.innerHTML = ModalDetalleOT(ot);
 
     // 3. Asignar eventos de cierre
     const modalElement = document.getElementById("modalDetalleOT");
