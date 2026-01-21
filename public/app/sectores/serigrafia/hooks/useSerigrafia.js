@@ -3,6 +3,9 @@ import { startSerigrafiaService } from "../services/startSerigrafiaService.js";
 import { endSerigrafiaService } from "../services/endSerigrafiaService.js";
 import { serigrafiaTable } from "../components/serigrafiaTable.js";
 import { loadViewCSS } from "/ICSoftware/public/app/utils/viewCssManager.js";
+import { ModalDetalleOT } from "../../administracion/OTs/components/ModalDetalleOT.js";
+import { getTodasOTs } from "../../administracion/OTs/services/getTodasOTsService.js";
+
 
 
 import { getSerigrafiaDetalleService } from "../services/getSerigrafiaDetalleService.js";
@@ -12,6 +15,7 @@ export async function useSerigrafia() {
   loadViewCSS("sectores/serigrafia/styles/serigrafiaTable.css");
   
   const section = document.getElementById("section-sh");
+  const modalContainer = document.getElementById("ModalContenedor");
 
   async function render() {
     section.innerHTML = "";
@@ -25,6 +29,23 @@ export async function useSerigrafia() {
  section.addEventListener("click", async (e) => {
   const btnIniciar = e.target.closest(".btn-iniciar");
   const btnFinalizar = e.target.closest(".btn-finalizar");
+  const btnVer = e.target.closest(".btn-ver");
+
+  if (btnVer) {
+    const id = Number(btnVer.dataset.id);
+    const res = await getTodasOTs(id);
+    const ots = res.data;
+    const dataOT = ots.find(o => Number(o.id_ot) === id);
+    modalContainer.innerHTML = ModalDetalleOT(dataOT);
+    const modalElement = document.getElementById("modalDetalleOT");
+    modalElement.querySelector("#cerrarModalOT").addEventListener("click", 
+      () => {
+        modalElement.remove();
+      }
+    );
+
+    return;
+  }
 
   if (btnIniciar) {
     const id = btnIniciar.dataset.id;

@@ -510,3 +510,8 @@
   border-color: #2563eb;
   background: #2563eb;
 }
+.activo {
+  border-color: #2563eb;
+  background: #2563eb;
+  color: white;
+}

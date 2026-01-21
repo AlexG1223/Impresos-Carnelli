@@ -41,6 +41,7 @@ export function offsetTable(data) {
                       ? `<button class="btn-iniciar" data-id="${ot.id}" title="Comenzar">▶</button>`
                       : `<button class="btn-finalizar" data-id="${ot.id}" title="Finalizar">✔</button>`
                     }
+                    <button class="btn-ver" data-id="${ot.id}" title="Ver Detalles">👁️</button>
                   </td>
                 </tr>
               `;
