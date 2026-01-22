@@ -70,7 +70,7 @@
 /* ======================================================
    BOTONES DE ACCIÓN
 ====================================================== */
-.btn-ver {
+.btn-verDisenio {
   background: none;
   border: none;
   cursor: pointer;
@@ -79,7 +79,7 @@
   border-radius: 6px;
 }
 
-.btn-ver:hover {
+.btn-verDisenio:hover {
   background-color: #e5e7eb;
 }
 

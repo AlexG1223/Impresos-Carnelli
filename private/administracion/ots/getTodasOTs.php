@@ -28,15 +28,19 @@ $sql = "
             ELSE ot.etapa
         END AS estado,
 
+        COALESCE(dp.especificaciones_tecnicas, 'No hay detalles técnicos') AS especificaciones_tecnicas,
+
         a.id AS archivo_id,
         a.ruta_archivo
 
     FROM ordenes_trabajo ot
     INNER JOIN clientes c ON c.id = ot.id_cliente
     INNER JOIN usuarios u ON u.id = ot.id_vendedor
+    LEFT JOIN detalle_produccion dp ON dp.id_orden = ot.id
     LEFT JOIN archivos a ON a.id_orden = ot.id
     ORDER BY ot.id DESC
 ";
+
 
 $result = mysqli_query($conexion, $sql);
 
@@ -51,21 +55,22 @@ while ($row = mysqli_fetch_assoc($result)) {
 
     $idOT = $row['id_ot'];
 
-    if (!isset($ots[$idOT])) {
-       $ots[$idOT] = [
-    'id_ot' => $row['id_ot'],
-    'cliente' => $row['cliente'],
-    'vendedor' => $row['vendedor'],
-    'fecha_ingreso' => $row['fecha_ingreso'],
-    'fecha_prometida' => $row['fecha_prometida'],
-    'estado' => $row['estado'],
-    'detalle_trabajo' => $row['detalle_trabajo'],
-    'cantidad_impresiones' => $row['cantidad_impresiones'],
-    'direccion_entrega' => $row['direccion_entrega'] ?? null,
-    'archivos' => []
-];
+if (!isset($ots[$idOT])) {
+    $ots[$idOT] = [
+        'id_ot' => $row['id_ot'],
+        'cliente' => $row['cliente'],
+        'vendedor' => $row['vendedor'],
+        'fecha_ingreso' => $row['fecha_ingreso'],
+        'fecha_prometida' => $row['fecha_prometida'],
+        'estado' => $row['estado'],
+        'detalle_trabajo' => $row['detalle_trabajo'],
+        'cantidad_impresiones' => $row['cantidad_impresiones'],
+        'direccion_entrega' => $row['direccion_entrega'] ?? null,
+        'especificaciones_tecnicas' => $row['especificaciones_tecnicas'],
+        'archivos' => []
+    ];
+}
 
-    }
 
     if ($row['archivo_id']) {
         $ots[$idOT]['archivos'][] = [

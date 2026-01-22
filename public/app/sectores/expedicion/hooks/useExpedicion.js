@@ -59,7 +59,7 @@ async function abrirModalExpedicion(otId, section) {
       const payload = {
         id_orden: otId,
         metodo_envio: modal.querySelector("#metodo_envio").value,
-        direccion_entrega_final: modal.querySelector("#direccion_entrega_final").value,
+        estado_final: estadoExpedicion,
         estado_embalaje: modal.querySelector("#estado_embalaje").value
       };
       if (!payload.metodo_envio || !payload.estado_embalaje ) {
@@ -67,6 +67,7 @@ async function abrirModalExpedicion(otId, section) {
         return;
       }
 
+      console.log("Payload Expedición:", payload);
       const saveRes = await saveExpedicionService(payload);
 
       if (!saveRes.success) {

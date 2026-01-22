@@ -13,7 +13,7 @@ export function OTPendienteRow(ot) {
       </td>
       <td>
         <button
-          class="btn-ver"
+          class="btn-verDisenio"
           data-id="${ot.id}"
         >
           👁

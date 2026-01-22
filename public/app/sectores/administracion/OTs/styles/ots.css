@@ -114,6 +114,19 @@
   flex: 1;                    
 }
 
+.detalles-section {
+display: flex;
+flex-direction: column;
+margin-top: 15px;
+}
+
+.detalles-section p {
+  margin: 4px 0 0;
+  font-weight: 500;
+  font-size: 24px;
+}
+
+
 
 /* ============================= */
 /* DETALLE GRID */

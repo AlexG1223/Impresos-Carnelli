@@ -16,21 +16,18 @@ export async function OTPendientesDisenio() {
 
   section.innerHTML = OTPendientesTable(res.data);
 
-  section.querySelectorAll(".btn-ver").forEach(btn => {
+  section.querySelectorAll(".btn-verDisenio").forEach(btn => {
     btn.addEventListener("click", async () => {
       const idOT = btn.dataset.id;
 
       const resDetalle = await getOTDetalleService(idOT);
       if (!resDetalle.success) return;
 
-    //  openOTModal(resDetalle.data);
-
        const modalContainer = document.getElementById("ModalContenedor");
       modalContainer.innerHTML = OTDetalleModal(resDetalle.data);
 
        const modal = document.getElementById("ot-modal-overlay");
 
-  // Cerrar modal
   modal.addEventListener("click", (e) => {
     if (
       e.target.classList.contains("btn-cerrar-modal") ||
@@ -40,7 +37,6 @@ export async function OTPendientesDisenio() {
     }
   });
 
-  // Selección de sector
   modal.querySelectorAll(".ot-sector").forEach(sector => {
     sector.addEventListener("click", () => {
       modal.querySelectorAll(".ot-sector")

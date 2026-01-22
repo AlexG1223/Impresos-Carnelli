@@ -9,7 +9,6 @@ export function expedicionModal(detalle) {
 
         <h3>Detalle Expedición</h3>
 
-        <!-- INFO BASE -->
         <div class="info-resumen">
           <div>
             <label>Cliente</label>
