@@ -5,6 +5,13 @@ import { reporteImpresionesComponent } from "../components/reporteImpresionesCom
 import { generarReporteVentas } from "../services/generarReporteVentas.js";
 import { reporteVentasComponent } from "../components/reportesVentasComponent.js";
 
+import { normalizarVentas } from "../utils/normalizarVentas.js";
+import { normalizarImpresiones } from "../utils/normalizarImpresiones.js";
+import { graficasResumenComponent } from "../components/graficasResumenComponent.js";
+import { graficasOperariosListComponent } from "../components/graficasOperariosListComponent.js";
+
+
+
 export async function useReportes() {
   loadViewCSS("sectores/administracion/reportesYEstadisticas/styles/reportes.css");
 
@@ -53,6 +60,21 @@ document.getElementById("reporteResultado").innerHTML = "<p>Generando reporte...
       }
       reporteVentasComponent(fechaInicio, fechaFin, res.data);
 
+    }
+    if (tipoReporte === "graficar") {
+const datosVentas = await generarReporteVentas(fechaInicio, fechaFin);
+const datosImpresiones = await generarReporteImpresiones(fechaInicio, fechaFin);
+
+  const ventasNorm = normalizarVentas(datosVentas.data.ordenes);
+const impresionesNorm = normalizarImpresiones(datosImpresiones.data.ordenes);
+
+document.getElementById("reporteResultado").innerHTML = "";
+
+graficasResumenComponent({
+  ventas: ventasNorm,
+  impresiones: impresionesNorm.general
+});
+graficasOperariosListComponent(impresionesNorm.operarios);
     }
   });
 }

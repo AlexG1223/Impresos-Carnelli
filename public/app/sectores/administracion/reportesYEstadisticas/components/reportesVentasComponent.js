@@ -1,5 +1,5 @@
 export function reporteVentasComponent(fechaInicio, fechaFin, data) {
-  const container = document.getElementById("section-sh");
+  const container = document.getElementById("reporteResultado");
   if (!container) return;
 
   const filas = data.ordenes && data.ordenes.length

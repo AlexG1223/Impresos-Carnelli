@@ -1,11 +1,11 @@
 export function reporteImpresionesComponent(fechaInicio, fechaFin, data) {
-  const container = document.getElementById("section-sh");
+  const container = document.getElementById("reporteResultado");
   if (!container) return;
 
   const filas = data.ordenes && data.ordenes.length
     ? data.ordenes.map(ot => `
         <tr>
-          <td>#${ot.id}</td>
+          <td>#${ot.idOrden}</td>
           <td>${ot.fechaIngreso}</td>
           <td>${ot.fechaFinalizacion ?? "-"}</td>
           <td>${ot.cantidadImpresiones}</td>

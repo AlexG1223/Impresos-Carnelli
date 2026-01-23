@@ -10,8 +10,8 @@ export function seleccionarClienteModal(clientes = []) {
               data-id="${c.id}" 
               data-nombre="${c.razon_social}"
             >
-              <strong>${c.razon_social}</strong><br/>
-              <small>${c.nombre_empresa || ""}</small>
+              <strong>${c.nombre_empresa || ""}</strong><br/>
+              <small>${c.razon_social}</small>
             </li>
           `).join("")}
         </ul>

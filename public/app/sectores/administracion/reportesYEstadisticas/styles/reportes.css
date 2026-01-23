@@ -197,3 +197,127 @@
     font-size: 22px;
   }
 }
+/* =========================
+   CONTENEDOR GENERAL
+========================= */
+
+#reporteResultado {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 20px;
+}
+
+/* =========================
+   RESUMEN GENERAL
+========================= */
+
+.graficas-resumen {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.grafica-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px 18px 20px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.grafica-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+  color: #222;
+}
+
+.grafica-card p {
+  margin: 4px 0 0;
+  font-weight: 600;
+  color: #333;
+}
+
+.grafica-card canvas {
+  width: 100% !important;
+  height: 240px !important;
+}
+
+/* =========================
+   OPERARIOS
+========================= */
+
+.operario-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 16px 18px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.operario-card h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 6px;
+}
+
+/* =========================
+   MINI GRÁFICAS
+========================= */
+
+.mini-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mini-chart span {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.mini-chart canvas {
+  width: 100% !important;
+  height: 80px !important;
+}
+
+/* =========================
+   GRID OPERARIOS
+========================= */
+
+.operarios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+}
+
+/* =========================
+   UTILIDADES
+========================= */
+
+.hidden {
+  display: none !important;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+  .grafica-card canvas {
+    height: 200px !important;
+  }
+
+  .mini-chart canvas {
+    height: 70px !important;
+  }
+}

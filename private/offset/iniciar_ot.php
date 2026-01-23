@@ -23,7 +23,7 @@ mysqli_begin_transaction($conexion);
 
 $sql1 = "
 UPDATE detalle_produccion
-SET fecha_inicio_trabajo = NOW()
+SET fecha_inicio_trabajo = NOW(), id_operario = ?
 WHERE id_orden = ?
 AND (
     fecha_inicio_trabajo IS NULL
@@ -32,7 +32,7 @@ AND (
 ";
 
 $stmt1 = $conexion->prepare($sql1);
-$stmt1->bind_param("i", $id_ot);
+$stmt1->bind_param("ii", $id_usuario, $id_ot);
 
 $sql2 = "
 UPDATE ordenes_trabajo

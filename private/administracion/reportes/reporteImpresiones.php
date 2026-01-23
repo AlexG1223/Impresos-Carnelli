@@ -22,15 +22,30 @@ try {
 
     $sql = "
         SELECT 
-            ot.id,
+            ot.id AS id_orden,
             ot.fecha_ingreso,
             ot.cantidad_impresiones,
-            de.fecha_lista_entrega
+            de.fecha_lista_entrega,
+
+            dp.id_operario,
+            dp.sector_responsable,
+
+            u.nombre AS nombre_operario
+
         FROM ordenes_trabajo ot
+
         INNER JOIN detalle_expedicion de 
             ON de.id_orden = ot.id
+
+        INNER JOIN detalle_produccion dp
+            ON dp.id_orden = ot.id
+
+        INNER JOIN usuarios u
+            ON u.id = dp.id_operario
+
         WHERE ot.fecha_ingreso BETWEEN ? AND ?
           AND de.fecha_lista_entrega IS NOT NULL
+
         ORDER BY ot.fecha_ingreso ASC
     ";
 
@@ -44,24 +59,33 @@ try {
     $totalImpresiones = 0;
 
     while ($row = $result->fetch_assoc()) {
+
         $cantidadImpresiones = (int)$row["cantidad_impresiones"];
         $totalImpresiones += $cantidadImpresiones;
 
         $ordenes[] = [
-            "id" => (int)$row["id"],
+            "idOrden" => (int)$row["id_orden"],
             "fechaIngreso" => $row["fecha_ingreso"],
             "fechaFinalizacion" => $row["fecha_lista_entrega"],
-            // ✅ cantidad de impresiones POR OT
-            "cantidadImpresiones" => $cantidadImpresiones
+
+            // impresiones por OT
+            "cantidadImpresiones" => $cantidadImpresiones,
+
+            // operario
+            "operario" => [
+                "id" => (int)$row["id_operario"],
+                "nombre" => $row["nombre_operario"]
+            ],
+
+            // sector (offset / serigrafía)
+            "sector" => $row["sector_responsable"]
         ];
     }
 
     echo json_encode([
         "success" => true,
         "data" => [
-            // ✅ total general
             "totalImpresiones" => $totalImpresiones,
-            // ✅ detalle por OT
             "ordenes" => $ordenes
         ]
     ]);
