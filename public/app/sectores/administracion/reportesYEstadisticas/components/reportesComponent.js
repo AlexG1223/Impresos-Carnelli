@@ -34,6 +34,12 @@ container.innerHTML = `<h2>Reportes y Estadísticas</h2>
       name="fechaFin"
     />
   </div>
+  <div class="campo">
+  <div id="comision-container" style="display:none">
+  <label>Comisión (%)</label>
+  <input type="number" id="porcentajeComision" value="10" min="0" step="0.1">
+</div>
+  </div>
 
   <div class="campo campo-boton">
     <button type="button" class="btn-generar">

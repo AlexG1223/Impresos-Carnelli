@@ -19,7 +19,7 @@ $conexion = conectar_bd();
 $sql = "
 SELECT 
   ot.id AS ot_id,
-  c.nombre_empresa,
+  c.nombre,
   dp.fecha_inicio_trabajo,
   dp.especificaciones_tecnicas
 FROM detalle_produccion dp

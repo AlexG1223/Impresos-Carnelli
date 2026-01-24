@@ -16,7 +16,7 @@ $conexion = conectar_bd();
 $sql = "
 SELECT 
     ot.id,
-    c.nombre_empresa AS cliente,
+    c.nombre AS cliente,
     dp.fecha_inicio_trabajo,
     dp.fecha_fin_trabajo
 FROM ordenes_trabajo ot

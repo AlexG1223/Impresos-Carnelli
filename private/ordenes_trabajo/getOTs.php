@@ -12,7 +12,7 @@ SELECT
     ot.fecha_prometida,
     ot.sector_destino,
 
-    c.nombre_empresa AS cliente_nombre,
+    c.nombre AS cliente_nombre,
 
     u.nombre AS vendedor_nombre,
 

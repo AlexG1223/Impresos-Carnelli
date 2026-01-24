@@ -15,6 +15,7 @@ if (!$data) {
 $required = [
     "razon_social",
     "nombre",
+    "empresa",
     "rut",
     "telefono",
     "departamento",
@@ -22,25 +23,17 @@ $required = [
     "direccion"
 ];
 
-foreach ($required as $field) {
-    if (!isset($data[$field]) || trim($data[$field]) === "") {
-        echo json_encode([
-            "success" => false,
-            "message" => "Campo obligatorio faltante: $field"
-        ]);
-        exit;
-    }
-}
 
 
-$razon_social   = $data["razon_social"];
-$nombre_empresa = $data["nombre"];
-$rut            = $data["rut"];
-$telefono       = $data["telefono"];
+$razon_social   = $data["razon_social"] ?? "";
+$nombre = $data["nombre"] ?? "Sin Nombre";
+$empresa = $data["empresa"] ?? "";
+$rut            = $data["rut"] ?? "";
+$telefono       = $data["telefono"] ?? "";
 $observaciones  = $data["observaciones"] ?? null;
-$departamento   = $data["departamento"];
-$localidad      = $data["localidad"];
-$direccion      = $data["direccion"];
+$departamento   = $data["departamento"] ?? "";
+$localidad      = $data["localidad"] ?? "";
+$direccion      = $data["direccion"] ?? "";
 
 require_once __DIR__ . "/../../conexion.php";
 $conexion = conectar_bd();
@@ -48,8 +41,8 @@ $conexion = conectar_bd();
 
 $sql = "
     INSERT INTO clientes
-    (razon_social, nombre_empresa, rut, telefono, observaciones, fecha_alta, departamento, localidad, direccion)
-    VALUES (?, ?, ?, ?, ?, CURDATE(), ?, ?, ?)
+    (razon_social, nombre, empresa, rut, telefono, observaciones, fecha_alta, departamento, localidad, direccion)
+    VALUES (?, ?, ?, ?, ?, ?,CURDATE(), ?, ?, ?)
 ";
 
 $stmt = $conexion->prepare($sql);
@@ -63,9 +56,10 @@ if (!$stmt) {
 }
 
 $stmt->bind_param(
-    "ssssssss",
+    "sssssssss",
     $razon_social,
-    $nombre_empresa,
+    $nombre,
+    $empresa,
     $rut,
     $telefono,
     $observaciones,

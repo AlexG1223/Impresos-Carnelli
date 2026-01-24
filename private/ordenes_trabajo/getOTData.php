@@ -33,7 +33,7 @@ SELECT
     ot.etapa,
     ot.direccion_entrega,
     ot.total_pago, 
-    c.nombre_empresa AS cliente_nombre,
+    c.nombre AS cliente_nombre,
     u.nombre AS vendedor_nombre
 FROM ordenes_trabajo ot
 JOIN clientes c ON ot.id_cliente = c.id

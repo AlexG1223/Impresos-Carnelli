@@ -17,7 +17,7 @@ SELECT
     ot.id,
     ot.detalle_trabajo,
       ot.cantidad_impresiones,
-    c.nombre_empresa AS cliente,
+    c.nombre AS cliente,
     dp.fecha_inicio_trabajo,
     dp.fecha_fin_trabajo
 FROM ordenes_trabajo ot

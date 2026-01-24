@@ -321,3 +321,55 @@
     height: 70px !important;
   }
 }
+.reporte-buscador {
+  margin: 10px 0;
+}
+
+.reporte-buscador input {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+}
+.comision-paga {
+  background-color: #ecfdf5;
+}
+
+.comision-no-paga {
+  background-color: #fef2f2;
+}
+
+.comision-paga td {
+  color: #065f46;
+}
+
+.comision-no-paga td {
+  color: #7f1d1d;
+}
+.btn-comision {
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-comision.paga {
+  background-color: #10b981;
+  color: #ffffff;
+}
+
+.btn-comision.no-paga {
+  background-color: #ef4444;
+  color: #ffffff;
+}
+
+.btn-comision:hover {
+  filter: brightness(0.95);
+}
+
+.btn-comision:active {
+  transform: scale(0.96);
+}
+

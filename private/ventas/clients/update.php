@@ -11,7 +11,8 @@ if (!$data || !isset($data["id"])) {
 }
 
 $required = [
-    "nombre_empresa",
+    "nombre",
+    "empresa",
     "razon_social",
     "rut",
     "direccion",
@@ -19,23 +20,15 @@ $required = [
     "telefono"
 ];
 
-foreach ($required as $field) {
-    if (!isset($data[$field]) || trim($data[$field]) === "") {
-        echo json_encode([
-            "success" => false,
-            "message" => "Campo obligatorio faltante: $field"
-        ]);
-        exit;
-    }
-}
 
 $id             = (int)$data["id"];
-$nombre_empresa = $data["nombre_empresa"];
-$razon_social   = $data["razon_social"];
-$rut            = $data["rut"];
-$direccion      = $data["direccion"];
-$localidad      = $data["localidad"];
-$telefono       = $data["telefono"];
+$nombre = $data["nombre"] ?? "";
+$empresa = $data["empresa"] ?? "";
+$razon_social   = $data["razon_social"] ?? "";
+$rut            = $data["rut"] ?? "";
+$direccion      = $data["direccion"] ?? "";
+$localidad      = $data["localidad"] ?? "";
+$telefono       = $data["telefono"] ?? "";
 $observaciones  = $data["observaciones"] ?? null;
 
 require_once __DIR__ . "/../../conexion.php";
@@ -43,7 +36,8 @@ $conexion = conectar_bd();
 
 $sql = "
     UPDATE clientes SET
-        nombre_empresa = ?,
+        nombre = ?,
+        empresa = ?,
         razon_social   = ?,
         rut            = ?,
         direccion      = ?,
@@ -64,8 +58,9 @@ if (!$stmt) {
 }
 
 $stmt->bind_param(
-    "sssssssi",
-    $nombre_empresa,
+    "ssssssssi",
+    $nombre,
+    $empresa,
     $razon_social,
     $rut,
     $direccion,

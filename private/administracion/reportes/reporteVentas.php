@@ -7,20 +7,23 @@ $fechaInicio = $data['fechaInicio'] ?? null;
 $fechaFin = $data['fechaFin'] ?? null;
 
 if (!$fechaInicio || !$fechaFin) {
-    echo json_encode(["success" => false, "message" => "Fechas inválidas"]);
+    echo json_encode([
+        "success" => false,
+        "message" => "Fechas inválidas"
+    ]);
     exit;
 }
 
 try {
-    // 1. Consulta optimizada con JOIN para traer nombres de vendedores de una vez
+
     $sql = "
         SELECT 
             ot.id,
             ot.fecha_ingreso,
             ot.presupuesto,
+            ot.comision_paga,
             de.fecha_lista_entrega,
-            u.nombre AS nombre_vendedor,
-            ot.id_vendedor
+            u.nombre AS nombre_vendedor
         FROM ordenes_trabajo ot
         LEFT JOIN detalle_expedicion de ON de.id_orden = ot.id
         INNER JOIN usuarios u ON ot.id_vendedor = u.id
@@ -36,34 +39,51 @@ try {
 
     $ordenes = [];
     $totalVentas = 0;
+    $totalComision = 0;
+
+    // Estructura temporal por vendedor
+    // [ nombre => [ventas => float, comision => float] ]
     $tempVendedores = [];
 
     while ($row = $result->fetch_assoc()) {
+
         $presupuesto = (float)$row["presupuesto"];
+        $comisionPaga = (int)$row["comision_paga"];
+        $nombreVendedor = $row["nombre_vendedor"];
+
         $totalVentas += $presupuesto;
 
-        // Agrupar por vendedor en memoria
-        $nombreV = $row["nombre_vendedor"];
-        if (!isset($tempVendedores[$nombreV])) {
-            $tempVendedores[$nombreV] = 0;
+        if (!isset($tempVendedores[$nombreVendedor])) {
+            $tempVendedores[$nombreVendedor] = [
+                "ventas" => 0,
+                "comision" => 0
+            ];
         }
-        $tempVendedores[$nombreV] += $presupuesto;
+
+        $tempVendedores[$nombreVendedor]["ventas"] += $presupuesto;
+
+        if ($comisionPaga === 1) {
+            $tempVendedores[$nombreVendedor]["comision"] += $presupuesto;
+            $totalComision += $presupuesto;
+        }
 
         $ordenes[] = [
             "id" => (int)$row["id"],
             "fechaIngreso" => $row["fecha_ingreso"],
-            "fechaFinalizacion" => $row["fecha_lista_entrega"] ?? 'Pendiente',
+            "fechaFinalizacion" => $row["fecha_lista_entrega"] ?? "Pendiente",
             "presupuesto" => $presupuesto,
-            "vendedor" => $nombreV
+            "comision_paga" => $comisionPaga,
+            "vendedor" => $nombreVendedor
         ];
     }
 
-    // Formatear vendedores para la respuesta
+    // Formatear vendedores
     $ventasPorVendedor = [];
-    foreach ($tempVendedores as $nombre => $total) {
+    foreach ($tempVendedores as $nombre => $datos) {
         $ventasPorVendedor[] = [
             "nombre" => $nombre,
-            "totalVentas" => $total
+            "totalVentas" => $datos["ventas"],
+            "totalComision" => $datos["comision"]
         ];
     }
 
@@ -71,6 +91,7 @@ try {
         "success" => true,
         "data" => [
             "totalVentas" => $totalVentas,
+            "totalComision" => $totalComision,
             "ordenes" => $ordenes,
             "ventasPorVendedor" => $ventasPorVendedor
         ]

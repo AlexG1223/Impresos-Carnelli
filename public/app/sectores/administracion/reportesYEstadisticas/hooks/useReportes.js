@@ -20,6 +20,15 @@ export async function useReportes() {
   const btnGenerar = document.querySelector(".btn-generar");
   if (!btnGenerar) return;
 
+
+      const tipoReporteSelect = document.getElementById("tipoReporte");
+const comisionContainer = document.getElementById("comision-container");
+
+tipoReporteSelect.addEventListener("change", () => {
+  comisionContainer.style.display =
+    tipoReporteSelect.value === "ventas" ? "block" : "none";
+});
+
   btnGenerar.addEventListener("click", async () => {
     const tipoReporte = document.getElementById("tipoReporte")?.value;
     const fechaInicio = document.getElementById("fechaInicio")?.value;
@@ -50,6 +59,9 @@ document.getElementById("reporteResultado").innerHTML = "<p>Generando reporte...
       reporteImpresionesComponent(fechaInicio, fechaFin, res.data);
 
     }
+
+
+
     if (tipoReporte === "ventas") {
        const res =  await generarReporteVentas(fechaInicio, fechaFin);
 
@@ -58,7 +70,11 @@ document.getElementById("reporteResultado").innerHTML = "<p>Generando reporte...
         document.getElementById("reporteResultado").innerHTML = "<p>Error al generar el reporte.</p>";
         return;
       }
-      reporteVentasComponent(fechaInicio, fechaFin, res.data);
+   const porcentajeComision =
+  Number(document.getElementById("porcentajeComision")?.value || 0);
+
+reporteVentasComponent(fechaInicio, fechaFin, res.data, porcentajeComision);
+
 
     }
     if (tipoReporte === "graficar") {

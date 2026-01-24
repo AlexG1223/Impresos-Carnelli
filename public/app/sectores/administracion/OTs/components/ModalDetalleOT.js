@@ -11,8 +11,13 @@ export function ModalDetalleOT(ot) {
           <div class="detalle-grid">
 
             <div>
-              <span class="label">Cliente</span>
+              <span class="label">Nombre Cliente</span>
               <p>${ot.cliente}</p>
+            </div>
+
+            <div>
+              <span class="label">Empresa</span>
+              <p>${ot.empresa}</p>
             </div>
 
             <div>

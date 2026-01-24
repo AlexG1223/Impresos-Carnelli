@@ -51,6 +51,7 @@ export function bindCreateClientForm() {
 
     const client = {
       nombre: fd.get("nombre").trim(),
+      empresa: fd.get("empresa")?.trim() || "",
       rut: fd.get("rut").trim(),
       razon_social: fd.get("razon_social").trim(),
       direccion: fd.get("direccion").trim(),

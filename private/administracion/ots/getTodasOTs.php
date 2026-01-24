@@ -14,7 +14,8 @@ if (!isset($_SESSION['user'])) {
 $sql = "
     SELECT
         ot.id AS id_ot,
-        c.nombre_empresa AS cliente,
+        c.nombre AS cliente,
+        c.empresa AS empresa,
         u.nombre AS vendedor,
         DATE(ot.fecha_ingreso) AS fecha_ingreso,
         ot.fecha_prometida,
@@ -59,6 +60,7 @@ if (!isset($ots[$idOT])) {
     $ots[$idOT] = [
         'id_ot' => $row['id_ot'],
         'cliente' => $row['cliente'],
+        'empresa' => $row['empresa'],
         'vendedor' => $row['vendedor'],
         'fecha_ingreso' => $row['fecha_ingreso'],
         'fecha_prometida' => $row['fecha_prometida'],

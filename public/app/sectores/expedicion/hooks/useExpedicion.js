@@ -5,6 +5,7 @@ import { loadViewCSS } from "/ICSoftware/public/app/utils/viewCssManager.js";
 import { getExpedicionDetalleService } from "../services/getExpedicionDetalleService.js";
 import { saveExpedicionService } from "../services/saveExpedicionService.js";
 
+
 async function renderExpedicionTable(section) {
   section.innerHTML = "<p class='loading'>Cargando expedición...</p>";
 
@@ -78,6 +79,23 @@ async function abrirModalExpedicion(otId, section) {
       modal.remove();
       await renderExpedicionTable(section);
     });
+    
+
+modal.querySelector("#crear-etiqueta").addEventListener("click", () => {
+
+  const cantidad = modal.querySelector("#cantidad_etiquetas").value;
+
+  if (!cantidad || parseInt(cantidad) < 1) {
+    alert("Ingresá una cantidad válida de etiquetas.");
+    return;
+  }
+
+  window.open(
+    `/ICSoftware/public/api/expedicion/etiqueta.php?id_orden=${otId}&cantidad=${cantidad}`,
+    "_blank"
+  );
+});
+
 }
 
 export async function useExpedicion() {

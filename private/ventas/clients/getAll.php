@@ -7,7 +7,8 @@ $sql = "
     SELECT 
         id,
         razon_social,
-        nombre_empresa,
+        nombre,
+        empresa,
         rut,
         telefono,
         observaciones,
