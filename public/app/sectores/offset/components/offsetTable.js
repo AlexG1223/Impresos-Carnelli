@@ -50,9 +50,5 @@ export function offsetTable(data) {
         </table>
       </div>
 
-      <div id="modal-ot" class="modal hidden">
-        <div class="modal-content"></div>
-      </div>
-    </div>
   `;
 }

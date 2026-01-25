@@ -120,8 +120,6 @@
   border: none;
 }
 
-#cancelarModal { background: #e2e8f0; color: #475569; }
-#confirmarFinalizar { background: #16a34a; color: #fff; }
 
 /* Responsive */
 @media (max-width: 500px) {
@@ -276,4 +274,40 @@
     opacity: 1;
     transform: scale(1);
   }
+}
+
+.modal-father
+  {
+ position: fixed;
+  inset: 0;
+  display: flex;
+   justify-content: center;
+  align-items: center;
+  }
+
+.modal-buttons-prod {
+  background: rgba(255, 255, 255, 0.826);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 500px;
+  height: 200px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.modal-body-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+.modal-body-buttons button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
 }

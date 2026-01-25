@@ -31,12 +31,15 @@ export async function useOffset() {
   const btnVer = e.target.closest(".btn-ver");
 
   if (btnVer) {
+
     const id = Number(btnVer.dataset.id);
     const res = await getTodasOTs(id);
     const ots = res.data;
     const dataOT = ots.find(o => Number(o.id_ot) === id);
+    
     modalContainer.innerHTML = ModalDetalleOT(dataOT);
     const modalElement = document.getElementById("modalDetalleOT");
+
     modalElement.querySelector("#cerrarModalOT").addEventListener("click", 
       () => {
         modalElement.remove();
@@ -44,6 +47,7 @@ export async function useOffset() {
     );
 
     return;
+    
   }
 
   if (btnIniciar) {
@@ -56,31 +60,26 @@ export async function useOffset() {
 if (btnFinalizar) {
   const id = btnFinalizar.dataset.id;
 
-  const modal = document.getElementById("modal-ot");
-  const modalContent = modal.querySelector(".modal-content");
-
+  const modal = document.getElementById("ModalContenedor");
   const res = await getOffsetDetalleService(id);
   if (!res.success) {
     alert(res.message);
     return;
   }
+modalContainer.innerHTML = offsetFinalizarModal(res.data);
 
-  modalContent.innerHTML = offsetFinalizarModal(res.data);
-  modal.classList.remove("hidden");
+const overlay = document.getElementById("offset-modal-overlay");
 
-  document
-    .getElementById("cancelarModal")
-    .addEventListener("click", () => {
-      modal.classList.add("hidden");
-    });
+overlay.querySelector("#cancelarModal")
+  .addEventListener("click", () => overlay.remove());
 
-  document
-    .getElementById("confirmarFinalizar")
-    .addEventListener("click", async () => {
-      await endOffsetService(id);
-      modal.classList.add("hidden");
-      await render();
-    });
+overlay.querySelector("#confirmarFinalizar")
+  .addEventListener("click", async () => {
+    await endOffsetService(id);
+    overlay.remove();
+    await render();
+  });
+
 
   return;
 }

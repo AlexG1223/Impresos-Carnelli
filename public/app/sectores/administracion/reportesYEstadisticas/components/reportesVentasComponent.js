@@ -1,3 +1,5 @@
+import { cambiarEstadoComisionService } from "../services/cambiarEstadoComisionService.js";
+
 export function reporteVentasComponent(fechaInicio, fechaFin, data, porcentajeComision) {
   const container = document.getElementById("reporteResultado");
   if (!container) return;
@@ -62,8 +64,8 @@ export function reporteVentasComponent(fechaInicio, fechaFin, data, porcentajeCo
       <div class="reporte-resumen">
         <span>Total de ventas</span>
         <strong>$ ${Number(data.totalVentas).toFixed(2)}</strong>
-        <span>Total Comisión base</span>
-        <strong>$ ${Number(data.totalComision).toFixed(2)}</strong>
+        <span>Total Comisión a pagar</span>
+        <strong>$ ${Number(data.totalComision * porcentajeComision / 100).toFixed(2)}</strong>
       </div>
 
       <div class="reporte-tabla">
@@ -73,7 +75,7 @@ export function reporteVentasComponent(fechaInicio, fechaFin, data, porcentajeCo
             <tr>
               <th>Vendedor</th>
               <th>Total Ventas</th>
-              <th>Comisión</th>
+              <th>Comisión a pagar</th>
             </tr>
           </thead>
           <tbody>
@@ -128,10 +130,23 @@ export function reporteVentasComponent(fechaInicio, fechaFin, data, porcentajeCo
     });
   }
 
-  document.querySelectorAll(".btn-comision").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const fila = btn.closest("tr");
-      const nuevoEstado = btn.dataset.estado === "1" ? 0 : 1;
+document.querySelectorAll(".btn-comision").forEach(btn => {
+  btn.addEventListener("click", async () => {
+    const fila = btn.closest("tr");
+    const idOT = btn.dataset.id;
+    const estadoActual = Number(btn.dataset.estado);
+    const nuevoEstado = estadoActual === 1 ? 0 : 1;
+
+    btn.disabled = true;
+
+    try {
+      const res = await cambiarEstadoComisionService(idOT, nuevoEstado);
+
+      if (!res.success) {
+        alert(res.message || "Error al cambiar estado de comisión");
+        btn.disabled = false;
+        return;
+      }
 
       btn.dataset.estado = nuevoEstado;
       btn.textContent = nuevoEstado ? "Paga" : "No paga";
@@ -141,6 +156,13 @@ export function reporteVentasComponent(fechaInicio, fechaFin, data, porcentajeCo
       fila.dataset.paga = nuevoEstado;
       fila.classList.toggle("comision-paga", nuevoEstado === 1);
       fila.classList.toggle("comision-no-paga", nuevoEstado === 0);
-    });
+
+    } catch (e) {
+      alert("Error de conexión");
+    } finally {
+      btn.disabled = false;
+    }
   });
+});
+
 }

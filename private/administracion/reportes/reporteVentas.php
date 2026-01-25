@@ -41,8 +41,6 @@ try {
     $totalVentas = 0;
     $totalComision = 0;
 
-    // Estructura temporal por vendedor
-    // [ nombre => [ventas => float, comision => float] ]
     $tempVendedores = [];
 
     while ($row = $result->fetch_assoc()) {
@@ -62,7 +60,7 @@ try {
 
         $tempVendedores[$nombreVendedor]["ventas"] += $presupuesto;
 
-        if ($comisionPaga === 1) {
+        if ($comisionPaga === 0) {
             $tempVendedores[$nombreVendedor]["comision"] += $presupuesto;
             $totalComision += $presupuesto;
         }
@@ -77,7 +75,6 @@ try {
         ];
     }
 
-    // Formatear vendedores
     $ventasPorVendedor = [];
     foreach ($tempVendedores as $nombre => $datos) {
         $ventasPorVendedor[] = [

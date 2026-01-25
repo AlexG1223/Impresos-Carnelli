@@ -18,7 +18,7 @@ async function renderExpedicionTable(section) {
 
   section.innerHTML = expedicionTable(res.data);
 
-  section.querySelectorAll(".btn-ver").forEach(btn => {
+  section.querySelectorAll(".btn-ver-expedicion").forEach(btn => {
     btn.addEventListener("click", async () => {
       await abrirModalExpedicion(btn.dataset.id, section);
     });
@@ -35,6 +35,7 @@ async function abrirModalExpedicion(otId, section) {
     alert(detalleRes.message);
     return;
   }
+modalContainer.innerHTML = "";
 
   modalContainer.innerHTML = expedicionModal(detalleRes.data);
 

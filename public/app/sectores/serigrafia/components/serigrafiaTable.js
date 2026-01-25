@@ -51,10 +51,5 @@ export function serigrafiaTable(data) {
           </tbody>
         </table>
       </div>
-
-      <div id="modal-ot" class="modal hidden">
-        <div class="modal-content"></div>
-      </div>
-    </div>
   `;
 }

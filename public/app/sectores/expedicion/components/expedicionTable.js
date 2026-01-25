@@ -29,7 +29,7 @@ export function expedicionTable(trabajos) {
                   </td>
                   <td class="acciones">
                     <button
-                      class="btn-ver"
+                      class="btn-ver-expedicion"
                       data-id="${ot.id}"
                       title="Ver detalle"
                     >

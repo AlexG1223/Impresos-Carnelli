@@ -56,7 +56,7 @@
    BOTÓN VER (👁)
    ============================== */
 
-.btn-ver {
+.btn-ver-expedicion {
   background: transparent;
   border: none;
   font-size: 18px;
@@ -65,12 +65,12 @@
   transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
-.btn-ver:hover {
+.btn-ver-expedicion:hover {
   transform: scale(1.15);
   opacity: 0.8;
 }
 
-.btn-ver:active {
+.btn-ver-expedicion:active {
   transform: scale(1);
 }
 

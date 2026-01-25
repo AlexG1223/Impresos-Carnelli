@@ -57,31 +57,27 @@ export async function useSerigrafia() {
 if (btnFinalizar) {
   const id = btnFinalizar.dataset.id;
 
-  const modal = document.getElementById("modal-ot");
-  const modalContent = modal.querySelector(".modal-content");
 
+  const modal = document.getElementById("ModalContenedor");
   const res = await getSerigrafiaDetalleService(id);
   if (!res.success) {
-    alert(res.message);
     return;
   }
 
-  modalContent.innerHTML = serigrafiaFinalizarModal(res.data);
-  modal.classList.remove("hidden");
+  modalContainer.innerHTML = serigrafiaFinalizarModal(res.data);
 
-  document
-    .getElementById("cancelarModal")
-    .addEventListener("click", () => {
-      modal.classList.add("hidden");
-    });
+const overlay = document.getElementById("serigrafia-modal-overlay");
 
-  document
-    .getElementById("confirmarFinalizar")
-    .addEventListener("click", async () => {
-      await endSerigrafiaService(id);
-      modal.classList.add("hidden");
-      await render();
-    });
+overlay.querySelector("#cancelarModal")
+  .addEventListener("click", () => overlay.remove());
+
+overlay.querySelector("#confirmarFinalizar")
+  .addEventListener("click", async () => {
+    await endSerigrafiaService(id);
+    overlay.remove();
+    await render();
+  });
+
 
   return;
 }

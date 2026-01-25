@@ -1,12 +1,13 @@
 export function offsetFinalizarModal(data) {
   return `
-   
-      <div class="acciones-modal">
+    <div id="offset-modal-overlay" class="modal-overlay">
+      <div class="modal-buttons-prod">
         <h3>Finalizar Trabajo OT #${data.ot_id}</h3>
-        <button id="cancelarModal">Cancelar</button>
-        <button id="confirmarFinalizar" data-id="${data.ot_id}">
-          Finalizar
-        </button>
+        <div class="modal-body-buttons">
+          <button id="cancelarModal">Cancelar</button>
+          <button id="confirmarFinalizar">Finalizar</button>
+        </div>
       </div>
+    </div>
   `;
 }

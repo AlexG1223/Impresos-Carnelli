@@ -72,7 +72,7 @@ document.getElementById("reporteResultado").innerHTML = "<p>Generando reporte...
       }
    const porcentajeComision =
   Number(document.getElementById("porcentajeComision")?.value || 0);
-
+console.log(res.data)
 reporteVentasComponent(fechaInicio, fechaFin, res.data, porcentajeComision);
 
 
