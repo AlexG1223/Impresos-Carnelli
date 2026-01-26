@@ -311,3 +311,7 @@
   cursor: pointer;
   border: none;
 }
+
+.detalles-section-info p {
+  white-space: pre-wrap !important;
+}

@@ -334,3 +334,6 @@ margin-top: 15px;
 .imagen-preview img:hover {
   transform: scale(1.05);
 }
+.detalles-section-info p {
+  white-space: pre-wrap !important;
+}
