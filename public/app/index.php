@@ -36,6 +36,6 @@ if (!isset($_SESSION['user'])) {
 
 
 <script type="module" src="script.js"></script>
-<script src="/ICSoftware/public/app/utils/chart.umd.js"></script>
+<script src="https://impresoscarnelli.com/public/app/utils/chart.umd.js"></script>
 </body>
 </html>
