@@ -5,6 +5,7 @@ import { loadViewCSS } from "http://impresoscarnelli.com/public/app/utils/viewCs
 import { getExpedicionDetalleService } from "../services/getExpedicionDetalleService.js";
 import { saveExpedicionService } from "../services/saveExpedicionService.js";
 
+
 async function renderExpedicionTable(section) {
   section.innerHTML = "<p class='loading'>Cargando expedición...</p>";
 
@@ -17,7 +18,7 @@ async function renderExpedicionTable(section) {
 
   section.innerHTML = expedicionTable(res.data);
 
-  section.querySelectorAll(".btn-ver").forEach(btn => {
+  section.querySelectorAll(".btn-ver-expedicion").forEach(btn => {
     btn.addEventListener("click", async () => {
       await abrirModalExpedicion(btn.dataset.id, section);
     });
@@ -28,15 +29,15 @@ async function renderExpedicionTable(section) {
 async function abrirModalExpedicion(otId, section) {
   const detalleRes = await getExpedicionDetalleService(otId);
 
+   const modalContainer = document.getElementById("ModalContenedor");
+
   if (!detalleRes.success) {
     alert(detalleRes.message);
     return;
   }
+modalContainer.innerHTML = "";
 
-  document.body.insertAdjacentHTML(
-    "beforeend",
-    expedicionModal(detalleRes.data)
-  );
+  modalContainer.innerHTML = expedicionModal(detalleRes.data);
 
   const modal = document.getElementById("expedicion-modal-overlay");
 
@@ -60,7 +61,7 @@ async function abrirModalExpedicion(otId, section) {
       const payload = {
         id_orden: otId,
         metodo_envio: modal.querySelector("#metodo_envio").value,
-        direccion_entrega_final: modal.querySelector("#direccion_entrega_final").value,
+        estado_final: estadoExpedicion,
         estado_embalaje: modal.querySelector("#estado_embalaje").value
       };
       if (!payload.metodo_envio || !payload.estado_embalaje ) {
@@ -68,6 +69,7 @@ async function abrirModalExpedicion(otId, section) {
         return;
       }
 
+      console.log("Payload Expedición:", payload);
       const saveRes = await saveExpedicionService(payload);
 
       if (!saveRes.success) {
@@ -78,6 +80,23 @@ async function abrirModalExpedicion(otId, section) {
       modal.remove();
       await renderExpedicionTable(section);
     });
+    
+
+modal.querySelector("#crear-etiqueta").addEventListener("click", () => {
+
+  const cantidad = modal.querySelector("#cantidad_etiquetas").value;
+
+  if (!cantidad || parseInt(cantidad) < 1) {
+    alert("Ingresá una cantidad válida de etiquetas.");
+    return;
+  }
+
+  window.open(
+    `/ICSoftware/public/api/expedicion/etiqueta.php?id_orden=${otId}&cantidad=${cantidad}`,
+    "_blank"
+  );
+});
+
 }
 
 export async function useExpedicion() {

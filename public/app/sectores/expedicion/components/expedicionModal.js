@@ -9,7 +9,6 @@ export function expedicionModal(detalle) {
 
         <h3>Detalle Expedición</h3>
 
-        <!-- INFO BASE -->
         <div class="info-resumen">
           <div>
             <label>Cliente</label>
@@ -28,9 +27,12 @@ export function expedicionModal(detalle) {
             <p>${detalle.direccion_entrega || "-"}</p>
           </div>
           <div>
+        <div class="detalle-trabajo">
           <label>Detalle del Trabajo</label>
-            <p>${detalle.detalle_trabajo || "-"}</p>
+          <p>${detalle.detalle_trabajo || "-"}</p>
           </div>
+        </div>
+
 
           <div>
           <label>Cantidad de Impresiones</label>
@@ -41,6 +43,14 @@ export function expedicionModal(detalle) {
 
         <!-- FORM -->
         <div class="form-expedicion">
+
+        <label>Cantidad de Etiquetas *</label>
+        <input 
+            type="number"
+            id="cantidad_etiquetas"
+            min="1"
+            placeholder="Ej: 3"
+          />
 
           <label>Método de Envío *</label>
           <select id="metodo_envio">
@@ -81,9 +91,13 @@ export function expedicionModal(detalle) {
           <button id="guardar-expedicion" class="btn-primary">
             Guardar Datos Expedición
           </button>
+          <button id="crear-etiqueta" class="btn-secondary">
+            Crear Etiqueta
+          </button>
           <button id="cerrar-expedicion" class="btn-secondary">
             Cancelar
           </button>
+
         </div>
 
       </div>

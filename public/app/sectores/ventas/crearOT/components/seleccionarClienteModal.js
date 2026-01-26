@@ -8,10 +8,10 @@ export function seleccionarClienteModal(clientes = []) {
           ${clientes.map(c => `
             <li 
               data-id="${c.id}" 
-              data-nombre="${c.razon_social}"
+              data-nombre="${c.nombre}"
             >
-              <strong>${c.razon_social}</strong><br/>
-              <small>${c.nombre_empresa || ""}</small>
+              <strong>${c.nombre || ""}</strong><br/>
+              <small>${c.empresa}</small>
             </li>
           `).join("")}
         </ul>

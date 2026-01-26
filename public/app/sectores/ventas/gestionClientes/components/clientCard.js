@@ -4,7 +4,7 @@ export function ClientCard(client) {
       <div class="card-header">
         <div class="icon">🏢</div>
         <div>
-          <strong>${client.nombre_empresa}</strong>
+          <strong>${client.nombre}</strong>
           <div class="rut">${client.rut}</div>
         </div>
       </div>

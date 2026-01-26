@@ -5,12 +5,16 @@ import { offsetTable } from "../components/offsetTable.js";
 import { loadViewCSS } from "http://impresoscarnelli.com/public/app/utils/viewCssManager.js";
 import { getOffsetDetalleService } from "../services/getOffsetDetalleService.js";
 import { offsetFinalizarModal } from "../components/offsetFinalizarModal.js";
+import { ModalDetalleOT } from "../../administracion/OTs/components/ModalDetalleOT.js";
+import { getTodasOTs } from "../../administracion/OTs/services/getTodasOTsService.js";
+
 
 
 export async function useOffset() {
   loadViewCSS("sectores/offset/styles/offsetTable.css");
 
   const section = document.getElementById("section-sh");
+  const modalContainer = document.getElementById("ModalContenedor");
 
   async function render() {
     section.innerHTML = "";
@@ -24,6 +28,27 @@ export async function useOffset() {
  section.addEventListener("click", async (e) => {
   const btnIniciar = e.target.closest(".btn-iniciar");
   const btnFinalizar = e.target.closest(".btn-finalizar");
+  const btnVer = e.target.closest(".btn-ver");
+
+  if (btnVer) {
+
+    const id = Number(btnVer.dataset.id);
+    const res = await getTodasOTs(id);
+    const ots = res.data;
+    const dataOT = ots.find(o => Number(o.id_ot) === id);
+    
+    modalContainer.innerHTML = ModalDetalleOT(dataOT);
+    const modalElement = document.getElementById("modalDetalleOT");
+
+    modalElement.querySelector("#cerrarModalOT").addEventListener("click", 
+      () => {
+        modalElement.remove();
+      }
+    );
+
+    return;
+    
+  }
 
   if (btnIniciar) {
     const id = btnIniciar.dataset.id;
@@ -35,31 +60,26 @@ export async function useOffset() {
 if (btnFinalizar) {
   const id = btnFinalizar.dataset.id;
 
-  const modal = document.getElementById("modal-ot");
-  const modalContent = modal.querySelector(".modal-content");
-
+  const modal = document.getElementById("ModalContenedor");
   const res = await getOffsetDetalleService(id);
   if (!res.success) {
     alert(res.message);
     return;
   }
+modalContainer.innerHTML = offsetFinalizarModal(res.data);
 
-  modalContent.innerHTML = offsetFinalizarModal(res.data);
-  modal.classList.remove("hidden");
+const overlay = document.getElementById("offset-modal-overlay");
 
-  document
-    .getElementById("cancelarModal")
-    .addEventListener("click", () => {
-      modal.classList.add("hidden");
-    });
+overlay.querySelector("#cancelarModal")
+  .addEventListener("click", () => overlay.remove());
 
-  document
-    .getElementById("confirmarFinalizar")
-    .addEventListener("click", async () => {
-      await endOffsetService(id);
-      modal.classList.add("hidden");
-      await render();
-    });
+overlay.querySelector("#confirmarFinalizar")
+  .addEventListener("click", async () => {
+    await endOffsetService(id);
+    overlay.remove();
+    await render();
+  });
+
 
   return;
 }
@@ -67,3 +87,4 @@ if (btnFinalizar) {
 });
 
 }
+

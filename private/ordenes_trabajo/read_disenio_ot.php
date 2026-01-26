@@ -11,7 +11,7 @@ SELECT
     ot.fecha_prometida,
     ot.etapa,
 
-    c.nombre_empresa AS cliente_nombre,
+    c.nombre AS cliente_nombre,
 
     u.nombre AS vendedor_nombre,
 

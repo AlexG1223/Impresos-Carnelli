@@ -22,7 +22,7 @@ SELECT
     ot.fecha_ingreso,
     ot.fecha_prometida,
 
-    c.nombre_empresa AS cliente_nombre,
+    c.nombre AS cliente_nombre,
     u.nombre AS vendedor_nombre
 
 FROM ordenes_trabajo ot

@@ -24,6 +24,8 @@ if (!isset($_SESSION['user'])) {
   <section id="section-sh"></section>
 </main>
 
+<div id="ModalContenedor"></div>
+
 
 <script>
   window.USER_SESSION = {
@@ -34,5 +36,6 @@ if (!isset($_SESSION['user'])) {
 
 
 <script type="module" src="script.js"></script>
+<script src="/ICSoftware/public/app/utils/chart.umd.js"></script>
 </body>
 </html>

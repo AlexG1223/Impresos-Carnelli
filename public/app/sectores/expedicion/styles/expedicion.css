@@ -56,7 +56,7 @@
    BOTÓN VER (👁)
    ============================== */
 
-.btn-ver {
+.btn-ver-expedicion {
   background: transparent;
   border: none;
   font-size: 18px;
@@ -65,12 +65,12 @@
   transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
-.btn-ver:hover {
+.btn-ver-expedicion:hover {
   transform: scale(1.15);
   opacity: 0.8;
 }
 
-.btn-ver:active {
+.btn-ver-expedicion:active {
   transform: scale(1);
 }
 
@@ -114,10 +114,27 @@
 
 .modal-expedicion {
   background: #fff;
-  width: 520px;
+  max-width: calc(100% - 30px);
+  width: 100%;
+  height: 90vh;
+  overflow-y: auto;     
   border-radius: 12px;
   padding: 20px;
 }
+
+.detalle-trabajo{
+  grid-column: 1 / -1;
+}
+
+.detalle-trabajo p {
+  max-height: 140px;     /* límite visual sano */
+  overflow-y: auto;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+
 
 /* HEADER */
 .modal-expedicion h3 {
@@ -149,7 +166,8 @@
 }
 
 .form-expedicion select,
-.form-expedicion textarea {
+.form-expedicion textarea,
+.form-expedicion input {
   width: 100%;
   margin-top: 6px;
   padding: 8px;

@@ -43,6 +43,7 @@ export function serigrafiaTable(data) {
                       ? `<button class="btn-iniciar" data-id="${ot.id}" title="Comenzar">▶</button>`
                       : `<button class="btn-finalizar" data-id="${ot.id}" title="Finalizar">✔</button>`
                     }
+                     <button class="btn-ver" data-id="${ot.id}" title="Ver Detalles">👁️</button>
                   </td>
                 </tr>
               `;
@@ -50,10 +51,5 @@ export function serigrafiaTable(data) {
           </tbody>
         </table>
       </div>
-
-      <div id="modal-ot" class="modal hidden">
-        <div class="modal-content"></div>
-      </div>
-    </div>
   `;
 }

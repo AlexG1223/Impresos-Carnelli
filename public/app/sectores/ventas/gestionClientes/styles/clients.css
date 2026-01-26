@@ -16,9 +16,12 @@
    CONTENEDOR GENERAL
 ===================== */
 #clientTable {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#clientsGrid {
+  width: 100%;
 }
 
 /* =====================
@@ -33,6 +36,7 @@
   flex-direction: column;
   margin: 3px;
   gap: 16px;
+  width: calc(100% - 50px);
 }
 
 .card-header {

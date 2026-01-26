@@ -8,29 +8,26 @@ import { loadViewCSS } from "http://impresoscarnelli.com/public/app/utils/viewCs
 function closeModal(modalContainer) {
   modalContainer.innerHTML = "";
 }
-
-
-
-
 export async function useClients() {
-    loadViewCSS("sectores/ventas/gestionClientes/styles/clients.css");
+  loadViewCSS("sectores/ventas/gestionClientes/styles/clients.css");
 
   const container = document.getElementById("clientTable");
   const modalContainer = document.getElementById("modalContainer");
-container.innerHTML = 'Cargando...';
+
+  container.innerHTML = "Cargando...";
 
   const res = await getAllClientsService();
   if (!res.success) return;
 
   const clients = res.data;
 
-container.innerHTML = `
+  container.innerHTML = `
+    <div id="clientsGrid">
+      ${clients.map(ClientCard).join("")}
+    </div>
+  `;
 
-  <div id="clientsGrid">
-    ${clients.map(ClientCard).join("")}
-  </div>
-`;
-activarBuscadorClientes();
+  activarBuscadorClientes();
 
   container.addEventListener("click", e => {
     const btn = e.target.closest("button");
@@ -48,28 +45,40 @@ activarBuscadorClientes();
     }
   });
 
-modalContainer.addEventListener("click", async e => {
+  modalContainer.addEventListener("click", e => {
+    if (e.target.id === "closeModal") {
+      closeModal(modalContainer);
+    }
+  });
 
+  modalContainer.addEventListener("submit", async e => {
+    if (!e.target.matches("#editClientForm")) return;
 
-  if (e.target.id === "closeModal") {
-    closeModal(modalContainer);
-    return;
-  }
-
-
-  if (e.target.closest("#editClientForm")) {
     e.preventDefault();
 
-    const form = e.target.closest("form");
+    const form = e.target;
     const data = Object.fromEntries(new FormData(form));
 
     const res = await updateClientService(data);
 
     if (res.success) {
-      useClients();
+      alert("Cliente actualizado con éxito.");
+      closeModal(modalContainer);
+       container.innerHTML = "Cargando...";
+
+  const res = await getAllClientsService();
+  if (!res.success) return;
+
+  const clients = res.data;
+
+  container.innerHTML = `
+    <div id="clientsGrid">
+      ${clients.map(ClientCard).join("")}
+    </div>
+  `;
+
     }
-  }
-});
+  });
 }
 
 function activarBuscadorClientes() {

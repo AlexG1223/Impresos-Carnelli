@@ -7,7 +7,7 @@ export function ClientViewModal(client) {
         <div class="grid">
           <div>
             <label>Nombre / Empresa</label>
-            <p>${client.nombre_empresa}</p>
+            <p>${client.nombre}</p>
           </div>
           <div>
             <label>RUT</label>

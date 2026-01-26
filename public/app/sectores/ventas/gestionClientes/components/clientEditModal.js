@@ -7,26 +7,29 @@ export function ClientEditModal(client) {
         <form id="editClientForm">
           <input type="hidden" name="id" value="${client.id}" />
 
-          <label>Nombre / Empresa *</label>
-          <input name="nombre_empresa" value="${client.nombre_empresa}" required />
+          <label>Nombre </label>
+          <input name="nombre" value="${client.nombre}" required />
+
+          <label>Empresa </label>
+          <input name="empresa" value="${client.empresa}"  />
 
           <label>RUT *</label>
-          <input name="rut" value="${client.rut}" required />
+          <input name="rut" value="${client.rut}"  />
 
           <label>Razón Social *</label>
-          <input name="razon_social" value="${client.razon_social}" required />
+          <input name="razon_social" value="${client.razon_social}"  />
 
           <label>Dirección *</label>
-          <input name="direccion" value="${client.direccion}" required />
+          <input name="direccion" value="${client.direccion}"  />
 
           <div class="grid">
             <div>
               <label>Localidad *</label>
-              <input name="localidad" value="${client.localidad}" required />
+              <input name="localidad" value="${client.localidad}"  />
             </div>
             <div>
               <label>Teléfono *</label>
-              <input name="telefono" value="${client.telefono}" required />
+              <input name="telefono" value="${client.telefono}"  />
             </div>
           </div>
 

@@ -17,7 +17,7 @@ $conexion = conectar_bd();
 $sql = "
 SELECT 
     ot.id,
-    c.nombre_empresa AS cliente,
+    c.nombre AS cliente,
     CASE 
         WHEN de.id IS NULL THEN 'PENDIENTE'
         ELSE 'LISTO'

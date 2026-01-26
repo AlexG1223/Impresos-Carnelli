@@ -13,6 +13,7 @@ container.innerHTML = `<h2>Reportes y Estadísticas</h2>
     <select id="tipoReporte" name="tipoReporte">
       <option value="impresiones">Impresiones</option>
       <option value="ventas">Ventas</option>
+      <option value="graficar">Gráficos</option>
     </select>
   </div>
 
@@ -32,6 +33,12 @@ container.innerHTML = `<h2>Reportes y Estadísticas</h2>
       id="fechaFin"
       name="fechaFin"
     />
+  </div>
+  <div class="campo">
+  <div id="comision-container" style="display:none">
+  <label>Comisión (%)</label>
+  <input type="number" id="porcentajeComision" value="10" min="0" step="0.1">
+</div>
   </div>
 
   <div class="campo campo-boton">

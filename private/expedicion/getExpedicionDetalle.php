@@ -26,7 +26,7 @@ if ($idOrden <= 0) {
 $sql = "
 SELECT
   ot.id AS id_orden,
-  c.nombre_empresa AS cliente,
+  c.nombre AS cliente,
   u.nombre AS vendedor,
   ot.fecha_prometida,
   ot.direccion_entrega,

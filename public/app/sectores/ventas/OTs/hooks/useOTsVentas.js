@@ -18,6 +18,8 @@ const oldContainer = document.getElementById("section-sh");
   if (!oldContainer) return;
 
   const container = oldContainer.cloneNode(false); 
+
+     const modalContainer = document.getElementById("ModalContenedor");
   oldContainer.parentNode.replaceChild(container, oldContainer);
   container.innerHTML = "Cargando OTs...";
 
@@ -45,7 +47,7 @@ const oldContainer = document.getElementById("section-sh");
 
     switch (accion) {
       case "view":
-        document.body.insertAdjacentHTML("beforeend", ModalDetalleOT(ot));
+        modalContainer.innerHTML = ModalDetalleOT(ot);
 
         document
           .getElementById("cerrarModalOT")

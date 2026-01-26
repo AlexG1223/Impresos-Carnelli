@@ -7,45 +7,53 @@ export async function useTodasOTs() {
   loadViewCSS("sectores/administracion/OTs/styles/ots.css");
 
   const container = document.getElementById("section-sh");
+  const modalContainer = document.getElementById("ModalContenedor");
+
   if (!container) return;
 
-  const response = await getTodasOTs();
+  
 
+  const response = await getTodasOTs();
   if (!response.success) {
     container.innerHTML = `<p>Error al cargar las órdenes</p>`;
     return;
   }
 
   const ots = response.data;
-
   container.innerHTML = TablaOTs(ots);
-activarBuscadorOTs()
-  document.querySelectorAll(".btn-ver").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const idOT = Number(btn.dataset.id);
-      const ot = ots.find(o => Number(o.id_ot) === idOT);
+  activarBuscadorOTs();
 
-      if (!ot) return;
+  // --- MEJORA: DELEGACIÓN DE EVENTOS ---
+  // En lugar de hacer forEach a cada botón, escuchamos el contenedor
+  container.addEventListener("click", e => {
+    const btn = e.target.closest(".btn-ver");
+    if (!btn) return;
 
-      document.body.insertAdjacentHTML(
-        "beforeend",
-        ModalDetalleOT(ot)
-      );
+    // 1. Evitar duplicados: Si ya hay un modal abierto, no hacer nada
+    if (document.getElementById("modalDetalleOT")) return;
 
-      document
-        .getElementById("cerrarModalOT")
-        .addEventListener("click", cerrarModal);
+    const idOT = Number(btn.dataset.id);
+    const ot = ots.find(o => Number(o.id_ot) === idOT);
+    if (!ot) return;
 
-      document
-        .getElementById("modalDetalleOT")
-        .addEventListener("click", e => {
-          if (e.target.id === "modalDetalleOT") cerrarModal();
-        });
+    // 2. Insertar modal
+    modalContainer.innerHTML = ModalDetalleOT(ot);
+
+    // 3. Asignar eventos de cierre
+    const modalElement = document.getElementById("modalDetalleOT");
+    
+    modalElement.querySelector("#cerrarModalOT").addEventListener("click", cerrarModal);
+    
+    modalElement.addEventListener("click", e => {
+      if (e.target.id === "modalDetalleOT") cerrarModal();
     });
   });
 }
 
 function cerrarModal() {
   const modal = document.getElementById("modalDetalleOT");
-  if (modal) modal.remove();
+  if (modal) {
+    // Opcional: podrías añadir una clase de fade-out aquí antes de remover
+    modal.remove();
+  }
 }
