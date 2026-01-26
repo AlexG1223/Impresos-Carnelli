@@ -92,7 +92,7 @@ modal.querySelector("#crear-etiqueta").addEventListener("click", () => {
   }
 
   window.open(
-    `/ICSoftware/public/api/expedicion/etiqueta.php?id_orden=${otId}&cantidad=${cantidad}`,
+    `http://impresoscarnelli.com/public/api/expedicion/etiqueta.php?id_orden=${otId}&cantidad=${cantidad}`,
     "_blank"
   );
 });

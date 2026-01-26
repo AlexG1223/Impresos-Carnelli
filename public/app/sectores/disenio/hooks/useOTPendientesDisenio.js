@@ -1,7 +1,7 @@
 import { getOTPendientesService } from "../services/getOTPendientesService.js";
 import { OTPendientesTable } from "../components/OTPendientesTable.js";
 import { getOTDetalleService } from "../services/getOTDetalleService.js";
-import { loadViewCSS } from "/ICSoftware/public/app/utils/viewCssManager.js";
+import { loadViewCSS } from "http://impresoscarnelli.com/public/app/utils/viewCssManager.js";
 import { enviarADetalleProduccionService } from "../services/enviarADetalleProduccionService.js";
 import { OTDetalleModal } from "../components/OTDetalleModal.js";
 
