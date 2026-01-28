@@ -379,15 +379,37 @@
   padding: 0 22px 22px;
 }
 
-.archivo-item {
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  padding: 12px 14px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
+.imagen-preview img {
+  max-width: calc(100% - 10px);
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: transform .2s ease;
 }
+
+.imagen-preview img:hover {
+  transform: scale(1.05);
+}
+
+.archivo-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  margin-top: 8px;
+  text-decoration: none;
+  color: #111827;
+  background: #f9fafb;
+  transition: background 0.15s ease;
+}
+
+.archivo-item:hover {
+  background: #eef2ff;
+}
+
 
 .archivo-item a {
   color: #2563eb;

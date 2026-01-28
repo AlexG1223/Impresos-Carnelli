@@ -272,19 +272,6 @@ margin-top: 15px;
   color: #9ca3af;
 }
 
-.archivos-section {
-  margin-top: 1rem;
-}
-
-.archivo-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 6px;
-  text-decoration: none;
-  color: inherit;
-}
-
 .imagen-preview img {
   max-width: calc(100% - 10px);
   object-fit: cover;
@@ -296,4 +283,8 @@ margin-top: 15px;
 
 .imagen-preview img:hover {
   transform: scale(1.05);
+}
+
+.detalles-section-info p {
+  white-space: pre-wrap !important;
 }

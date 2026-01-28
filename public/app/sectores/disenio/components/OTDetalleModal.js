@@ -43,10 +43,10 @@ export function OTDetalleModal(ot) {
               ot.archivos.length === 0
                 ? "<p>No hay archivos cargados</p>"
                 : ot.archivos.map(a => `
-                    <div class="archivo-item">
-                      <span>${a.nombre}</span>
-                      <a href="${a.url}" target="_blank">Descargar</a>
-                    </div>
+                     <a class="archivo-item imagen-preview" href="${a.url}" target="_blank">
+                       <img src="${a.url}" alt="${a.nombre}" />
+                       <span>${a.nombre}</span>
+                     </a>
                   `).join("")
             }
           </div>
