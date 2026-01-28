@@ -1,6 +1,4 @@
-/* =====================
-   VARIABLES
-===================== */
+
 :root {
   --primary: #1e5eff;
   --primary-hover: #1749c6;
@@ -12,9 +10,6 @@
   --radius: 12px;
 }
 
-/* =====================
-   CONTENEDOR GENERAL
-===================== */
 #clientTable {
   display: flex;
   align-items: center;
@@ -24,9 +19,6 @@
   width: 100%;
 }
 
-/* =====================
-   TARJETA CLIENTE
-===================== */
 .client-card {
   background: var(--card-bg);
   border-radius: var(--radius);
@@ -96,9 +88,7 @@
   text-decoration: underline;
 }
 
-/* =====================
-   MODAL OVERLAY
-===================== */
+
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -109,9 +99,6 @@
   z-index: 999;
 }
 
-/* =====================
-   MODAL
-===================== */
 .modal {
   background: white;
   border-radius: var(--radius);
@@ -127,9 +114,6 @@
   color: var(--text);
 }
 
-/* =====================
-   FORMULARIOS
-===================== */
 .modal label {
   font-size: 13px;
   color: var(--muted);
@@ -173,9 +157,6 @@
   gap: 14px;
 }
 
-/* =====================
-   ACCIONES MODAL
-===================== */
 .modal-actions {
   display: flex;
   justify-content: space-between;
@@ -206,9 +187,6 @@
   color: #374151;
 }
 
-/* =====================
-   ANIMACIONES
-===================== */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -219,6 +197,12 @@
     transform: scale(1);
   }
 }
+
+.modal-card {
+  max-width: 80vh;
+  overflow-y: auto;
+}
+
 .clients-header {
   display: flex;
   justify-content: center;
@@ -243,4 +227,114 @@
 .field input,
 .field select {
   font-size: 16px;
+}
+
+.form {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+
+.field input,
+.field textarea {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 15px;
+  outline: none;
+  transition: all 0.2s ease;
+  background: #fff;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+
+.field input:hover,
+.field textarea:hover {
+  border-color: #9ca3af;
+}
+
+
+.field input:focus,
+.field textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.btn-primary {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: #1d4ed8;
+}
+
+.btn-secondary {
+  background: #e5e7eb;
+  color: #111827;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: #d1d5db;
+}
+
+
+@media (max-width: 640px) {
+  .form-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    flex-direction: column-reverse;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+  }
 }
