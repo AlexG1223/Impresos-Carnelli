@@ -65,7 +65,7 @@ for ($i = 1; $i <= $cantidad; $i++) {
     $pdf->Text(3, 40, 'Teléfono: ' . ($orden['cliente_telefono'] ?? 'N/A'));
 
     $pdf->MultiCell(
-        80,
+        93,
         5,
         'Dirección: ' . ($orden['direccion_entrega'] ?? 'N/A'),
         0,
@@ -73,7 +73,7 @@ for ($i = 1; $i <= $cantidad; $i++) {
         false,
         1,
         3,
-        50
+        47
     );
 
     $pdf->Text(3, 60, 'Ciudad: ' . ($orden['cliente_localidad'] ?? 'N/A'));
