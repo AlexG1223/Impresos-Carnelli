@@ -1,5 +1,5 @@
 import { getTodasOTs } from "../services/getTodasOTsService.js";
-import { TablaOTs, activarBuscadorOTs } from "../components/TablaOTs.js";
+import { TablaOTs, activarBuscadorOTs, activarToggleFinalizadas } from "../components/TablaOTs.js";
 import { ModalDetalleOT } from "../components/ModalDetalleOT.js";
 import { loadViewCSS } from "/ICSoftware/public/app/utils/viewCssManager.js";
 
@@ -22,6 +22,7 @@ export async function useTodasOTs() {
   const ots = response.data;
   container.innerHTML = TablaOTs(ots);
   activarBuscadorOTs();
+  activarToggleFinalizadas()
 
   container.addEventListener("click", e => {
     const btn = e.target.closest(".btn-ver");
