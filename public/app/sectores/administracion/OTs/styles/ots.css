@@ -281,3 +281,11 @@ margin-top: 15px;
 .detalles-section-info p {
   white-space: pre-wrap !important;
 }
+.archivo-pdf {
+  font-weight: 600;
+  color: #c0392b;
+}
+
+.archivo-pdf:hover {
+  text-decoration: underline;
+}

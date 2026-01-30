@@ -83,22 +83,34 @@ export function ModalDetalleOT(ot) {
   ${
     ot.archivos.length
       ? ot.archivos
-          .map((a) => {
-            if (esImagen(a.nombre)) {
-              return `
-              <a class="archivo-item imagen-preview" href="${a.url}" target="_blank">
-                <img src="${a.url}" alt="${a.nombre}" />
-                <span>${a.nombre}</span>
-              </a>
-            `;
-            }
+         .map((a) => {
+  if (esImagen(a.nombre)) {
+    return `
+      <a class="archivo-item imagen-preview" href="${a.url}" target="_blank" rel="noopener">
+        <img src="${a.url}" alt="${a.nombre}" />
+        <span>${a.nombre}</span>
+      </a>
+    `;
+  }
 
-            return `
-            <a class="archivo-item" href="${a.url}" target="_blank">
-              ${a.nombre}
-            </a>
-          `;
-          })
+  if (esPDF(a.nombre)) {
+    return `
+      <a 
+        class="archivo-item archivo-pdf"
+        href="#"
+        onclick="window.open('${a.url}', '_blank', 'noopener'); return false;"
+      >
+        📄 ${a.nombre}
+      </a>
+    `;
+  }
+
+  return `
+    <a class="archivo-item" href="${a.url}" target="_blank" rel="noopener">
+      ${a.nombre}
+    </a>
+  `;
+})
           .join("")
       : `<p class="sin-archivos">No hay archivos adjuntos</p>`
   }
@@ -117,4 +129,7 @@ export function ModalDetalleOT(ot) {
 }
 function esImagen(nombre) {
   return /\.(jpg|jpeg|png|gif|webp)$/i.test(nombre);
+}
+function esPDF(nombre) {
+  return /\.pdf$/i.test(nombre);
 }

@@ -23,23 +23,18 @@ export async function useTodasOTs() {
   container.innerHTML = TablaOTs(ots);
   activarBuscadorOTs();
 
-  // --- MEJORA: DELEGACIÓN DE EVENTOS ---
-  // En lugar de hacer forEach a cada botón, escuchamos el contenedor
   container.addEventListener("click", e => {
     const btn = e.target.closest(".btn-ver");
     if (!btn) return;
 
-    // 1. Evitar duplicados: Si ya hay un modal abierto, no hacer nada
     if (document.getElementById("modalDetalleOT")) return;
 
     const idOT = Number(btn.dataset.id);
     const ot = ots.find(o => Number(o.id_ot) === idOT);
     if (!ot) return;
 
-    // 2. Insertar modal
     modalContainer.innerHTML = ModalDetalleOT(ot);
 
-    // 3. Asignar eventos de cierre
     const modalElement = document.getElementById("modalDetalleOT");
     
     modalElement.querySelector("#cerrarModalOT").addEventListener("click", cerrarModal);
@@ -53,7 +48,6 @@ export async function useTodasOTs() {
 function cerrarModal() {
   const modal = document.getElementById("modalDetalleOT");
   if (modal) {
-    // Opcional: podrías añadir una clase de fade-out aquí antes de remover
     modal.remove();
   }
 }
