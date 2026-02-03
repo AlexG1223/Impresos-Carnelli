@@ -3,7 +3,7 @@ import { getTodasOTs } from "../../../administracion/OTs/services/getTodasOTsSer
 import { ModalDetalleOT } from "../../../administracion/OTs/components/ModalDetalleOT.js";
 import {
   TablaOTsVendedor,
-  activarBuscadorOTsVendedor
+  activarBuscadorOTsVendedor, activarToggleFinalizadas
 } from "../components/TablaOTsVendedor.js";
 import { deleteOT } from "../services/deleteOTService.js";
 import { loadViewCSS } from "https://impresoscarnelli.com/public/app/utils/viewCssManager.js";
@@ -33,6 +33,7 @@ const oldContainer = document.getElementById("section-sh");
 
   container.innerHTML = TablaOTsVendedor(ots);
   activarBuscadorOTsVendedor();
+  activarToggleFinalizadas();
 
   container.addEventListener("click", async (e) => {
     const btn = e.target.closest("button");

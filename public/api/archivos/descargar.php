@@ -63,8 +63,16 @@ if (!file_exists($rutaArchivo)) {
 $mime = mime_content_type($rutaArchivo);
 $nombre = basename($rutaArchivo);
 
+$esPDF = ($mime === "application/pdf");
+
+
 header("Content-Type: $mime");
-header("Content-Disposition: attachment; filename=\"$nombre\"");
+if ($esPDF) {
+    header("Content-Disposition: inline; filename=\"$nombre\"");
+} else {
+    header("Content-Disposition: attachment; filename=\"$nombre\"");
+}
+
 header("Content-Length: " . filesize($rutaArchivo));
 header("Cache-Control: private");
 header("X-Content-Type-Options: nosniff");

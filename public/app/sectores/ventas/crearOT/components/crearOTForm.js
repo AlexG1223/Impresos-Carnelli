@@ -5,7 +5,6 @@ export function crearOTForm() {
 
     <form id="crearOTForm" enctype="multipart/form-data" data-es-repetida="0">
 
-      <!-- INFO OT REPETIDA -->
       <div id="otRepetidaInfo" style="display:none;" class="ot-repetida-info">
         <strong>OT repetida</strong>
         <span id="otRepetidaOrigen"></span>
@@ -42,6 +41,9 @@ export function crearOTForm() {
       <label>Dirección de Entrega</label>
       <input name="direccion_entrega" type="text" />
 
+      
+      <label>Aclaración de Entrega</label>
+      <textarea name="aclaracion_entrega"></textarea>
 
       <label>Seña</label>
       <input name="sena" type="number" step="0.01" />

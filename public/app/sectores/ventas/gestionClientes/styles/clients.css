@@ -107,7 +107,10 @@
   padding: 24px;
   box-shadow: 0 20px 40px rgba(0,0,0,0.15);
   animation: fadeIn 0.2s ease-out;
+  overflow-y: auto;
+  max-height: 90vh;
 }
+
 
 .modal h2 {
   margin-bottom: 20px;

@@ -23,22 +23,26 @@ $sql = "
         ot.cantidad_impresiones,
         ot.direccion_entrega,
 
-        CASE
-            WHEN ot.etapa IN ('PRODUCCION', 'EN_PRODUCCION') THEN ot.sector_destino
-            WHEN ot.etapa = 'INGRESADA' THEN 'DISEÑO'
-            ELSE ot.etapa
-        END AS estado,
+ CASE
+    WHEN ot.etapa = 'EXPEDICION' AND de.id IS NOT NULL THEN 'FINALIZADA'
+    WHEN ot.etapa IN ('PRODUCCION', 'EN_PRODUCCION') THEN ot.sector_destino
+    WHEN ot.etapa = 'INGRESADA' THEN 'DISEÑO'
+    ELSE ot.etapa
+END AS estado,
+
 
         COALESCE(dp.especificaciones_tecnicas, 'No hay detalles técnicos') AS especificaciones_tecnicas,
 
         a.id AS archivo_id,
         a.ruta_archivo
 
-    FROM ordenes_trabajo ot
-    INNER JOIN clientes c ON c.id = ot.id_cliente
-    INNER JOIN usuarios u ON u.id = ot.id_vendedor
-    LEFT JOIN detalle_produccion dp ON dp.id_orden = ot.id
-    LEFT JOIN archivos a ON a.id_orden = ot.id
+FROM ordenes_trabajo ot
+INNER JOIN clientes c ON c.id = ot.id_cliente
+INNER JOIN usuarios u ON u.id = ot.id_vendedor
+LEFT JOIN detalle_produccion dp ON dp.id_orden = ot.id
+LEFT JOIN detalle_expedicion de ON de.id_orden = ot.id
+LEFT JOIN archivos a ON a.id_orden = ot.id
+
     ORDER BY ot.id DESC
 ";
 

@@ -24,7 +24,8 @@ $sqlOT = "
     es_repeticion,
     sector_destino,
     cantidad_impresiones,
-    direccion_entrega
+    direccion_entrega,
+    aclaracion_entrega
   FROM ordenes_trabajo
   WHERE id = ?
   LIMIT 1

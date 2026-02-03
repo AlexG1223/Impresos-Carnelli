@@ -17,7 +17,8 @@ $required = [
     "rut",
     "direccion",
     "localidad",
-    "telefono"
+    "telefono",
+    "departamento"
 ];
 
 
@@ -30,6 +31,7 @@ $direccion      = $data["direccion"] ?? "";
 $localidad      = $data["localidad"] ?? "";
 $telefono       = $data["telefono"] ?? "";
 $observaciones  = $data["observaciones"] ?? null;
+$departamento   = $data["departamento"] ?? "";
 
 require_once __DIR__ . "/../../conexion.php";
 $conexion = conectar_bd();
@@ -42,6 +44,7 @@ $sql = "
         rut            = ?,
         direccion      = ?,
         localidad      = ?,
+        departamento   = ?,
         telefono       = ?,
         observaciones  = ?
     WHERE id = ?
@@ -58,13 +61,14 @@ if (!$stmt) {
 }
 
 $stmt->bind_param(
-    "ssssssssi",
+    "sssssssssi",
     $nombre,
     $empresa,
     $razon_social,
     $rut,
     $direccion,
     $localidad,
+    $departamento,
     $telefono,
     $observaciones,
     $id

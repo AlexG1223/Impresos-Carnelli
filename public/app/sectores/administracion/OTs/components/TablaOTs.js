@@ -9,7 +9,11 @@ export function TablaOTs(ots) {
           placeholder="Buscar OT, cliente, vendedor o estado..."
           class="buscador-ots"
         />
+          <button id="toggleFinalizadas" class="btn-toggle-finalizadas">
+    Ocultar finalizadas
+  </button>
       </div>
+
 
       <table>
         <thead>
@@ -62,6 +66,8 @@ function getEstadoClass(estado) {
       return 'badge-expedicion';
     case 'ENTREGADO':
       return 'badge-entregado';
+      case 'FINALIZADA':
+      return 'badge-finalizada';
     default:
       return 'badge-default';
   }
@@ -81,3 +87,26 @@ export function activarBuscadorOTs() {
   });
 }
 
+export function activarToggleFinalizadas() {
+  const btn = document.getElementById('toggleFinalizadas');
+  if (!btn) return;
+
+  let ocultas = false;
+
+  btn.addEventListener('click', () => {
+    const filas = document.querySelectorAll('#tablaOTsBody tr');
+
+    filas.forEach(fila => {
+      const badge = fila.querySelector('.badge-finalizada');
+
+      if (badge) {
+        fila.style.display = ocultas ? '' : 'none';
+      }
+    });
+
+    ocultas = !ocultas;
+    btn.textContent = ocultas
+      ? 'Mostrar finalizadas'
+      : 'Ocultar finalizadas';
+  });
+}
