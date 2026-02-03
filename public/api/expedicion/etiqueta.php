@@ -16,10 +16,10 @@ if ($cantidad < 1) {
     $cantidad = 1;
 }
 
-
 $sql = "
 SELECT
     ot.direccion_entrega,
+    ot.aclaracion_entrega,
     c.nombre AS cliente_nombre,
     c.telefono AS cliente_telefono,
     c.localidad AS cliente_localidad,
@@ -34,65 +34,58 @@ $stmt->execute();
 $result = $stmt->get_result();
 $orden = $result->fetch_assoc();
 
+function writeIfExists($pdf, $html) {
+    if (!empty(trim(strip_tags($html)))) {
+        $pdf->writeHTML($html, true, false, true, false);
+    }
+}
 
+$pdf = new TCPDF('P', 'mm', [100, 100], true, 'UTF-8', false);
 
-$pdf = new TCPDF(
-    'P',
-    'mm',
-    [100, 100], 
-    true,
-    'UTF-8',
-    false
-);
-$fechahoy = date("d/m/Y");
-
-$pdf->SetMargins(0, 0, 0);
-$pdf->SetAutoPageBreak(false, 0);
+$pdf->SetMargins(3, 30, 3);
+$pdf->SetAutoPageBreak(false);
 $pdf->setPrintHeader(false);
 $pdf->setPrintFooter(false);
+
+$fechahoy = date("d/m/Y");
+
 for ($i = 1; $i <= $cantidad; $i++) {
 
     $pdf->AddPage();
-
-    $pdf->SetFont('helvetica', 'B', 16);
 
     $pdf->Image($imgPath, 0, 2, 100, 20, 'JPG');
 
     $pdf->SetFont('helvetica', '', 12);
 
-    $pdf->Text(3, 30, 'SR.: ' . ($orden['cliente_nombre'] ?? 'N/A'));
-    $pdf->Text(70, 30, $fechahoy);
-    $pdf->Text(3, 40, 'Teléfono: ' . ($orden['cliente_telefono'] ?? 'N/A'));
+    $pdf->SetY(30);
+    $pdf->Cell(0, 0, $fechahoy, 0, 1, 'R');
 
-    $pdf->MultiCell(
-        93,
-        5,
-        'Dirección: ' . ($orden['direccion_entrega'] ?? 'N/A'),
-        0,
-        'L',
-        false,
-        1,
-        3,
-        47
-    );
+    writeIfExists($pdf, !empty($orden['cliente_nombre']) ? 'SR.: <b>' . htmlspecialchars($orden['cliente_nombre']) . '</b>' : '');
+    writeIfExists($pdf, !empty($orden['cliente_telefono']) ? 'Teléfono: <b>' . htmlspecialchars($orden['cliente_telefono']) . '</b>' : '');
+    writeIfExists($pdf, !empty($orden['direccion_entrega']) ? 'Dirección: <b>' . htmlspecialchars($orden['direccion_entrega']) . '</b>' : '');
+    writeIfExists($pdf, !empty($orden['aclaracion_entrega']) ? 'Aclaración: <b>' . htmlspecialchars($orden['aclaracion_entrega']) . '</b>' : '');
+    writeIfExists($pdf, !empty($orden['cliente_localidad']) ? 'Ciudad: <b>' . htmlspecialchars($orden['cliente_localidad']) . '</b>' : '');
+    writeIfExists($pdf, !empty($orden['cliente_departamento']) ? 'Departamento: <b>' . htmlspecialchars($orden['cliente_departamento']) . '</b>' : '');
 
-    $pdf->Text(3, 60, 'Ciudad: ' . ($orden['cliente_localidad'] ?? 'N/A'));
-    $pdf->Text(3, 70, 'Departamento: ' . ($orden['cliente_departamento'] ?? 'N/A'));
+    $pdf->SetFont('helvetica', 'B', 16);
+    $pdf->SetXY(70, 73);
+    $pdf->Cell(0, 0, 'Bulto', 0, 0, 'L');
 
-    $pdf->SetFont('helvetica', 'B', 18);
-    $pdf->Text(70, 73, 'Bulto');
+    $pdf->SetFont('helvetica', 'B', 20);
+    $pdf->SetXY(3, 80);
+    $pdf->Cell(0, 0, 'ENVÍO', 0, 0, 'L');
+    $pdf->SetXY(73, 80);
+    $pdf->Cell(0, 0, (string)$i, 0, 0, 'L');
 
-    $pdf->SetFont('helvetica', 'B', 24);
-    $pdf->Text(30, 80, 'ENVÍO');
-    $pdf->Text(73, 80, (string)$i); 
+    $pdf->SetFont('helvetica', '', 16);
+    $pdf->SetXY(0, 85);
+    $pdf->Cell(100, 0, str_repeat('_', 60), 0, 0, 'C');
 
-    $pdf->SetFont('helvetica', '', 12);
-    $pdf->Text(0, 85, '________________________________________________________________');
-
-    $pdf->Text(5, 92, 'impresoscarnelli.com    @impresoscarnelli');
+    $pdf->SetFont('helvetica', '', 10);
+    $pdf->SetXY(0, 92);
+    $pdf->Cell(100, 0, 'impresoscarnelli.com    @impresoscarnelli', 0, 0, 'C');
 
     $pdf->Rect(0, 0, 100, 25);
 }
-
 
 $pdf->Output('etiqueta_prueba_10x10.pdf', 'I');
