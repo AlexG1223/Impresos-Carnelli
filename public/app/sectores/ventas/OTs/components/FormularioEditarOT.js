@@ -26,9 +26,15 @@ export function FormularioEditarOT(ot) {
       <label>Dirección de Entrega</label>
       <input name="direccion_entrega" type="text" id="direccion_entrega" value="${ot.direccion_entrega}" required />
 
+      
+
+      <label>Aclaración de Entrega</label>
+      <textarea name="aclaracion_entrega" id="aclaracion_entrega">${ot.aclaracion_entrega}</textarea>
+
 
       <label>Cantidad de Impresiones</label>
       <input name="cantidad_impresiones" type="number" value="${ot.cantidad_impresiones}" />
+
 
       <label>Sector Destino</label>
       <select name="sector_destino" required>

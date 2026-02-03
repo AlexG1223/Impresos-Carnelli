@@ -15,7 +15,8 @@ $sql = "
         fecha_alta,
         departamento,
         localidad,
-        direccion
+        direccion,
+        departamento
     FROM clientes
     ORDER BY fecha_alta DESC
 ";

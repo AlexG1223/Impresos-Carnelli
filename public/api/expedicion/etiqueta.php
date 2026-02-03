@@ -64,7 +64,7 @@ for ($i = 1; $i <= $cantidad; $i++) {
     writeIfExists($pdf, !empty($orden['cliente_telefono']) ? 'Teléfono: <b>' . htmlspecialchars($orden['cliente_telefono']) . '</b>' : '');
     writeIfExists($pdf, !empty($orden['direccion_entrega']) ? 'Dirección: <b>' . htmlspecialchars($orden['direccion_entrega']) . '</b>' : '');
     writeIfExists($pdf, !empty($orden['aclaracion_entrega']) ? 'Aclaración: <b>' . htmlspecialchars($orden['aclaracion_entrega']) . '</b>' : '');
-    writeIfExists($pdf, !empty($orden['cliente_localidad']) ? 'Ciudad: <b>' . htmlspecialchars($orden['cliente_localidad']) . '</b>' : '');
+    writeIfExists($pdf, !empty($orden['cliente_localidad']) ? 'Localidad: <b>' . htmlspecialchars($orden['cliente_localidad']) . '</b>' : '');
     writeIfExists($pdf, !empty($orden['cliente_departamento']) ? 'Departamento: <b>' . htmlspecialchars($orden['cliente_departamento']) . '</b>' : '');
 
     $pdf->SetFont('helvetica', 'B', 16);

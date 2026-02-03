@@ -33,6 +33,7 @@ SELECT
     ot.etapa,
     ot.direccion_entrega,
     ot.total_pago, 
+    ot.aclaracion_entrega,
     c.nombre AS cliente_nombre,
     u.nombre AS vendedor_nombre
 FROM ordenes_trabajo ot

@@ -24,9 +24,15 @@ export function ClientEditModal(client) {
 
           <div class="grid">
             <div>
-              <label>Localidad *</label>
+              <label>Localidad</label>
               <input name="localidad" value="${client.localidad}"  />
             </div>
+
+            <div>
+              <label>Departamento </label>
+              <input name="departamento" value="${client.departamento}"  />
+            </div>
+
             <div>
               <label>Teléfono *</label>
               <input name="telefono" value="${client.telefono}"  />
