@@ -202,8 +202,16 @@
 }
 
 .modal-card {
-  max-width: 80vh;
-  overflow-y: auto;
+  width: 100%;
+  max-width: 640px;
+
+  max-height: 90vh;  
+  overflow-y: auto;   
+
+  background: white;
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
 }
 
 .clients-header {
