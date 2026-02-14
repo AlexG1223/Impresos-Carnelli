@@ -1,4 +1,9 @@
 export async function editarOTService(formData) {
+console.group("📡 Petición API: editarOTService");
+  for (let [key, value] of formData.entries()) {
+    console.log(`${key}:`, value instanceof File ? `Archivo: ${value.name}` : value);
+  }
+  console.groupEnd();
   try {
     const response = await fetch('/ICSoftware/public/api/ordenes_trabajo/edit.php', {
       method: 'POST',
