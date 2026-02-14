@@ -37,7 +37,7 @@ export function FormularioEditarOT(ot) {
                 </button>
 
                 <img 
-                  src="/ICSoftware/${a.ruta_archivo}" 
+                  src="https://impresoscarnelli.com/${a.ruta_archivo}" 
                   class="archivo-img"
                   loading="lazy"
                 />
@@ -56,7 +56,7 @@ export function FormularioEditarOT(ot) {
                   ✕
                 </button>
 
-                <a href="/ICSoftware/${a.ruta_archivo}" target="_blank" rel="noopener">
+                <a href="https://impresoscarnelli.com/${a.ruta_archivo}" target="_blank" rel="noopener">
                   📄 Ver PDF
                 </a>
 
@@ -74,7 +74,7 @@ export function FormularioEditarOT(ot) {
                 ✕
               </button>
 
-              <a href="/ICSoftware/${a.ruta_archivo}" target="_blank" rel="noopener">
+              <a href="https://impresoscarnelli.com/${a.ruta_archivo}" target="_blank" rel="noopener">
                 Archivo
               </a>
 

@@ -1,7 +1,7 @@
 export async function toggleTiempoDisenioService(id_orden) {
   try {
     const res = await fetch(
-      "/ICSoftware/public/api/disenio/toggle_tiempo.php",
+      "https://impresoscarnelli.com/public/api/disenio/toggle_tiempo.php",
       {
         method: "POST",
         headers: {
