@@ -4,6 +4,7 @@ import { getOTDetalleService } from "../services/getOTDetalleService.js";
 import { loadViewCSS } from "http://impresoscarnelli.com/public/app/utils/viewCssManager.js";
 import { enviarADetalleProduccionService } from "../services/enviarADetalleProduccionService.js";
 import { OTDetalleModal } from "../components/OTDetalleModal.js";
+import { toggleTiempoDisenioService } from "../services/toggleTiempoDisenioService.js";
 
 export async function OTPendientesDisenio() {
   loadViewCSS("sectores/disenio/styles/OTPendientesDisenio.css");
@@ -45,8 +46,29 @@ export async function OTPendientesDisenio() {
       sector.classList.add("activo");
     });
   });
+modal.querySelector(".btn-iniciar-diseño").addEventListener("click", async (e) => {
+    const btn = e.currentTarget;
+    const idOrden = modal.dataset.idOrden;
 
-  // Confirmar envío
+    btn.disabled = true; 
+    
+    const res = await toggleTiempoDisenioService(idOrden);
+
+    if (res.success) {
+
+        modalContainer.innerHTML = ""; 
+        await OTPendientesDisenio(); 
+        
+
+    } else {
+        alert(res.message);
+        btn.disabled = false;
+    }
+});
+
+
+
+
   modal.querySelector(".btn-confirmar-envio")
     .addEventListener("click", async () => {
 

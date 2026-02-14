@@ -1,6 +1,14 @@
 
 
 export function OTDetalleModal(ot) {
+  const clasesEstado = {
+    "Iniciar Trabajo": "btn-estado-iniciar",
+    "Trabajo en Proceso": "btn-estado-proceso",
+    "Finalizado": "btn-estado-finalizado"
+  };
+
+  const claseActual = clasesEstado[ot.estado_diseno] || "primaria";
+  const esFinalizado = ot.estado_diseno === "Finalizado";
   return `
     <div class="modal-overlay" id="ot-modal-overlay" data-id-orden="${ot.id}">
       <div class="modal-ot">
@@ -60,6 +68,15 @@ export function OTDetalleModal(ot) {
             class="ot-textarea js-aclaraciones"
             placeholder="Ej: Colores Pantone, sangrado, tipo de papel, tamaño final..."
           ></textarea>
+
+     <h4 class="modal-subtitle">Seguimiento de Tiempos</h4>
+          <button 
+            type="button" 
+            class="btn-accion ${claseActual} btn-iniciar-diseño" 
+            ${esFinalizado ? 'disabled' : ''}
+          >
+            ${ot.estado_diseno}
+          </button>
 
           <h4 class="modal-subtitle">Enviar a</h4>
           <div class="ot-sectores">

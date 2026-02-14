@@ -1,4 +1,9 @@
 export async function editarOTService(formData) {
+console.group("📡 Petición API: editarOTService");
+  for (let [key, value] of formData.entries()) {
+    console.log(`${key}:`, value instanceof File ? `Archivo: ${value.name}` : value);
+  }
+  console.groupEnd();
   try {
     console.log('Enviando datos de OT para editar:', Array.from(formData.entries()));
     const response = await fetch('https://impresoscarnelli.com/public/api/ordenes_trabajo/edit.php', {

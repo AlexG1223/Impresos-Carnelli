@@ -11,6 +11,9 @@ import { loadViewCSS } from "https://impresoscarnelli.com/public/app/utils/viewC
 import { FormularioEditarOT } from "../components/FormularioEditarOT.js";
 import { editarOTService } from "../services/editarOTService.js"; 
 import { getOTService } from "../services/getOTService.js";
+import { activarAgregarArchivosOT, obtenerDatosArchivosEdit } from "../utils/activarAgregarArchivosOT.js";
+
+
 export async function useOTsVendedor() {
   loadViewCSS("sectores/ventas/OTs/styles/otsVendedor.css");
 
@@ -40,9 +43,11 @@ const oldContainer = document.getElementById("section-sh");
     if (!btn) return;
 
     const fila = btn.closest("tr");
+
+    if (!fila) return;
     const idOT = Number(fila.dataset.id);
     const accion = btn.dataset.action;
-
+if (!accion) return;
     const ot = ots.find((o) => Number(o.id_ot) === idOT);
     if (!ot) return;
 
@@ -67,13 +72,28 @@ const oldContainer = document.getElementById("section-sh");
        container.innerHTML = FormularioEditarOT(dataOT)
 
 
+       activarAgregarArchivosOT();
+
+
         const form = document.getElementById("editarOTForm");
         form.addEventListener("submit", async (e) => {
           e.preventDefault();
 
           const formData = new FormData(form);
-          const res = await editarOTService(formData);
 
+          const { nuevos, eliminados } = obtenerDatosArchivosEdit();
+
+          nuevos.forEach(file => {
+        formData.append("archivos[]", file);
+      });
+
+
+    eliminados.forEach(id => {
+        formData.append("archivos_eliminados[]", id);
+    });
+
+          const res = await editarOTService(formData);
+          
           if (res.success) {
             alert("OT actualizada correctamente");
             container.innerHTML = ""; 
