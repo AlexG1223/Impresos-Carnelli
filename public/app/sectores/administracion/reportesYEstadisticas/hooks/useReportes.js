@@ -10,7 +10,8 @@ import { normalizarImpresiones } from "../utils/normalizarImpresiones.js";
 import { graficasResumenComponent } from "../components/graficasResumenComponent.js";
 import { graficasOperariosListComponent } from "../components/graficasOperariosListComponent.js";
 
-
+import { generarReporteDisenio } from "../services/generarReporteDisenio.js";
+import { reporteDisenioComponent } from "../components/reporteDisenioComponent.js";
 
 export async function useReportes() {
   loadViewCSS("sectores/administracion/reportesYEstadisticas/styles/reportes.css");
@@ -23,10 +24,13 @@ export async function useReportes() {
 
       const tipoReporteSelect = document.getElementById("tipoReporte");
 const comisionContainer = document.getElementById("comision-container");
+const precioDiseñadorContainer = document.getElementById("precio-diseño-container");
 
 tipoReporteSelect.addEventListener("change", () => {
   comisionContainer.style.display =
     tipoReporteSelect.value === "ventas" ? "block" : "none";
+  precioDiseñadorContainer.style.display =
+    tipoReporteSelect.value === "diseño" ? "block" : "none";
 });
 
   btnGenerar.addEventListener("click", async () => {
@@ -73,6 +77,7 @@ document.getElementById("reporteResultado").innerHTML = "<p>Generando reporte...
    const porcentajeComision =
   Number(document.getElementById("porcentajeComision")?.value || 0);
 console.log(res.data)
+
 reporteVentasComponent(fechaInicio, fechaFin, res.data, porcentajeComision);
 
 
@@ -91,6 +96,19 @@ graficasResumenComponent({
   impresiones: impresionesNorm.general
 });
 graficasOperariosListComponent(impresionesNorm.operarios);
+    }
+
+
+    if (tipoReporte === "diseño") {
+  const res =  await generarReporteDisenio(fechaInicio, fechaFin);
+
+      if (!res.success) {
+        alert(res.message || "Error al generar el reporte de diseño");
+        document.getElementById("reporteResultado").innerHTML = "<p>Error al generar el reporte.</p>";
+        return;
+      }
+      const precioDiseño = Number(document.getElementById("precioDiseño")?.value || 0);
+reporteDisenioComponent(fechaInicio, fechaFin, res.data, precioDiseño);
     }
   });
 }

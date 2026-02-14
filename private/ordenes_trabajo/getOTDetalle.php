@@ -80,6 +80,29 @@ while ($row = $resArchivos->fetch_assoc()) {
 $ot["archivos"] = $archivos;
 
 
+$sqlEstado = "
+    SELECT fecha_inicio_trabajo, fecha_fin_trabajo 
+    FROM detalle_diseño 
+    WHERE id_orden = ? 
+    ORDER BY id DESC LIMIT 1
+";
+$stmtE = $conexion->prepare($sqlEstado);
+$stmtE->bind_param("i", $idOT);
+$stmtE->execute();
+$resE = $stmtE->get_result();
+
+$estado_actual = "Iniciar Trabajo"; // Estado por defecto
+
+if ($rowE = $resE->fetch_assoc()) {
+    if ($rowE['fecha_inicio_trabajo'] && !$rowE['fecha_fin_trabajo']) {
+        $estado_actual = "Trabajo en Proceso";
+    } else if ($rowE['fecha_fin_trabajo']) {
+        $estado_actual = "Finalizado";
+    }
+}
+
+$ot["estado_diseno"] = $estado_actual;
+
 echo json_encode([
     "success" => true,
     "data" => $ot
