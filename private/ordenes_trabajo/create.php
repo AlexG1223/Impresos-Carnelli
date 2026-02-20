@@ -36,11 +36,15 @@ $sector_destino = $_POST["sector_destino"] ?? "DISEÑO";
 $es_repeticion = isset($_POST["es_repeticion"]) ? 1 : 0;
 $ot_origen_id  = isset($_POST["ot_origen_id"]) ? (int)$_POST["ot_origen_id"] : null;
 
-
-$etapa = $es_repeticion
-    ? "EN_PRODUCCION"
-    : ($_POST["etapa"] ?? "INGRESADA");
-
+if ($es_repeticion) {
+    $etapa = "EN_PRODUCCION";
+} else {
+    if ($sector_destino !== "DISEÑO") {
+        $etapa = "EN_PRODUCCION";
+    } else {
+        $etapa = "INGRESADA";
+    }
+}
 $sql = "
 INSERT INTO ordenes_trabajo
 (id_cliente, id_vendedor, detalle_trabajo, presupuesto, fecha_ingreso, fecha_prometida, es_repeticion, sector_destino, sena, cantidad_impresiones, etapa, direccion_entrega, aclaracion_entrega)
