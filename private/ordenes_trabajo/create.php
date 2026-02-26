@@ -31,7 +31,7 @@ $cantidad_impresiones   = $_POST["cantidad_impresiones"] ?? null;
 $direccion_entrega      = $_POST["direccion_entrega"] ?? null;
 $aclaracion_entrega     = $_POST["aclaracion_entrega"] ?? null;
 
-$sector_destino = $_POST["sector_destino"] ?? "DISEÑO";
+$sector_destino = isset($_POST["sector_destino"]) ? trim($_POST["sector_destino"]) : "DISEÑO";
 
 $es_repeticion = isset($_POST["es_repeticion"]) ? 1 : 0;
 $ot_origen_id  = isset($_POST["ot_origen_id"]) ? (int)$_POST["ot_origen_id"] : null;
@@ -39,10 +39,13 @@ $ot_origen_id  = isset($_POST["ot_origen_id"]) ? (int)$_POST["ot_origen_id"] : n
 if ($es_repeticion) {
     $etapa = "EN_PRODUCCION";
 } else {
-    if ($sector_destino !== "DISEÑO") {
-        $etapa = "EN_PRODUCCION";
-    } else {
+
+    $sector_comparar = mb_strtoupper($sector_destino, 'UTF-8');
+    
+    if ($sector_comparar === "DISEÑO" || $sector_comparar === "DISEÑO ") {
         $etapa = "INGRESADA";
+    } else {
+        $etapa = "EN_PRODUCCION";
     }
 }
 $sql = "
@@ -98,10 +101,10 @@ $stmtH->execute();
 
 
 if ($es_repeticion && $ot_origen_id) {
-
+    // 1. Buscamos el detalle de la OT origen
     $sqlDetalleProduccion = "
-        SELECT especificaciones_tecnicas, sector_responsable
-        FROM detalle_produccion
+        SELECT especificaciones_tecnicas, sector_responsable 
+        FROM detalle_produccion 
         WHERE id_orden = ?
     ";
 
@@ -110,22 +113,23 @@ if ($es_repeticion && $ot_origen_id) {
     $stmtDetalle->execute();
     $resultDetalle = $stmtDetalle->get_result();
 
-    if ($resultDetalle->num_rows > 0) {
+    if ($resultDetalle && $resultDetalle->num_rows > 0) {
         $detalle = $resultDetalle->fetch_assoc();
         $especificaciones_tecnicas = $detalle["especificaciones_tecnicas"];
         $sector_responsable = $detalle["sector_responsable"];
 
+        // 2. Insertamos en la nueva OT
         $sqlInsertDetalleProduccion = "
-            INSERT INTO detalle_produccion
-            (id_orden, especificaciones_tecnicas, sector_responsable)
+            INSERT INTO detalle_produccion 
+            (id_orden, especificaciones_tecnicas, sector_responsable) 
             VALUES (?, ?, ?)
         ";
 
         $stmtInsertDetalle = $conexion->prepare($sqlInsertDetalleProduccion);
         $stmtInsertDetalle->bind_param(
-            "iss",
-            $id_orden,
-            $especificaciones_tecnicas,
+            "iss", 
+            $id_orden, 
+            $especificaciones_tecnicas, 
             $sector_responsable
         );
         $stmtInsertDetalle->execute();
