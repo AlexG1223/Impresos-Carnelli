@@ -1,14 +1,28 @@
-<?php 
-    // Indicar al navegador que la respuesta es JSON
-    header('Content-Type: application/json; charset=utf-8');
+<?php
+// Asegúrate de que NO haya espacios antes de <?php
+header('Content-Type: application/json');
+session_start();
 
-    // Opcional: Si vas a recibir datos POST en JSON, se leerían así:
-    // $input = json_decode(file_get_contents('php://input'), true);
-
+// Verificamos si la sesión existe
+if (!isset($_SESSION["user"]["id"])) {
     echo json_encode([
-        'success' => true, 
-        'message' => 'Usuarios XD'
+        "success" => false,
+        "message" => "No autenticado"
     ]);
-    
     exit;
-?>
+}
+
+// Preparamos la respuesta con lo que realmente guardaste en el login
+$response = [
+    "success" => true,
+    "data" => [
+        "id"     => $_SESSION["user"]["id"],
+        "nombre" => $_SESSION["user"]["nombre"],
+        "rol"    => $_SESSION["user"]["rol"],
+        // Si necesitas los sectores en el frontend, agrégalos aquí:
+        "sectores" => $_SESSION["sectores"] ?? []
+    ]
+];
+
+echo json_encode($response);
+exit;
