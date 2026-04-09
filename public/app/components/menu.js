@@ -26,6 +26,8 @@ administracion: {
     <a data-action="clientes">Clientes</a>
     <a data-action="otsVentas">Ver Ordenes</a>
     <a data-action="reportes">Reportes y Estadísticas</a>
+    <a data-action="eCommerce">Administrar eCommerce</a>
+
     `,
     mobile: `
     
@@ -33,6 +35,7 @@ administracion: {
     <a data-action="clientes">Clientes</a>
     <a data-action="otsVentas">Ver Ordenes</a>
     <a data-action="reportes">Reportes y Estadísticas</a>
+    <a data-action="eCommerce">Administrar eCommerce</a>
     `
   },
 
