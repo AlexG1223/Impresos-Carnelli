@@ -4,10 +4,12 @@ export function ProductList(products) {
     return `
         <div class="admin-panel">
             <header class="header-main">
+             <button id="btn-back-main">VOLVER</button>
                 <h2>IMPRESOS CARNELLI</h2>
                 <button id="btn-add-main">AGREGAR</button>
             </header>
             <main class="content">
+            <div class="table-container">
                 <table class="table-products">
                     <thead>
                         <tr>
@@ -27,6 +29,7 @@ export function ProductList(products) {
                             : '<tr><td colspan="8">No hay productos.</td></tr>'}
                     </tbody>
                 </table>
+            </div>
             </main>
         </div>
     `;

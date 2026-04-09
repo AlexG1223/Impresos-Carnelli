@@ -6,7 +6,7 @@ export function ProductRow(product) {
             <td>${product.stock}</td>
             <td>$${product.price}</td>
             <td>${product.min_quantity}</td>
-            <td>${product.category_id}</td>
+            <td>${product.category_name || 'Sin categoría'}</td>
             <td>${product.is_active ? 'Si' : 'No'}</td>
             <td>
                 <span class="action-delete" data-id="${product.id}" style="cursor:pointer; color:red; text-decoration:underline;">eliminar</span>

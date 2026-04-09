@@ -1,4 +1,4 @@
-export async function getSessionData() {
+export async function getProductList() {
     try {
         const response = await fetch('http://localhost/eCommerce/public_html/api/actions/getProductList.php', {
             method: 'POST',
