@@ -19,16 +19,17 @@ $cantidad_impresiones = intval($_POST['cantidad_impresiones'] ?? 0);
 $sector_destino = $_POST['sector_destino'];
 $direccion_entrega = $_POST['direccion_entrega'] ?? '';
 $total_pago = isset($_POST['total_pago']) && $_POST['total_pago'] === 'on' ? 1 : 0;
+$aclaracion_entrega = $_POST['aclaracion_entrega'] ?? '';
 
 // 1. Actualización de datos básicos de la OT
 $sql = "UPDATE ordenes_trabajo SET 
             presupuesto = ?, fecha_ingreso = ?, fecha_prometida = ?, 
             detalle_trabajo = ?, sena = ?, cantidad_impresiones = ?, 
-            sector_destino = ?, total_pago = ?, direccion_entrega = ?
+            sector_destino = ?, total_pago = ?, direccion_entrega = ?, aclaracion_entrega = ?
         WHERE id = ?";
 
 $stmt = $conexion->prepare($sql);
-$stmt->bind_param("dsssdisssi", $presupuesto, $fecha_ingreso, $fecha_prometida, $detalle_trabajo, $sena, $cantidad_impresiones, $sector_destino, $total_pago, $direccion_entrega, $id_ot);
+$stmt->bind_param("dsssdissssi", $presupuesto, $fecha_ingreso, $fecha_prometida, $detalle_trabajo, $sena, $cantidad_impresiones, $sector_destino, $total_pago, $direccion_entrega, $aclaracion_entrega, $id_ot);
 
 if (!$stmt->execute()) {
     echo json_encode(["success" => false, "message" => "Error al actualizar la OT"]);

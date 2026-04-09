@@ -88,7 +88,6 @@ export function ModalDetalleOT(ot) {
     return `
       <a class="archivo-item imagen-preview" href="${a.url}" target="_blank" rel="noopener">
         <img src="${a.url}" alt="${a.nombre}" />
-        <span>${a.nombre}</span>
       </a>
     `;
   }

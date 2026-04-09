@@ -388,6 +388,12 @@
   transition: transform .2s ease;
 }
 
+@media (min-width: 1024px) {
+  .imagen-preview img {
+    max-width: calc(50% - 10px);
+  }
+}
+
 .imagen-preview img:hover {
   transform: scale(1.05);
 }

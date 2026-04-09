@@ -1,0 +1,213 @@
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   ESTILOS MODERNOS Y RESPONSIVE - IMPRESOS CARNELLI
+   ========================================================================== */
+
+:root {
+  --primary-color: #1d3cff;
+  --primary-hover: #162ecf;
+  --bg-body: #f4f7fa;
+  --text-main: #2d3436;
+  --white: #ffffff;
+  --border-color: #e1e4e8;
+  --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* 1. Contenedor de la vista (aplica a la tabla y al formulario) */
+.admin-panel {
+  max-width: 1200px;
+  margin: 0 auto;
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 2. Header de Sección */
+.header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  flex-wrap: wrap; /* Para móviles */
+  gap: 15px;
+}
+
+.header-main h2 {
+  color: var(--text-main);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* 3. Botones con estilo moderno */
+#btn-back-main, #btn-add-main, #btn-submit-product {
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#btn-back-main {
+  background: var(--white);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+}
+
+#btn-add-main, #btn-submit-product {
+  background: var(--primary-color);
+  color: var(--white);
+  box-shadow: 0 4px 10px rgba(29, 60, 255, 0.2);
+}
+
+#btn-add-main:hover, #btn-submit-product:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(29, 60, 255, 0.3);
+}
+
+/* 4. Tabla Responsive Moderna */
+.table-container {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: var(--shadow-soft);
+  overflow-x: auto; /* Permite scroll horizontal en móviles */
+}
+
+.table-products {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px; /* Asegura que la tabla no se rompa en pantallas muy chicas */
+}
+
+.table-products th {
+  background: #f8f9fb;
+  color: #636e72;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  padding: 15px;
+  text-align: left;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.table-products td {
+  padding: 15px;
+  color: var(--text-main);
+  border-bottom: 1px solid #f1f1f1;
+  font-size: 0.95rem;
+}
+
+.table-products tr:hover {
+  background-color: #fcfdfe;
+}
+
+/* 5. Formulario Profesional */
+.admin-form {
+  background: var(--white);
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  gap: 25px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #4b4b4b;
+}
+
+.form-group input, 
+.form-group select, 
+.form-group textarea {
+  padding: 14px;
+  border: 1.5px solid #e1e1e1;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s;
+  background: #fafafa;
+}
+
+.form-group input:focus, 
+.form-group select:focus {
+  border-color: var(--primary-color);
+  background: var(--white);
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(29, 60, 255, 0.1);
+}
+
+/* Filas combinadas para Precio/Stock */
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+/* 6. Preview de imágenes */
+#image-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+}
+
+#image-preview img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid var(--border-color);
+  transition: transform 0.2s;
+}
+
+#image-preview img:hover {
+  transform: scale(1.05);
+}
+
+/* 7. Ajustes Responsive (Móvil) */
+@media (max-width: 768px) {
+  .header-main {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .admin-form {
+    padding: 20px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .content {
+    padding: 15px; /* Menos espacio en móviles */
+  }
+}

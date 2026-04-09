@@ -49,6 +49,9 @@ export const useMenuActions = () => {
     },
     otsVentas() {
       useOTsVendedor();
+    },
+    eCommerce() {
+      window.location.href = "/ICSoftware/public/UIAdministrator/tienda.php";
     }
   };
 

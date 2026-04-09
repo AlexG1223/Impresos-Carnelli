@@ -28,8 +28,7 @@ INNER JOIN usuarios u
 LEFT JOIN archivos a
     ON a.id_orden = ot.id
 
-WHERE ot.sector_destino = 'DISEÑO'
-  AND ot.etapa = 'INGRESADA'
+WHERE ot.etapa = 'INGRESADA'
 
 GROUP BY ot.id
 ORDER BY ot.fecha_ingreso ASC
