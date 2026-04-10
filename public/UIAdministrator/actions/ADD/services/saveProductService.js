@@ -1,8 +1,7 @@
-// /ICSoftware/public/UIAdministrator/actions/ADD/services/saveProductService.js
 
 export async function saveProduct(formData) {
     try {
-        const response = await fetch('http://localhost/eCommerce/public_html/api/actions/saveProduct.php', {
+        const response = await fetch('/public/tienda/public_html/api/actions/saveProduct.php', {
             method: 'POST',
             body: formData // No enviar headers de Content-Type aquí
         });

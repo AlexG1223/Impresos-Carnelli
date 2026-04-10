@@ -1,7 +1,7 @@
-import { getSessionData } from "/ICSoftware/public/UIAdministrator/services/getSessionData.js";
-import { ProductList } from "/ICSoftware/public/UIAdministrator/components/ProductList.js";
-import { getProductList } from "/ICSoftware/public/UIAdministrator/services/getProductList.js";
-import { deleteProduct } from "/ICSoftware/public/UIAdministrator/services/deleteProductService.js";
+import { getSessionData } from "/public/UIAdministrator/services/getSessionData.js";
+import { ProductList } from "/public/UIAdministrator/components/ProductList.js";
+import { getProductList } from "/public/UIAdministrator/services/getProductList.js";
+import { deleteProduct } from "/public/UIAdministrator/services/deleteProductService.js";
 export async function useAdministrator() {
     const app = document.getElementById("app");
     const res = await getSessionData();
@@ -41,12 +41,12 @@ async function renderDashboard(container) {
     
    
        document.getElementById("btn-back-main")?.addEventListener("click", () => {
-        window.location.href = " /ICSoftware/public/app";
+        window.location.href = " /public/app";
         // Aquí dispararemos el componente de formulario más adelante
     });
     // Evento Agregar
     document.getElementById("btn-add-main")?.addEventListener("click", () => {
-         window.location.href = "/ICSoftware/public/UIAdministrator/actions/ADD/agregarProducto.php";
+         window.location.href = "/public/UIAdministrator/actions/ADD/agregarProducto.php";
         // Aquí dispararemos el componente de formulario más adelante
     });
 

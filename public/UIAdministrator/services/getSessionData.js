@@ -1,6 +1,6 @@
 export async function getSessionData() {
     try {
-        const response = await fetch('/ICSoftware/public/api/administracion/session/getSessionData.php', {
+        const response = await fetch('/public/api/administracion/session/getSessionData.php', {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
         });
