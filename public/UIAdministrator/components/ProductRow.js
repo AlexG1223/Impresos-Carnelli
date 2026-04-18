@@ -10,7 +10,7 @@ export function ProductRow(product) {
             <td>${product.is_active ? 'Si' : 'No'}</td>
             <td>
                 <span class="action-delete" data-id="${product.id}" style="cursor:pointer; color:red; text-decoration:underline;">eliminar</span>
-                <span class="action-edit" data-id="${product.id}" style="cursor:pointer; color:blue; text-decoration:underline;">editar</span>
+               <!-- <span class="action-edit" data-id="${product.id}" style="cursor:pointer; color:blue; text-decoration:underline;">editar</span>
             </td>
         </tr>
     `;

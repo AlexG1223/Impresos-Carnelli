@@ -28,12 +28,18 @@ async function renderForm(container) {
     // 1. Cargar categorías en el Select (Simulado)
     const selectCat = document.getElementById("select-categories");
     // const categories = await getCategories(); 
-    const categories = [
-        {id: 1, name: 'Pizzería'},
-        {id: 2, name: 'Cafetería'},
-        {id: 3, name: 'Oficina'}
-    ]; // Esto vendrá de tu BD
-    
+const categories = [
+    {id: 1, name: 'Cafeterías'},
+    {id: 2, name: 'Confiterías'},
+    {id: 3, name: 'Fakeaway'},
+    {id: 4, name: 'Fast food'},
+    {id: 5, name: 'Food trucks'},
+    {id: 6, name: 'Hamburgueserías'},
+    {id: 7, name: 'Panaderías'},
+    {id: 8, name: 'Pastelerías'},
+    {id: 9, name: 'Pizzerías'},
+    {id: 10, name: 'Restaurantes'}
+];
     selectCat.innerHTML = '<option value="">Seleccione una categoría</option>' + 
         categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
 
