@@ -3,7 +3,10 @@ session_start();
 
 header("Content-Type: application/json");
 
-if (!isset($_SESSION["user"]["id"])) {
+// Bypass authentication if a valid api_token is provided (e.g., for eCommerce automated orders)
+$is_api_call = (isset($_POST["api_token"]) && $_POST["api_token"] === "IC_SECRET_2026_EC");
+
+if (!isset($_SESSION["user"]["id"]) && !$is_api_call) {
     echo json_encode(["success" => false, "message" => "No autenticado"]);
     exit;
 }
@@ -21,7 +24,8 @@ if (!$id_cliente || !$fecha_ingreso) {
 }
 
 
-$id_vendedor = (int)$_SESSION["user"]["id"];
+// Use session user ID or provided vendedor ID for API calls (defaulting to 1 for system/eCommerce)
+$id_vendedor = isset($_SESSION["user"]["id"]) ? (int)$_SESSION["user"]["id"] : (int)($_POST["id_vendedor"] ?? 1);
 
 $detalle_trabajo        = $_POST["detalle_trabajo"] ?? null;
 $presupuesto            = $_POST["presupuesto"] ?? null;
