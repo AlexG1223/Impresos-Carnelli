@@ -11,6 +11,7 @@ import { loadViewCSS } from "/public/app/utils/viewCssManager.js";
 import { FormularioEditarOT } from "../components/FormularioEditarOT.js";
 import { editarOTService } from "../services/editarOTService.js"; 
 import { getOTService } from "../services/getOTService.js";
+import { togglePagoService } from "../services/togglePagoService.js";
 import { activarAgregarArchivosOT, obtenerDatosArchivosEdit } from "../utils/activarAgregarArchivosOT.js";
 
 
@@ -52,6 +53,19 @@ if (!accion) return;
     if (!ot) return;
 
     switch (accion) {
+      case "toggle-pago":
+        const pRes = await togglePagoService(idOT);
+        if (pRes.success) {
+          const isPagado = pRes.nuevo_pago == 1;
+          ot.total_pago = pRes.nuevo_pago;
+          btn.classList.toggle("pagado", isPagado);
+          btn.innerHTML = isPagado ? "💰" : "💸";
+          btn.title = isPagado ? "Marcar como pendiente de pago" : "Marcar como pagada totalmente";
+        } else {
+          alert(pRes.message || "Error al actualizar el pago");
+        }
+        break;
+
       case "view":
         modalContainer.innerHTML = ModalDetalleOT(ot);
 
@@ -68,7 +82,13 @@ if (!accion) return;
 
       case "edit":
          const dataOT = await getOTService(ot.id_ot);
-       container.innerHTML = "cargando formulario de edición...";
+       
+       if (!dataOT) {
+         alert("Error al cargar los datos de la OT");
+         container.innerHTML = TablaOTsVendedor(ots);
+         return;
+       }
+
        container.innerHTML = FormularioEditarOT(dataOT)
 
 

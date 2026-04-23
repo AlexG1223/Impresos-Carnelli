@@ -42,7 +42,7 @@
   padding: 28px;
   border-radius: var(--radius);
   max-width: 900px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
 }
 
 /* =====================
@@ -137,20 +137,60 @@
     grid-template-columns: 1fr;
   }
 }
-.cliente-selector {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 18px;
+
+.autocomplete-container {
+  position: relative;
+  width: 100%;
 }
 
-.cliente-selector input {
-  flex: 1;
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid var(--border);
+  border-top: none;
+  z-index: 99;
+  top: calc(100% - 18px);
+  /* 18px is the margin-bottom of inputs */
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  border-radius: 0 0 10px 10px;
+  max-height: 250px;
+  overflow-y: auto;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.autocomplete-item {
+  padding: 12px 15px;
+  cursor: pointer;
+  border-bottom: 1px solid #f3f4f6;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.autocomplete-item:last-child {
+  border-bottom: none;
+}
+
+.autocomplete-item:hover {
+  background-color: #f9fafb;
+}
+
+.autocomplete-item strong {
+  display: block;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.autocomplete-item small {
+  color: var(--muted);
+  font-size: 12px;
 }
 
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -181,6 +221,7 @@
 .clientes-list li:hover {
   background: #f3f4f6;
 }
+
 /* ===== Overlay ===== */
 .modal-overlay {
   position: fixed;
@@ -225,6 +266,7 @@
 .client-list::-webkit-scrollbar {
   width: 6px;
 }
+
 .client-list::-webkit-scrollbar-thumb {
   background: #c7c7c7;
   border-radius: 6px;
@@ -279,11 +321,13 @@
     opacity: 0;
     transform: scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
   }
 }
+
 /* =====================
    MODAL OT REPETIDA
 ===================== */
@@ -318,7 +362,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.18);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
   animation: fadeInScale 0.2s ease;
 }
 
@@ -396,6 +440,7 @@
   background: #c7c7c7;
   border-radius: 6px;
 }
+
 .buscador-ot-repetida {
   width: 100%;
   margin-bottom: 12px;

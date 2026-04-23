@@ -64,7 +64,9 @@ function cargarOTRepetidaEnFormulario(data) {
     `Cliente asociado a OT #${orden_trabajo.id_cliente}`;
 
 
-  document.getElementById("btnSeleccionarCliente").disabled = true;
+  const inputNombre = document.getElementById("clienteNombre");
+  inputNombre.readOnly = true;
+  inputNombre.disabled = true;
 
   form.querySelector('[name="direccion_entrega"]').value =
     orden_trabajo.direccion_entrega || "";

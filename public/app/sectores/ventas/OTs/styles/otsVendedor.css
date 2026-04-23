@@ -56,8 +56,11 @@ td {
 .btn-ver { background: #e0f2fe; }
 .btn-editar { background: #fef3c7; }
 .btn-borrar { background: #fee2e2; }
+.btn-pago { background: #f0fdf4; color: #166534; border: 1px solid #dcfce7 !important; }
+.btn-pago.pagado { background: #22c55e; color: #fff; border: 1px solid #16a34a !important; }
 
 .btn-borrar:hover { background: #fecaca; }
+.btn-pago:hover { opacity: 0.8; }
 
 .badge {
   padding: 4px 8px;

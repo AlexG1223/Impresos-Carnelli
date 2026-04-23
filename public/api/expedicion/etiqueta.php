@@ -9,8 +9,8 @@ if (!file_exists($imgPath)) {
     die('NO EXISTE LA IMAGEN: ' . $imgPath);
 }
 
-$id_orden = (int)($_GET["id_orden"] ?? 0);
-$cantidad = (int)($_GET["cantidad"] ?? 1);
+$id_orden = (int) ($_GET["id_orden"] ?? 0);
+$cantidad = (int) ($_GET["cantidad"] ?? 1);
 
 if ($cantidad < 1) {
     $cantidad = 1;
@@ -34,7 +34,8 @@ $stmt->execute();
 $result = $stmt->get_result();
 $orden = $result->fetch_assoc();
 
-function writeIfExists($pdf, $html) {
+function writeIfExists($pdf, $html)
+{
     if (!empty(trim(strip_tags($html)))) {
         $pdf->writeHTML($html, true, false, true, false);
     }
@@ -75,7 +76,7 @@ for ($i = 1; $i <= $cantidad; $i++) {
     $pdf->SetXY(3, 80);
     $pdf->Cell(0, 0, 'ENVÍO', 0, 0, 'L');
     $pdf->SetXY(73, 80);
-    $pdf->Cell(0, 0, (string)$i, 0, 0, 'L');
+    $pdf->Cell(0, 0, (string) $i, 0, 0, 'L');
 
     $pdf->SetFont('helvetica', '', 16);
     $pdf->SetXY(0, 85);

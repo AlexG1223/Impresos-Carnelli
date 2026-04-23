@@ -37,7 +37,7 @@ export function FormularioEditarOT(ot) {
                 </button>
 
                 <img 
-                  src="/ICSoftware/${a.ruta_archivo}" 
+                  src="/${a.ruta_archivo}" 
                   class="archivo-img"
                   loading="lazy"
                 />
@@ -56,7 +56,7 @@ export function FormularioEditarOT(ot) {
                   ✕
                 </button>
 
-                <a href="/ICSoftware/${a.ruta_archivo}" target="_blank" rel="noopener">
+                <a href="/${a.ruta_archivo}" target="_blank" rel="noopener">
                   📄 Ver PDF
                 </a>
 
@@ -74,7 +74,7 @@ export function FormularioEditarOT(ot) {
                 ✕
               </button>
 
-              <a href="/ICSoftware/${a.ruta_archivo}" target="_blank" rel="noopener">
+              <a href="/${a.ruta_archivo}" target="_blank" rel="noopener">
                 Archivo
               </a>
 
@@ -128,10 +128,7 @@ export function FormularioEditarOT(ot) {
         <option value="SERIGRAFIA" ${ot.sector_destino === "SERIGRAFIA" ? "selected" : ""}>SERIGRAFIA</option>
       </select>
 
-      <label>
-        <input type="checkbox" name="total_pago" ${ot.total_pago ? "checked" : ""}/>
-        Pagada en su totalidad
-      </label>
+
 
       <hr>
 

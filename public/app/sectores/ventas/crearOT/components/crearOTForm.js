@@ -11,17 +11,15 @@ export function crearOTForm() {
       </div>
 
       <label>Cliente *</label>
-      <div class="cliente-selector">
+      <div class="autocomplete-container">
         <input
           type="text"
           id="clienteNombre"
-          placeholder="Seleccionar cliente..."
-          readonly
+          placeholder="Escribe para buscar cliente..."
           required
+          autocomplete="off"
         />
-        <button type="button" id="btnSeleccionarCliente">
-          Elegir
-        </button>
+        <div id="autocomplete-list" class="autocomplete-items"></div>
       </div>
 
       <input type="hidden" name="id_cliente" id="id_cliente" />

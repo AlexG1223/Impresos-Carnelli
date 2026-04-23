@@ -3,7 +3,7 @@ require_once __DIR__ . "/../conexion.php";
 $conexion = conectar_bd();
 
 $input = json_decode(file_get_contents("php://input"), true);
-$otId = (int)($input ?? 0);
+$otId = (int) ($input ?? 0);
 
 if ($otId <= 0) {
   echo json_encode([
