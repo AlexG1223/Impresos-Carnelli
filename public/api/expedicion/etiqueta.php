@@ -18,12 +18,9 @@ if ($cantidad < 1) {
 
 $sql = "
 SELECT
-    ot.direccion_entrega,
-    ot.aclaracion_entrega,
     c.nombre AS cliente_nombre,
     c.telefono AS cliente_telefono,
-    c.localidad AS cliente_localidad,
-    c.departamento AS cliente_departamento
+    c.direccion AS cliente_direccion
 FROM ordenes_trabajo ot
 INNER JOIN clientes c ON ot.id_cliente = c.id
 WHERE ot.id = ?
@@ -63,10 +60,7 @@ for ($i = 1; $i <= $cantidad; $i++) {
 
     writeIfExists($pdf, !empty($orden['cliente_nombre']) ? 'SR.: <b>' . htmlspecialchars($orden['cliente_nombre']) . '</b>' : '');
     writeIfExists($pdf, !empty($orden['cliente_telefono']) ? 'Teléfono: <b>' . htmlspecialchars($orden['cliente_telefono']) . '</b>' : '');
-    writeIfExists($pdf, !empty($orden['direccion_entrega']) ? 'Dirección: <b>' . htmlspecialchars($orden['direccion_entrega']) . '</b>' : '');
-    writeIfExists($pdf, !empty($orden['aclaracion_entrega']) ? 'Aclaración: <b>' . htmlspecialchars($orden['aclaracion_entrega']) . '</b>' : '');
-    writeIfExists($pdf, !empty($orden['cliente_localidad']) ? 'Localidad: <b>' . htmlspecialchars($orden['cliente_localidad']) . '</b>' : '');
-    writeIfExists($pdf, !empty($orden['cliente_departamento']) ? 'Departamento: <b>' . htmlspecialchars($orden['cliente_departamento']) . '</b>' : '');
+    writeIfExists($pdf, !empty($orden['cliente_direccion']) ? 'Dirección: <b>' . htmlspecialchars($orden['cliente_direccion']) . '</b>' : '');
 
     $pdf->SetFont('helvetica', 'B', 16);
     $pdf->SetXY(70, 73);

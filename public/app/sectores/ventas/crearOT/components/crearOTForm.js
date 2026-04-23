@@ -36,12 +36,11 @@ export function crearOTForm() {
       <label>Detalle del Trabajo</label>
       <textarea name="detalle_trabajo"></textarea>
 
-      <label>Dirección de Entrega</label>
-      <input name="direccion_entrega" type="text" />
-
-      
-      <label>Aclaración de Entrega</label>
-      <textarea name="aclaracion_entrega"></textarea>
+      <div id="archivosExistentesContainer" style="display:none;" class="archivos-existentes-aviso">
+        <strong>📁 Archivos de la OT original:</strong>
+        <p>Estos archivos se copiarán automáticamente a la nueva orden.</p>
+        <div id="listaArchivosExistentes" class="archivos-grid-preview"></div>
+      </div>
 
       <label>Seña</label>
       <input name="sena" type="number" step="0.01" />

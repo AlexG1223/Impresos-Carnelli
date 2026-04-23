@@ -60,19 +60,33 @@ function cargarOTRepetidaEnFormulario(data) {
     ` (OT #${orden_trabajo.id})`;
 
   document.getElementById("id_cliente").value = orden_trabajo.id_cliente;
-  document.getElementById("clienteNombre").value =
-    `Cliente asociado a OT #${orden_trabajo.id_cliente}`;
+  document.getElementById("clienteNombre").value = orden_trabajo.cliente_nombre;
+
+  // Mostrar archivos existentes
+  const archivosContainer = document.getElementById("archivosExistentesContainer");
+  const listaArchivos = document.getElementById("listaArchivosExistentes");
+  
+  if (archivos && archivos.length > 0) {
+    archivosContainer.style.display = "block";
+    listaArchivos.innerHTML = archivos.map(a => {
+        const esImagen = /\.(jpg|jpeg|png|gif|webp)$/i.test(a.ruta_archivo);
+        return `
+          <div class="archivo-item-preview">
+            ${esImagen 
+              ? `<img src="/${a.ruta_archivo}" style="width:50px; height:50px; object-fit:cover; border-radius:4px;">` 
+              : `<span style="font-size: 20px;">📄</span>`
+            }
+          </div>
+        `;
+    }).join("");
+  } else {
+    archivosContainer.style.display = "none";
+  }
 
 
   const inputNombre = document.getElementById("clienteNombre");
   inputNombre.readOnly = true;
   inputNombre.disabled = true;
-
-  form.querySelector('[name="direccion_entrega"]').value =
-    orden_trabajo.direccion_entrega || "";
-
-  form.querySelector('[name="aclaracion_entrega"]').value =
-    orden_trabajo.aclaracion_entrega || "";
 
   form.querySelector('[name="detalle_trabajo"]').value =
     orden_trabajo.detalle_trabajo || "";
