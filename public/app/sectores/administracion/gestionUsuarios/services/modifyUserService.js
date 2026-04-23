@@ -1,5 +1,5 @@
 export async function ModifyUserService(updatedUser) {
- const res = await fetch("/ICSoftware/public/api/users/update.php", {
+ const res = await fetch("/public/api/users/update.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"

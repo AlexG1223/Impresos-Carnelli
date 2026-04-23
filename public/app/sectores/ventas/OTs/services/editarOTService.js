@@ -5,7 +5,7 @@ console.group("📡 Petición API: editarOTService");
   }
   console.groupEnd();
   try {
-    const response = await fetch('/ICSoftware/public/api/ordenes_trabajo/edit.php', {
+    const response = await fetch('/public/api/ordenes_trabajo/edit.php', {
       method: 'POST',
       body: formData
     });

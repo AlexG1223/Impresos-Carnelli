@@ -1,7 +1,7 @@
 
 export async function getTodasOTs() {
   try {
-    const res = await fetch("/ICSoftware/public/api/administracion/ots/getTodasOTs.php");
+    const res = await fetch("/public/api/administracion/ots/getTodasOTs.php");
 
     if (!res.ok) {
       throw new Error("Error al obtener OTs de administración");

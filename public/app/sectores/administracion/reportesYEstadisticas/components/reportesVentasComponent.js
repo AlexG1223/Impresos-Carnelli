@@ -134,19 +134,19 @@ document.querySelectorAll(".btn-comision").forEach(btn => {
   btn.addEventListener("click", async () => {
     const fila = btn.closest("tr");
     const idOT = btn.dataset.id;
-    const estadoActual = Number(btn.dataset.estado);
-    const nuevoEstado = estadoActual === 1 ? 0 : 1;
 
     btn.disabled = true;
 
     try {
-      const res = await cambiarEstadoComisionService(idOT, nuevoEstado);
+      const res = await cambiarEstadoComisionService(idOT);
 
       if (!res.success) {
         alert(res.message || "Error al cambiar estado de comisión");
         btn.disabled = false;
         return;
       }
+
+      const nuevoEstado = res.comision_paga;
 
       btn.dataset.estado = nuevoEstado;
       btn.textContent = nuevoEstado ? "Paga" : "No paga";

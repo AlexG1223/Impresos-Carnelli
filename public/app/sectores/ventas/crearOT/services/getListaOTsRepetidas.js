@@ -1,7 +1,7 @@
 export async function getListaOTsRepetidas() {
 try {
     const res = await fetch(
-      "/ICSoftware/public/api/ordenes_trabajo/getOTs.php",
+      "/public/api/ordenes_trabajo/getOTs.php",
       {
         method: "GET",
         headers: {

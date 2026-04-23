@@ -51,7 +51,7 @@ export const useMenuActions = () => {
       useOTsVendedor();
     },
     eCommerce() {
-      window.location.href = "/ICSoftware/public/UIAdministrator/tienda.php";
+      window.location.href = "/public/UIAdministrator/tienda.php";
     }
   };
 
@@ -88,7 +88,7 @@ const showDefaultBackground = () => {
 
   main.innerHTML = `
     <div class="default-bg">
-      <img src="/ICSoftware/public/assets/img/ICLogo.jpeg" alt="IC Software">
+      <img src="/public/assets/img/ICLogo.jpeg" alt="IC Software">
     </div>
   `;
 };

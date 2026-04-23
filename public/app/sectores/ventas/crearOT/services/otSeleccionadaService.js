@@ -1,7 +1,7 @@
 export async function otSeleccionadaService(otId) { 
 try {
     const res = await fetch(
-      "/ICSoftware/public/api/ordenes_trabajo/getOTseleccionada.php",
+      "/public/api/ordenes_trabajo/getOTseleccionada.php",
  {
         method: "POST",
         headers: {

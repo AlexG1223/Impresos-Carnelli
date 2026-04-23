@@ -5,10 +5,14 @@ export function normalizarImpresiones(ordenes) {
   const operarios = {};
 
   ordenes.forEach(o => {
+    if (!o.operario || !o.operario.nombre) return;
+    
     const fecha = o.fechaIngreso;
     const cant = Number(o.cantidadImpresiones) || 0;
     const nombre = o.operario.nombre;
-    const sector = o.sector;
+    const sector = o.sector ? o.sector.toUpperCase() : null;
+
+    if (!sector || (sector !== "OFFSET" && sector !== "SERIGRAFIA")) return;
 
     if (!generalPorFecha[fecha]) generalPorFecha[fecha] = 0;
     generalPorFecha[fecha] += cant;

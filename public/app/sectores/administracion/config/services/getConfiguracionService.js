@@ -3,7 +3,7 @@
 export async function getConfiguracionService() {
   try {
     const res = await fetch(
-      "/ICSoftware/public/api/administracion/getConfiguracion.php",
+      "/public/api/administracion/getConfiguracion.php",
       {
         method: "GET",
         headers: {

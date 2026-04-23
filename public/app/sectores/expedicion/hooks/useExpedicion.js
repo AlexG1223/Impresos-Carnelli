@@ -1,7 +1,7 @@
 import { getExpedicionService } from "../services/expedicionService.js";
 import { expedicionTable } from "../components/expedicionTable.js";
 import { expedicionModal } from "../components/expedicionModal.js";
-import { loadViewCSS } from "/ICSoftware/public/app/utils/viewCssManager.js";
+import { loadViewCSS } from "/public/app/utils/viewCssManager.js";
 import { getExpedicionDetalleService } from "../services/getExpedicionDetalleService.js";
 import { saveExpedicionService } from "../services/saveExpedicionService.js";
 
@@ -92,7 +92,7 @@ modal.querySelector("#crear-etiqueta").addEventListener("click", () => {
   }
 
   window.open(
-    `/ICSoftware/public/api/expedicion/etiqueta.php?id_orden=${otId}&cantidad=${cantidad}`,
+    `/public/api/expedicion/etiqueta.php?id_orden=${otId}&cantidad=${cantidad}`,
     "_blank"
   );
 });
