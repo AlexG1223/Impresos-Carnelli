@@ -110,6 +110,9 @@ export function FormularioEditarOT(ot) {
       <label>Detalle del Trabajo</label>
       <textarea name="detalle_trabajo">${ot.detalle_trabajo}</textarea>
 
+      <label>Especificaciones Técnicas (Producción)</label>
+      <textarea name="especificaciones_tecnicas" placeholder="Aclaraciones para el taller...">${ot.especificaciones_tecnicas || ''}</textarea>
+
       <label>Seña</label>
       <input name="sena" type="number" step="0.01" value="${ot.sena}" />
 

@@ -44,10 +44,12 @@ SELECT
     ot.total_pago, 
     ot.aclaracion_entrega,
     c.nombre AS cliente_nombre,
-    u.nombre AS vendedor_nombre
+    u.nombre AS vendedor_nombre,
+    dp.especificaciones_tecnicas
 FROM ordenes_trabajo ot
 JOIN clientes c ON ot.id_cliente = c.id
 JOIN usuarios u ON ot.id_vendedor = u.id
+LEFT JOIN detalle_produccion dp ON ot.id = dp.id_orden
 WHERE ot.id = ?
 ";
 
