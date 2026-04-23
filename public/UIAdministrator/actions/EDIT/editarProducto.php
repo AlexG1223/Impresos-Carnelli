@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../styles/administrator.css">
     <link rel="icon" type="image/png" href="../../assets/img/ICLogo.jpeg">
-    <title>Agregar Producto</title>
+    <title>Editar Producto</title>
 </head>
 <body>
 <div id="app"></div>
 
-    <script type="module" src="./hooks/useAddProduct.js"></script>
+    <script type="module" src="./hooks/useEditProduct.js"></script>
 </body>
 </html>

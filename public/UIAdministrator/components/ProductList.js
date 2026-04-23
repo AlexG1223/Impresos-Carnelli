@@ -13,14 +13,14 @@ export function ProductList(products) {
                 <table class="table-products">
                     <thead>
                         <tr>
-                            <th>nombre</th>
-                            <th>descripcion</th>
-                            <th>stock</th>
-                            <th>precio</th>
-                            <th>cant. min.</th>
-                            <th>categoria</th>
-                            <th>activo</th>
-                            <th>acciones</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Stock</th>
+                            <th>Precio</th>
+                            <th>Cant. Min.</th>
+                            <th>Categoría</th>
+                            <th>Activo</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody id="product-list-body">

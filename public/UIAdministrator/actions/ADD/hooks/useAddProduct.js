@@ -1,8 +1,8 @@
-import { getSessionData } from "/ICSoftware/public/UIAdministrator/services/getSessionData.js";
-import { formComponent } from "/ICSoftware/public/UIAdministrator/actions/ADD/components/formComponent.js";
+import { getSessionData } from "../../../services/getSessionData.js";
+import { formComponent } from "../components/formComponent.js";
 // Importarás tus servicios aquí
 // import { getCategories } from "../../services/getCategories.js";
-import { saveProduct } from "/ICSoftware/public/UIAdministrator/actions/ADD/services/saveProductService.js";
+import { saveProduct } from "../services/saveProductService.js";
 
 export async function useAddProduct() {
     const app = document.getElementById("app");
@@ -45,7 +45,7 @@ const categories = [
 
     // 2. Listener Volver
     document.getElementById("btn-back-main")?.addEventListener("click", () => {
-        window.location.href = "/ICSoftware/public/UIAdministrator/tienda.php";
+        window.location.href = "/public/UIAdministrator/tienda.php";
     });
 
     // 3. Manejo del Formulario
@@ -63,7 +63,7 @@ const categories = [
         if(response.status === "success") {
              alert("Producto agregado con éxito");
              window.location.href = "tienda.php";
-             window.location.href = "/ICSoftware/public/UIAdministrator/tienda.php";
+             window.location.href = "/public/UIAdministrator/tienda.php";
         } else {
              alert("Error al agregar producto: " + response.message);
         }
