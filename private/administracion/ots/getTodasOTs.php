@@ -22,6 +22,7 @@ $sql = "
         ot.detalle_trabajo,
         ot.cantidad_impresiones,
         ot.direccion_entrega,
+        ot.total_pago,
 
  CASE
     WHEN ot.etapa = 'EXPEDICION' AND de.id IS NOT NULL THEN 'FINALIZADA'
@@ -72,6 +73,7 @@ if (!isset($ots[$idOT])) {
         'detalle_trabajo' => $row['detalle_trabajo'],
         'cantidad_impresiones' => $row['cantidad_impresiones'],
         'direccion_entrega' => $row['direccion_entrega'] ?? null,
+        'total_pago' => $row['total_pago'],
         'especificaciones_tecnicas' => $row['especificaciones_tecnicas'],
         'archivos' => []
     ];
