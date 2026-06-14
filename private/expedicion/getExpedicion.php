@@ -18,6 +18,7 @@ $sql = "
 SELECT 
     ot.id,
     c.nombre AS cliente,
+    u.nombre AS vendedor,
     CASE 
         WHEN de.id IS NULL THEN 'PENDIENTE'
         ELSE 'LISTO'
@@ -25,6 +26,8 @@ SELECT
 FROM ordenes_trabajo ot
 INNER JOIN clientes c 
     ON c.id = ot.id_cliente
+INNER JOIN usuarios u
+    ON u.id = ot.id_vendedor
 LEFT JOIN detalle_expedicion de
     ON de.id_orden = ot.id
 WHERE ot.etapa = 'EXPEDICION'

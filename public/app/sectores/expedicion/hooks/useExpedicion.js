@@ -1,5 +1,5 @@
 import { getExpedicionService } from "../services/expedicionService.js";
-import { expedicionTable } from "../components/expedicionTable.js";
+import { expedicionTable, activarBuscadorExpedicion } from "../components/expedicionTable.js";
 import { expedicionModal } from "../components/expedicionModal.js";
 import { loadViewCSS } from "/public/app/utils/viewCssManager.js";
 import { getExpedicionDetalleService } from "../services/getExpedicionDetalleService.js";
@@ -17,6 +17,7 @@ async function renderExpedicionTable(section) {
   }
 
   section.innerHTML = expedicionTable(res.data);
+  activarBuscadorExpedicion();
 
   section.querySelectorAll(".btn-ver-expedicion").forEach(btn => {
     btn.addEventListener("click", async () => {
