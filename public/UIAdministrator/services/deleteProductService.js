@@ -1,7 +1,8 @@
+// public/UIAdministrator/services/deleteProductService.js
 
 export async function deleteProduct(id) {
     try {
-        const response = await fetch('/public/tienda/public_html/api/actions/deleteProduct.php', {
+        const response = await fetch('/public/tienda/api/actions/deleteProduct.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id: id })

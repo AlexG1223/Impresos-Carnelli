@@ -55,6 +55,14 @@ export const useMenuActions = () => {
     }
   };
 
+  const closeMobileMenu = () => {
+    const menu = document.getElementById("mobileMenu");
+    if (menu && menu.classList.contains("open")) {
+      menu.classList.remove("open");
+      document.body.style.overflow = "auto";
+    }
+  };
+
   const executeAction = (action) => {
     const fn = actions[action];
 
@@ -64,6 +72,7 @@ export const useMenuActions = () => {
     }
 
     fn();
+    closeMobileMenu();
   };
 
   const bindMenuActions = () => {
@@ -88,7 +97,7 @@ const showDefaultBackground = () => {
 
   main.innerHTML = `
     <div class="default-bg">
-      <img src="http://impresoscarnelli.com/public/assets/img/ICLogo.jpeg" alt="IC Software">
+      <img src="/public/assets/img/ICLogo.jpeg" alt="IC Software">
     </div>
   `;
 };

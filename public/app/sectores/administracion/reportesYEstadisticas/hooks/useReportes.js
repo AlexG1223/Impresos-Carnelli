@@ -1,4 +1,4 @@
-import { loadViewCSS } from "https://impresoscarnelli.com/public/app/utils/viewCssManager.js";
+import { loadViewCSS } from "../../../../utils/viewCssManager.js";
 import { renderReportes } from "../components/reportesComponent.js";
 import { generarReporteImpresiones } from "../services/generarReporteImpresiones.js";
 import { reporteImpresionesComponent } from "../components/reporteImpresionesComponent.js";
@@ -9,6 +9,7 @@ import { normalizarVentas } from "../utils/normalizarVentas.js";
 import { normalizarImpresiones } from "../utils/normalizarImpresiones.js";
 import { graficasResumenComponent } from "../components/graficasResumenComponent.js";
 import { graficasOperariosListComponent } from "../components/graficasOperariosListComponent.js";
+import { graficasVendedoresListComponent } from "../components/graficasVendedoresListComponent.js";
 
 import { generarReporteDisenio } from "../services/generarReporteDisenio.js";
 import { reporteDisenioComponent } from "../components/reporteDisenioComponent.js";
@@ -95,6 +96,7 @@ graficasResumenComponent({
   ventas: ventasNorm,
   impresiones: impresionesNorm.general
 });
+graficasVendedoresListComponent(ventasNorm.vendedores);
 graficasOperariosListComponent(impresionesNorm.operarios);
     }
 

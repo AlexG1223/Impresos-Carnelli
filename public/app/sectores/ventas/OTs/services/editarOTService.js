@@ -5,8 +5,7 @@ console.group("📡 Petición API: editarOTService");
   }
   console.groupEnd();
   try {
-    console.log('Enviando datos de OT para editar:', Array.from(formData.entries()));
-    const response = await fetch('https://impresoscarnelli.com/public/api/ordenes_trabajo/edit.php', {
+    const response = await fetch('/public/api/ordenes_trabajo/edit.php', {
       method: 'POST',
       body: formData
     });

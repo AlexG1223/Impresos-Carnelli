@@ -2,7 +2,7 @@
 
 export async function getExpedicionService() {
   try {
-    const res = await fetch("http://impresoscarnelli.com/public/api/expedicion/getExpedicion.php");
+    const res = await fetch("/public/api/expedicion/getExpedicion.php");
 
     if (!res.ok) {
       throw new Error("Error al obtener OTs de expedición");

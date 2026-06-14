@@ -1,6 +1,6 @@
 export async function getProductList() {
     try {
-        const response = await fetch('/public/tienda/public_html/api/actions/getProductList.php', {
+        const response = await fetch('/public/tienda/api/actions/getProductList.php', {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
         });

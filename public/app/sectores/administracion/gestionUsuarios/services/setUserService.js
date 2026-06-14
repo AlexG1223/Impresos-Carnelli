@@ -1,5 +1,5 @@
 export async function createUserService(user) {
-  const res = await fetch("http://impresoscarnelli.com/public/api/users/create.php", {
+  const res = await fetch("/public/api/users/create.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"

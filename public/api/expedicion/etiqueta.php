@@ -9,8 +9,8 @@ if (!file_exists($imgPath)) {
     die('NO EXISTE LA IMAGEN: ' . $imgPath);
 }
 
-$id_orden = (int)($_GET["id_orden"] ?? 0);
-$cantidad = (int)($_GET["cantidad"] ?? 1);
+$id_orden = (int) ($_GET["id_orden"] ?? 0);
+$cantidad = (int) ($_GET["cantidad"] ?? 1);
 
 if ($cantidad < 1) {
     $cantidad = 1;
@@ -18,12 +18,13 @@ if ($cantidad < 1) {
 
 $sql = "
 SELECT
-    ot.direccion_entrega,
-    ot.aclaracion_entrega,
     c.nombre AS cliente_nombre,
     c.telefono AS cliente_telefono,
+    c.direccion AS cliente_direccion,
     c.localidad AS cliente_localidad,
-    c.departamento AS cliente_departamento
+    c.departamento AS cliente_departamento,
+    c.rut AS cliente_rut,
+    c.observaciones AS cliente_observaciones
 FROM ordenes_trabajo ot
 INNER JOIN clientes c ON ot.id_cliente = c.id
 WHERE ot.id = ?
@@ -34,9 +35,11 @@ $stmt->execute();
 $result = $stmt->get_result();
 $orden = $result->fetch_assoc();
 
-function writeIfExists($pdf, $html) {
-    if (!empty(trim(strip_tags($html)))) {
-        $pdf->writeHTML($html, true, false, true, false);
+function writeIfExists($pdf, $label, $value)
+{
+    $val = trim((string) $value);
+    if ($val !== '') {
+        $pdf->writeHTML($label . ' <b>' . htmlspecialchars($val) . '</b>', true, false, true, false);
     }
 }
 
@@ -60,12 +63,13 @@ for ($i = 1; $i <= $cantidad; $i++) {
     $pdf->SetY(30);
     $pdf->Cell(0, 0, $fechahoy, 0, 1, 'R');
 
-    writeIfExists($pdf, !empty($orden['cliente_nombre']) ? 'SR.: <b>' . htmlspecialchars($orden['cliente_nombre']) . '</b>' : '');
-    writeIfExists($pdf, !empty($orden['cliente_telefono']) ? 'Teléfono: <b>' . htmlspecialchars($orden['cliente_telefono']) . '</b>' : '');
-    writeIfExists($pdf, !empty($orden['direccion_entrega']) ? 'Dirección: <b>' . htmlspecialchars($orden['direccion_entrega']) . '</b>' : '');
-    writeIfExists($pdf, !empty($orden['aclaracion_entrega']) ? 'Aclaración: <b>' . htmlspecialchars($orden['aclaracion_entrega']) . '</b>' : '');
-    writeIfExists($pdf, !empty($orden['cliente_localidad']) ? 'Localidad: <b>' . htmlspecialchars($orden['cliente_localidad']) . '</b>' : '');
-    writeIfExists($pdf, !empty($orden['cliente_departamento']) ? 'Departamento: <b>' . htmlspecialchars($orden['cliente_departamento']) . '</b>' : '');
+    writeIfExists($pdf, 'SR.:', $orden['cliente_nombre']);
+    writeIfExists($pdf, 'TELEFONO.:', $orden['cliente_telefono']);
+    writeIfExists($pdf, 'DIRECCION.:', $orden['cliente_direccion']);
+    writeIfExists($pdf, 'LOCALIDAD.:', $orden['cliente_localidad']);
+    writeIfExists($pdf, 'DEPARTAMENTO.:', $orden['cliente_departamento']);
+    writeIfExists($pdf, 'RUT.:', $orden['cliente_rut']);
+    writeIfExists($pdf, 'OBSERVACIONES.:', $orden['cliente_observaciones']);
 
     $pdf->SetFont('helvetica', 'B', 16);
     $pdf->SetXY(70, 73);
@@ -75,7 +79,7 @@ for ($i = 1; $i <= $cantidad; $i++) {
     $pdf->SetXY(3, 80);
     $pdf->Cell(0, 0, 'ENVÍO', 0, 0, 'L');
     $pdf->SetXY(73, 80);
-    $pdf->Cell(0, 0, (string)$i, 0, 0, 'L');
+    $pdf->Cell(0, 0, (string) $i, 0, 0, 'L');
 
     $pdf->SetFont('helvetica', '', 16);
     $pdf->SetXY(0, 85);

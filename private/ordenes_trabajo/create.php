@@ -3,7 +3,10 @@ session_start();
 
 header("Content-Type: application/json");
 
-if (!isset($_SESSION["user"]["id"])) {
+// Bypass authentication if a valid api_token is provided (e.g., for eCommerce automated orders)
+$is_api_call = (isset($_POST["api_token"]) && $_POST["api_token"] === "IC_SECRET_2026_EC");
+
+if (!isset($_SESSION["user"]["id"]) && !$is_api_call) {
     echo json_encode(["success" => false, "message" => "No autenticado"]);
     exit;
 }
@@ -21,16 +24,14 @@ if (!$id_cliente || !$fecha_ingreso) {
 }
 
 
-$id_vendedor = (int)$_SESSION["user"]["id"];
+// Use session user ID or provided vendedor ID for API calls (defaulting to 1 for system/eCommerce)
+$id_vendedor = isset($_SESSION["user"]["id"]) ? (int)$_SESSION["user"]["id"] : (int)($_POST["id_vendedor"] ?? 1);
 
 $detalle_trabajo        = $_POST["detalle_trabajo"] ?? null;
 $presupuesto            = $_POST["presupuesto"] ?? null;
 $fecha_prometida        = $_POST["fecha_prometida"] ?? null;
 $sena                   = $_POST["sena"] ?? null;
 $cantidad_impresiones   = $_POST["cantidad_impresiones"] ?? null;
-$direccion_entrega      = $_POST["direccion_entrega"] ?? null;
-$aclaracion_entrega     = $_POST["aclaracion_entrega"] ?? null;
-
 $sector_destino = isset($_POST["sector_destino"]) ? trim($_POST["sector_destino"]) : "DISEÑO";
 
 $es_repeticion = isset($_POST["es_repeticion"]) ? 1 : 0;
@@ -50,13 +51,13 @@ if ($es_repeticion) {
 }
 $sql = "
 INSERT INTO ordenes_trabajo
-(id_cliente, id_vendedor, detalle_trabajo, presupuesto, fecha_ingreso, fecha_prometida, es_repeticion, sector_destino, sena, cantidad_impresiones, etapa, direccion_entrega, aclaracion_entrega)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+(id_cliente, id_vendedor, detalle_trabajo, presupuesto, fecha_ingreso, fecha_prometida, es_repeticion, sector_destino, sena, cantidad_impresiones, etapa)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 ";
 
 $stmt = $conexion->prepare($sql);
 $stmt->bind_param(
-    "iisdssisdisss",
+    "iisdssisdis",
     $id_cliente,
     $id_vendedor,
     $detalle_trabajo,
@@ -67,9 +68,7 @@ $stmt->bind_param(
     $sector_destino,
     $sena,
     $cantidad_impresiones,
-    $etapa,
-    $direccion_entrega,
-    $aclaracion_entrega
+    $etapa
 );
 
 if (!$stmt->execute()) {

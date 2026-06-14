@@ -1,36 +1,44 @@
-/* Reset básico */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --primary: #1d3cff;
+  --primary-hover: #162ecf;
+  --danger: #ef4444;
+  --success: #22c55e;
+  --bg-body: #f8fafc;
+  --bg-card: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --radius: 12px;
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
 * {
   box-sizing: border-box;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 body {
-  margin: 0;
+  background-color: var(--bg-body);
+  color: var(--text-main);
   min-height: 100vh;
-  background: #f1f5f9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  line-height: 1.5;
+  padding: 0;
+  margin: 0;
 }
 
-/* ==========================================================================
-   ESTILOS MODERNOS Y RESPONSIVE - IMPRESOS CARNELLI
-   ========================================================================== */
-
-:root {
-  --primary-color: #1d3cff;
-  --primary-hover: #162ecf;
-  --bg-body: #f4f7fa;
-  --text-main: #2d3436;
-  --white: #ffffff;
-  --border-color: #e1e4e8;
-  --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.05);
+#app {
+  width: 100%;
 }
 
-/* 1. Contenedor de la vista (aplica a la tabla y al formulario) */
 .admin-panel {
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 30px 20px;
   animation: fadeIn 0.4s ease-out;
 }
 
@@ -39,97 +47,177 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* 2. Header de Sección */
 .header-main {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 20px 0;
-  flex-wrap: wrap; /* Para móviles */
-  gap: 15px;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
 .header-main h2 {
+  font-size: 1.75rem;
+  font-weight: 800;
   color: var(--text-main);
-  font-size: 1.5rem;
-  font-weight: 700;
+  letter-spacing: -0.025em;
+  flex-grow: 1;
 }
 
-/* 3. Botones con estilo moderno */
+button {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
 #btn-back-main, #btn-add-main, #btn-submit-product {
-  padding: 12px 24px;
+  padding: 10px 24px;
   border-radius: 8px;
   border: none;
   font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  font-size: 0.875rem;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
 #btn-back-main {
-  background: var(--white);
+  background: white;
   color: var(--text-main);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
+}
+
+#btn-back-main:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
 }
 
 #btn-add-main, #btn-submit-product {
-  background: var(--primary-color);
-  color: var(--white);
-  box-shadow: 0 4px 10px rgba(29, 60, 255, 0.2);
+  background: var(--primary);
+  color: white;
 }
 
 #btn-add-main:hover, #btn-submit-product:hover {
   background: var(--primary-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(29, 60, 255, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 15px -3px rgba(29, 60, 255, 0.2);
 }
 
-/* 4. Tabla Responsive Moderna */
+/* Table Styling */
 .table-container {
-  background: var(--white);
-  border-radius: 12px;
-  padding: 10px;
-  box-shadow: var(--shadow-soft);
-  overflow-x: auto; /* Permite scroll horizontal en móviles */
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 1px solid var(--border);
 }
 
 .table-products {
   width: 100%;
   border-collapse: collapse;
-  min-width: 800px; /* Asegura que la tabla no se rompa en pantallas muy chicas */
+  text-align: left;
 }
 
 .table-products th {
-  background: #f8f9fb;
-  color: #636e72;
-  font-size: 0.85rem;
+  background: #f8fafc;
+  padding: 14px 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
   text-transform: uppercase;
-  padding: 15px;
-  text-align: left;
-  border-bottom: 2px solid var(--border-color);
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  letter-spacing: 0.05em;
 }
 
 .table-products td {
-  padding: 15px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9375rem;
   color: var(--text-main);
-  border-bottom: 1px solid #f1f1f1;
-  font-size: 0.95rem;
+}
+
+.table-products tr:last-child td {
+  border-bottom: none;
 }
 
 .table-products tr:hover {
-  background-color: #fcfdfe;
+  background-color: #f8fafc;
 }
 
-/* 5. Formulario Profesional */
+/* Toggle Switch Styling */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 22px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #cbd5e1;
+  transition: .4s;
+  border-radius: 20px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 14px;
+  left: 4px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+input:checked + .slider {
+  background-color: var(--success);
+}
+
+input:checked + .slider:before {
+  transform: translateX(18px);
+}
+
+/* Actions Styling */
+.action-icon {
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-icon:hover {
+  background: #f1f5f9;
+  transform: scale(1.1);
+}
+
+.action-edit { color: var(--primary); }
+.action-delete { color: var(--danger); }
+
+/* Form Styling */
 .admin-form {
-  background: var(--white);
-  padding: 40px;
-  border-radius: 16px;
-  box-shadow: var(--shadow-soft);
+  background: var(--bg-card);
+  padding: 32px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
   display: grid;
-  gap: 25px;
+  gap: 24px;
 }
 
 .form-group {
@@ -139,75 +227,191 @@ body {
 }
 
 .form-group label {
+  font-size: 0.875rem;
   font-weight: 600;
-  font-size: 0.9rem;
-  color: #4b4b4b;
+  color: var(--text-main);
 }
 
 .form-group input, 
 .form-group select, 
 .form-group textarea {
-  padding: 14px;
-  border: 1.5px solid #e1e1e1;
-  border-radius: 10px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
   font-size: 1rem;
-  transition: all 0.3s;
-  background: #fafafa;
+  background: #ffffff;
+  color: var(--text-main);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group textarea {
+  min-height: 120px;
+  resize: vertical;
 }
 
 .form-group input:focus, 
-.form-group select:focus {
-  border-color: var(--primary-color);
-  background: var(--white);
+.form-group select:focus, 
+.form-group textarea:focus {
   outline: none;
+  border-color: var(--primary);
   box-shadow: 0 0 0 4px rgba(29, 60, 255, 0.1);
 }
 
-/* Filas combinadas para Precio/Stock */
 .form-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
 }
 
-/* 6. Preview de imágenes */
-#image-preview {
+/* Image Management Styling */
+.image-management-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-  gap: 15px;
-  margin-top: 15px;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 16px;
+  margin-top: 12px;
 }
 
-#image-preview img {
-  width: 100%;
+.image-item {
+  position: relative;
   aspect-ratio: 1/1;
-  object-fit: cover;
   border-radius: 12px;
-  border: 2px solid var(--border-color);
-  transition: transform 0.2s;
+  overflow: hidden;
+  border: 2px solid var(--border);
+  background: #f1f5f9;
 }
 
-#image-preview img:hover {
-  transform: scale(1.05);
+.image-item.is-primary {
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
 }
 
-/* 7. Ajustes Responsive (Móvil) */
+.image-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-actions {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.image-item:hover .image-actions {
+  opacity: 1;
+}
+
+.image-actions span {
+  width: 36px;
+  height: 36px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .table-products th:nth-child(2), 
+  .table-products td:nth-child(2) {
+    display: none; /* Hide description on smaller screens */
+  }
+}
+
 @media (max-width: 768px) {
   .header-main {
     flex-direction: column;
     align-items: stretch;
     text-align: center;
+    gap: 16px;
+  }
+  
+  .header-main h2 {
+    font-size: 1.5rem;
+    order: -1;
+  }
+
+  .header-main button {
+    width: 100%;
   }
 
   .admin-form {
-    padding: 20px;
+    padding: 24px;
   }
 
   .form-row {
     grid-template-columns: 1fr;
   }
+
+  /* Card Layout for Mobile */
+  .table-container {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    overflow: visible;
+  }
+
+  .table-products thead {
+    display: none;
+  }
+
+  .table-products tbody {
+    display: grid;
+    gap: 16px;
+  }
+
+  .table-products tr {
+    display: block;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+  }
+
+  .table-products td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f1f5f9;
+    text-align: right;
+  }
+
+  .table-products td:last-child {
+    border-bottom: none;
+    padding-top: 15px;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  .table-products td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-right: 15px;
+    text-align: left;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-panel {
+    padding: 16px;
+  }
   
-  .content {
-    padding: 15px; /* Menos espacio en móviles */
+  .admin-form {
+    padding: 16px;
   }
 }

@@ -1,7 +1,7 @@
 import { getExpedicionService } from "../services/expedicionService.js";
-import { expedicionTable } from "../components/expedicionTable.js";
+import { expedicionTable, activarBuscadorExpedicion } from "../components/expedicionTable.js";
 import { expedicionModal } from "../components/expedicionModal.js";
-import { loadViewCSS } from "http://impresoscarnelli.com/public/app/utils/viewCssManager.js";
+import { loadViewCSS } from "/public/app/utils/viewCssManager.js";
 import { getExpedicionDetalleService } from "../services/getExpedicionDetalleService.js";
 import { saveExpedicionService } from "../services/saveExpedicionService.js";
 
@@ -17,6 +17,7 @@ async function renderExpedicionTable(section) {
   }
 
   section.innerHTML = expedicionTable(res.data);
+  activarBuscadorExpedicion();
 
   section.querySelectorAll(".btn-ver-expedicion").forEach(btn => {
     btn.addEventListener("click", async () => {
@@ -92,7 +93,7 @@ modal.querySelector("#crear-etiqueta").addEventListener("click", () => {
   }
 
   window.open(
-    `http://impresoscarnelli.com/public/api/expedicion/etiqueta.php?id_orden=${otId}&cantidad=${cantidad}`,
+    `/public/api/expedicion/etiqueta.php?id_orden=${otId}&cantidad=${cantidad}`,
     "_blank"
   );
 });

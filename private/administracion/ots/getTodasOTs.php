@@ -22,6 +22,7 @@ $sql = "
         ot.detalle_trabajo,
         ot.cantidad_impresiones,
         ot.direccion_entrega,
+        ot.total_pago,
 
  CASE
     WHEN ot.etapa = 'EXPEDICION' AND de.id IS NOT NULL THEN 'FINALIZADA'
@@ -60,29 +61,30 @@ while ($row = mysqli_fetch_assoc($result)) {
 
     $idOT = $row['id_ot'];
 
-if (!isset($ots[$idOT])) {
-    $ots[$idOT] = [
-        'id_ot' => $row['id_ot'],
-        'cliente' => $row['cliente'],
-        'empresa' => $row['empresa'],
-        'vendedor' => $row['vendedor'],
-        'fecha_ingreso' => $row['fecha_ingreso'],
-        'fecha_prometida' => $row['fecha_prometida'],
-        'estado' => $row['estado'],
-        'detalle_trabajo' => $row['detalle_trabajo'],
-        'cantidad_impresiones' => $row['cantidad_impresiones'],
-        'direccion_entrega' => $row['direccion_entrega'] ?? null,
-        'especificaciones_tecnicas' => $row['especificaciones_tecnicas'],
-        'archivos' => []
-    ];
-}
+    if (!isset($ots[$idOT])) {
+        $ots[$idOT] = [
+            'id_ot' => $row['id_ot'],
+            'cliente' => $row['cliente'],
+            'empresa' => $row['empresa'],
+            'vendedor' => $row['vendedor'],
+            'fecha_ingreso' => $row['fecha_ingreso'],
+            'fecha_prometida' => $row['fecha_prometida'],
+            'estado' => $row['estado'],
+            'detalle_trabajo' => $row['detalle_trabajo'],
+            'cantidad_impresiones' => $row['cantidad_impresiones'],
+            'direccion_entrega' => $row['direccion_entrega'] ?? null,
+            'total_pago' => $row['total_pago'],
+            'especificaciones_tecnicas' => $row['especificaciones_tecnicas'],
+            'archivos' => []
+        ];
+    }
 
 
     if ($row['archivo_id']) {
         $ots[$idOT]['archivos'][] = [
             'id' => $row['archivo_id'],
             'nombre' => basename($row['ruta_archivo']),
-            'url' => "https://impresoscarnelli.com/public/api/archivos/descargar.php?id=" . $row['archivo_id']
+            'url' => "/public/api/archivos/descargar.php?id=" . $row['archivo_id']
         ];
     }
 }

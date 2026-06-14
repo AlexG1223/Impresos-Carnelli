@@ -3,7 +3,7 @@ require_once __DIR__ . "/../conexion.php";
 $conexion = conectar_bd();
 
 $input = json_decode(file_get_contents("php://input"), true);
-$otId = (int)($input ?? 0);
+$otId = (int) ($input ?? 0);
 
 if ($otId <= 0) {
   echo json_encode([
@@ -16,18 +16,20 @@ if ($otId <= 0) {
 
 $sqlOT = "
   SELECT 
-    id,
-    id_cliente,
-    detalle_trabajo,
-    sena,
-    presupuesto,
-    es_repeticion,
-    sector_destino,
-    cantidad_impresiones,
-    direccion_entrega,
-    aclaracion_entrega
-  FROM ordenes_trabajo
-  WHERE id = ?
+    ot.id,
+    ot.id_cliente,
+    ot.detalle_trabajo,
+    ot.sena,
+    ot.presupuesto,
+    ot.es_repeticion,
+    ot.sector_destino,
+    ot.cantidad_impresiones,
+    ot.direccion_entrega,
+    ot.aclaracion_entrega,
+    c.nombre as cliente_nombre
+  FROM ordenes_trabajo ot
+  INNER JOIN clientes c ON ot.id_cliente = c.id
+  WHERE ot.id = ?
   LIMIT 1
 ";
 

@@ -1,7 +1,7 @@
 export async function saveExpedicionService(data) {
   try {
     const res = await fetch(
-      "http://impresoscarnelli.com/public/api/expedicion/saveExpedicion.php",
+      "/public/api/expedicion/saveExpedicion.php",
       {
         method: "POST",
         headers: {

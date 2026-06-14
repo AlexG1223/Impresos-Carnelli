@@ -1,36 +1,68 @@
-import { seleccionarClienteModal } from "../components/seleccionarClienteModal.js";
 import { getAllClientsService } from "../../gestionClientes/services/getAllClientsServices.js";
 
 export async function initSeleccionarCliente() {
-  const btn = document.getElementById("btnSeleccionarCliente");
-  const modalContainer = document.getElementById("modal-container");
+  const inputNombre = document.getElementById("clienteNombre");
+  const inputId = document.getElementById("id_cliente");
+  const listContainer = document.getElementById("autocomplete-list");
 
-  if (!btn || !modalContainer) return;
+  if (!inputNombre || !inputId || !listContainer) return;
 
-  btn.addEventListener("click", async () => {
+  let clientes = [];
+
+  // Cargamos los clientes al inicio para tenerlos disponibles para el buscador
+  try {
     const res = await getAllClientsService();
+    if (res.success && Array.isArray(res.data)) {
+      clientes = res.data;
+    }
+  } catch (error) {
+    console.error("Error al cargar clientes:", error);
+  }
 
-    if (!res.success || !Array.isArray(res.data)) {
-      alert("No se pudieron cargar los clientes");
+  inputNombre.addEventListener("input", (e) => {
+    const val = e.target.value.toLowerCase();
+    listContainer.innerHTML = "";
+    
+    // Si borra el texto, también borramos el ID seleccionado
+    if (!val) {
+      inputId.value = "";
       return;
     }
 
-    modalContainer.innerHTML = seleccionarClienteModal(res.data);
+    // Filtrar por nombre o empresa
+    const filtrados = clientes.filter(c => 
+      (c.nombre && c.nombre.toLowerCase().includes(val)) || 
+      (c.empresa && c.empresa.toLowerCase().includes(val))
+    ).slice(0, 10); // Limitar a 10 resultados para mejor performance y UI
+
+    filtrados.forEach(cliente => {
+      const div = document.createElement("div");
+      div.className = "autocomplete-item";
+      div.innerHTML = `
+        <strong>${cliente.nombre || "Sin nombre"}</strong>
+        <small>${cliente.empresa || "Sin empresa"}</small>
+      `;
+      div.addEventListener("click", () => {
+        inputNombre.value = cliente.nombre;
+        inputId.value = cliente.id;
+        listContainer.innerHTML = "";
+      });
+      listContainer.appendChild(div);
+    });
   });
 
-  modalContainer.addEventListener("click", (e) => {
-
-    if (e.target.id === "cerrarModalCliente") {
-      modalContainer.innerHTML = "";
-      return;
+  // Cerrar lista al hacer click fuera
+  document.addEventListener("click", (e) => {
+    if (e.target !== inputNombre) {
+      listContainer.innerHTML = "";
     }
+  });
 
-    const item = e.target.closest("li[data-id]");
-    if (!item) return;
-
-    document.getElementById("id_cliente").value = item.dataset.id;
-    document.getElementById("clienteNombre").value = item.dataset.nombre;
-
-    modalContainer.innerHTML = "";
+  // Si el input gana foco y tiene texto, mostrar sugerencias nuevamente
+  inputNombre.addEventListener("focus", () => {
+    if (inputNombre.value) {
+      inputNombre.dispatchEvent(new Event('input'));
+    }
   });
 }
+

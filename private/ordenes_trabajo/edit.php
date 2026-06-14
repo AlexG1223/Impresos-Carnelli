@@ -20,6 +20,7 @@ $sector_destino = $_POST['sector_destino'];
 $direccion_entrega = $_POST['direccion_entrega'] ?? '';
 $total_pago = isset($_POST['total_pago']) && $_POST['total_pago'] === 'on' ? 1 : 0;
 $aclaracion_entrega = $_POST['aclaracion_entrega'] ?? '';
+$especificaciones_tecnicas = $_POST['especificaciones_tecnicas'] ?? '';
 
 // 1. Actualización de datos básicos de la OT
 $sql = "UPDATE ordenes_trabajo SET 
@@ -34,6 +35,26 @@ $stmt->bind_param("dsssdissssi", $presupuesto, $fecha_ingreso, $fecha_prometida,
 if (!$stmt->execute()) {
     echo json_encode(["success" => false, "message" => "Error al actualizar la OT"]);
     exit;
+}
+
+// 1.5. Actualización de especificaciones técnicas en detalle_produccion
+$checkSql = "SELECT id FROM detalle_produccion WHERE id_orden = ?";
+$stmtCheck = $conexion->prepare($checkSql);
+$stmtCheck->bind_param("i", $id_ot);
+$stmtCheck->execute();
+$resCheck = $stmtCheck->get_result();
+
+if ($resCheck->num_rows > 0) {
+    $sqlDP = "UPDATE detalle_produccion SET especificaciones_tecnicas = ? WHERE id_orden = ?";
+    $stmtDP = $conexion->prepare($sqlDP);
+    $stmtDP->bind_param("si", $especificaciones_tecnicas, $id_ot);
+    $stmtDP->execute();
+} else if (!empty($especificaciones_tecnicas)) {
+    // Si no existe pero hay texto, lo creamos. Default sector: DISEÑO o el sector_destino de la OT
+    $sqlDP = "INSERT INTO detalle_produccion (id_orden, especificaciones_tecnicas, sector_responsable) VALUES (?, ?, ?)";
+    $stmtDP = $conexion->prepare($sqlDP);
+    $stmtDP->bind_param("iss", $id_ot, $especificaciones_tecnicas, $sector_destino);
+    $stmtDP->execute();
 }
 
 // 2. ELIMINAR ARCHIVOS MARCADOS (Los que el usuario quitó en el front)

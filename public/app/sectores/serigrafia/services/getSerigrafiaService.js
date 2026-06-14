@@ -1,6 +1,6 @@
 export async function getSerigrafiaService() {
   try {
-    const res = await fetch("http://impresoscarnelli.com/public/api/serigrafia/getSerigrafia.php");
+    const res = await fetch("/public/api/serigrafia/getSerigrafia.php");
 
     if (!res.ok) {
       throw new Error("Error al obtener OTs de serigrafia");

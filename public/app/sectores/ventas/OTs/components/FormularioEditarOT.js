@@ -37,7 +37,7 @@ export function FormularioEditarOT(ot) {
                 </button>
 
                 <img 
-                  src="https://impresoscarnelli.com/${a.ruta_archivo}" 
+                  src="/${a.ruta_archivo}" 
                   class="archivo-img"
                   loading="lazy"
                 />
@@ -56,7 +56,7 @@ export function FormularioEditarOT(ot) {
                   ✕
                 </button>
 
-                <a href="https://impresoscarnelli.com/${a.ruta_archivo}" target="_blank" rel="noopener">
+                <a href="/${a.ruta_archivo}" target="_blank" rel="noopener">
                   📄 Ver PDF
                 </a>
 
@@ -74,7 +74,7 @@ export function FormularioEditarOT(ot) {
                 ✕
               </button>
 
-              <a href="https://impresoscarnelli.com/${a.ruta_archivo}" target="_blank" rel="noopener">
+              <a href="/${a.ruta_archivo}" target="_blank" rel="noopener">
                 Archivo
               </a>
 
@@ -110,6 +110,9 @@ export function FormularioEditarOT(ot) {
       <label>Detalle del Trabajo</label>
       <textarea name="detalle_trabajo">${ot.detalle_trabajo}</textarea>
 
+      <label>Especificaciones Técnicas (Producción)</label>
+      <textarea name="especificaciones_tecnicas" placeholder="Aclaraciones para el taller...">${ot.especificaciones_tecnicas || ''}</textarea>
+
       <label>Seña</label>
       <input name="sena" type="number" step="0.01" value="${ot.sena}" />
 
@@ -128,10 +131,7 @@ export function FormularioEditarOT(ot) {
         <option value="SERIGRAFIA" ${ot.sector_destino === "SERIGRAFIA" ? "selected" : ""}>SERIGRAFIA</option>
       </select>
 
-      <label>
-        <input type="checkbox" name="total_pago" ${ot.total_pago ? "checked" : ""}/>
-        Pagada en su totalidad
-      </label>
+
 
       <hr>
 
