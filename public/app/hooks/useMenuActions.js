@@ -50,6 +50,9 @@ export const useMenuActions = () => {
     otsVentas() {
       useOTsVendedor();
     },
+    presupuestos() {
+      window.open("../../presupuestos_imprenta/", "_blank");
+    },
     eCommerce() {
       window.location.href = "/public/UIAdministrator/tienda.php";
     }

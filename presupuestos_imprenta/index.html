@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculador Profesional | Presupuestos Imprenta</title>
+    <link rel="stylesheet" href="css/style.css?v=11">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="js/auth.js"></script>
+    <style>
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            #print-area,
+            #print-area * {
+                visibility: visible;
+            }
+
+            #print-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                background: white;
+                color: black;
+                margin: 0;
+                padding: 0;
+            }
+
+            @page {
+                margin: 0;
+            }
+
+            .etiqueta-print {
+                page-break-after: always;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                padding: 5mm;
+                box-sizing: border-box;
+            }
+
+            .etiqueta-print:last-child {
+                page-break-after: auto;
+            }
+        }
+
+        /* Rejilla de 2 columnas para el calculador y fechas comerciales */
+        .calculador-container {
+            display: grid;
+            grid-template-columns: 2.2fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        /* Scrollbar premium para el panel de eventos */
+        #lista-eventos::-webkit-scrollbar {
+            width: 6px;
+        }
+        #lista-eventos::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.01);
+            border-radius: 4px;
+        }
+        #lista-eventos::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        #lista-eventos::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+                border-color: rgba(239, 68, 68, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 6px rgba(239, 68, 68, 0);
+                border-color: rgba(239, 68, 68, 0.1);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+                border-color: rgba(239, 68, 68, 0.4);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .calculador-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Barra de Carga Superior (Estilo YouTube/GitHub) -->
+    <div id="top-loading-bar" style="position: fixed; top: 0; left: 0; width: 0%; height: 4px; background: linear-gradient(90deg, #6366f1, #a3e635); z-index: 99999; transition: width 0.3s ease, opacity 0.3s ease; opacity: 0; pointer-events: none; box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);"></div>
+
+    <header>
+        <img src="img/logo_navbar.png" alt="IMPRESOS CARNELLI"
+            style="height: 40px; margin: 0; object-fit: contain; cursor: pointer;" onclick="switchView('calculador')">
+        <nav id="main-nav">
+            <a href="#" onclick="switchView('calculador'); return false;" class="nav-link active"
+                data-target="calculador">Calculador</a>
+            <a href="#" onclick="switchView('historial'); return false;" class="nav-link"
+                data-target="historial">Historial</a>
+            <a href="#" onclick="switchView('stock'); return false;" class="nav-link" data-target="stock">Stock</a>
+            <a href="#" onclick="switchView('admin'); return false;" class="nav-link"
+                data-target="admin">Administración</a>
+            <a href="#" onclick="switchView('proveedores'); return false;" class="nav-link"
+                data-target="proveedores">Proveedores</a>
+            <a href="#" onclick="logout(); return false;"
+                style="color: #ef4444; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 1rem; margin-left: 0.5rem;"
+                title="Cerrar Sesión">Salir</a>
+        </nav>
+    </header>
+
+
+    <main>
+        <div id="view-calculador" class="app-view calculador-container">
+
+            <div class="glass-panel">
+                <h2><i data-feather="monitor"></i> Nuevo Presupuesto</h2>
+                <form id="form-calculador" class="form-grid">
+                    <div class="form-group">
+                        <label style="display: flex; justify-content: space-between; align-items: center;">
+                            Cliente (Membrete PDF)
+                            <label
+                                style="display: inline-flex; align-items: center; font-weight: normal; font-size: 0.9em; color: #93c5fd; cursor: pointer;">
+                                <input type="checkbox" id="c_revendedor"
+                                    style="margin-right: 5px; width: 14px; height: 14px;">
+                                Revendedor (-10%)
+                            </label>
+                        </label>
+                        <input type="text" id="c_cliente" placeholder="Sr. Juan Pérez / Empresa X" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Trabajo / Descripción</label>
+                        <input type="text" id="c_desc" placeholder="Ej. Afiche 50x70" required>
+                    </div>
+                    <div class="form-group"
+                        style="grid-column: 1 / -1; background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px;">
+                        <label style="color: #fef08a; display: block; margin-bottom: 0.5rem;"><i
+                                data-feather="target"></i>
+                            Utilizar Troquel Especial (Opcional)</label>
+                        <select id="c_troquel_select"
+                            style="width: 100%; border: 1px solid rgba(234, 179, 8, 0.5); background: rgba(0,0,0,0.5); color: #fef08a;">
+                            <option value="">No usar troquel (Corte Recto)</option>
+                        </select>
+                    </div>
+
+                    <div id="grupo_dimensiones_estandar"
+                        style="display: flex; gap: 1.5rem; grid-column: 1 / -1; flex-wrap: wrap;">
+                        <div class="form-group" style="flex: 1; min-width: 200px;">
+                            <label>Ancho Final (cm)</label>
+                            <input type="number" step="0.1" id="c_ancho" required>
+                        </div>
+                        <div class="form-group" style="flex: 1; min-width: 200px;">
+                            <label>Largo Final (cm)</label>
+                            <input type="number" step="0.1" id="c_largo" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="grupo_bobina_engranaje"
+                        style="display: none; grid-column: 1 / -1; background: rgba(59, 130, 246, 0.1); padding: 1.5rem; border-radius: 8px; border: 1px solid rgba(59, 130, 246, 0.2);">
+                        <label style="color: #93c5fd; font-weight: bold; margin-bottom: 0.5rem; display: block;"><i
+                                data-feather="settings"></i> Engranaje / Avance de Bobina</label>
+                        <select id="c_bobina_engranaje"
+                            style="width: 100%; border: 1px solid rgba(59, 130, 246, 0.5); background: rgba(0,0,0,0.5); color: #93c5fd; padding: 0.5rem;">
+                            <option value="8">8 Pulgadas (20.32 cm)</option>
+                            <option value="9">9 Pulgadas (22.86 cm)</option>
+                            <option value="10">10 Pulgadas (25.40 cm)</option>
+                            <option value="12">12 Pulgadas (30.48 cm)</option>
+                            <option value="13">13 Pulgadas (33.02 cm)</option>
+                            <option value="14">14 Pulgadas (35.56 cm)</option>
+                        </select>
+                    </div>
+
+                    <div id="grupo_dimensiones_troquel"
+                        style="display: none; grid-column: 1 / -1; background: rgba(234, 179, 8, 0.1); padding: 1.5rem; border-radius: 8px; border: 1px solid rgba(234, 179, 8, 0.2);">
+                        <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+                            <div class="form-group" style="flex: 1; min-width: 150px;">
+                                <label style="color: #fcd34d;">Ancho Plancha (cm)</label>
+                                <input type="number" step="0.1" id="c_troquel_ancho" readonly
+                                    style="background: rgba(0,0,0,0.2);">
+                            </div>
+                            <div class="form-group" style="flex: 1; min-width: 150px;">
+                                <label style="color: #fcd34d;">Largo Plancha (cm)</label>
+                                <input type="number" step="0.1" id="c_troquel_largo" readonly
+                                    style="background: rgba(0,0,0,0.2);">
+                            </div>
+                            <div class="form-group" style="flex: 1; min-width: 150px;">
+                                <label style="color: #fcd34d;">Bocas por Troquel</label>
+                                <input type="number" id="c_troquel_bocas" readonly style="background: rgba(0,0,0,0.2);">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Cantidad (Ejemplares a entregar)</label>
+                        <input type="number" id="c_cantidad" required>
+                    </div>
+                    <div class="form-group">
+                        <label>% Demasía (Desperdicio)</label>
+                        <input type="number" id="c_demasia" value="10" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label>% Ganancia</label>
+                        <input type="number" id="c_ganancia" min="0" step="0.1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>% Comisión Vendedor</label>
+                        <input type="number" id="c_comision" min="0" step="0.1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>% I.V.A.</label>
+                        <input type="number" id="c_iva" min="0" step="0.1" required>
+                    </div>
+                    <div class="form-group" style="grid-column: 1 / -1; display: flex; flex-direction: column;">
+                        <label style="display: flex; justify-content: space-between; align-items: center;">
+                            Papel Base o Sustrato / Prenda
+                            <label style="display: inline-flex; align-items: center; font-weight: normal; font-size: 0.9em; color: #93c5fd; cursor: pointer;">
+                                <input type="checkbox" id="c_papel_cliente" style="margin-right: 5px; width: 14px; height: 14px;">
+                                Aportado por Cliente (Costo $0)
+                            </label>
+                        </label>
+                        <select id="c_papel" required style="width: 100%;">
+                            <option value="">Cargando...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Cant. de Colores</label>
+                        <input type="number" id="c_colores" min="0" value="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Detalle Tintas (Ej. Cyan, Pantone 032)</label>
+                        <input type="text" id="c_detalle_tintas" placeholder="Especificar pantones" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label>¿Frente y Dorso?</label>
+                        <select id="c_frente_dorso" required>
+                            <option value="no">No (Solo Frente)</option>
+                            <option value="si">Sí (Frente y Dorso)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="grid-column: 1 / -1; margin-top: 1rem;">
+                        <label style="color: var(--primary-color);">Ruta de Producción (Agrega las máquinas en orden
+                            secuencial)</label>
+                        <div id="maquinas_checkboxes"
+                            style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
+                            <span style="color: #94a3b8;">Cargando máquinas...</span>
+                        </div>
+                        <ul id="lista_ruta"
+                            style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px; margin-bottom: 1rem;">
+                            <!-- JS fills this -->
+                        </ul>
+                    </div>
+
+                    <div class="form-group" style="display: flex; align-items: flex-end; grid-column: 1 / -1;">
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                            <i data-feather="cpu"></i> Calcular Ruta
+                        </button>
+                    </div>
+                </form>
+
+                <div id="result-box" class="result-card">
+                    <h3><i data-feather="check-circle" style="vertical-align: middle;"></i> ¡Cálculo Completo!</h3>
+                    <div class="result-data">
+                        <div class="data-item" style="grid-column: 1 / -1;">
+                            <span class="label">Ruta y Máquinas Evaluadas</span>
+                            <span class="value" id="r_maquina"
+                                style="color: var(--primary-color); font-size: 1.1rem;">-</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="label">Poses por Pliego</span>
+                            <span class="value" id="r_poses">-</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="label" id="lbl_r_pliegos">Pliegos Necesarios</span>
+                            <span class="value" id="r_pliegos">-</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="label">Costos Separados</span>
+                            <span class="value">
+                                <small id="r_costo_papel" style="display:block; color: #a1a1aa;"></small>
+                                <small id="r_costo_imp" style="display:block; color: #a1a1aa;"></small>
+                            </span>
+                        </div>
+                        <div class="data-item">
+                            <span class="label">Tiempo Prod. Estimado</span>
+                            <span class="value" id="r_tiempo">-</span>
+                        </div>
+                        <div class="data-item"
+                            style="grid-column: span 2; background: rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 1rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                            <h4
+                                style="margin-top: 0; color: #cbd5e1; font-size: 1.1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; margin-bottom: 0.8rem;">
+                                Desglose Comercial</h4>
+
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.3rem;">
+                                <span>Puestas en Máquina:</span>
+                                <strong id="r_costo_puestas">$-</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.3rem;">
+                                <span>Millar Impresión:</span>
+                                <strong id="r_costo_impresion">$-</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.3rem;">
+                                <span>Papel / Insumo Total:</span>
+                                <strong id="r_costo_papel_desglose">$-</strong>
+                            </div>
+                            <div id="r_revendedor_container" style="display: none; justify-content: space-between; margin-bottom: 0.3rem; color: #f87171;">
+                                <span>Descuento Revendedor (-10%):</span>
+                                <strong id="r_revendedor_descuento">$-</strong>
+                            </div>
+                            <div
+                                style="display: flex; justify-content: space-between; margin-bottom: 0.3rem; color: #a3e635; padding-top: 0.3rem; border-top: 1px dashed rgba(255,255,255,0.1);">
+                                <span>Ganancia:</span>
+                                <strong id="r_ganancia_valor">$-</strong>
+                            </div>
+                            <div
+                                style="display: flex; justify-content: space-between; margin-bottom: 0.3rem; color: #facc15;">
+                                <span>Comisión Vendedor:</span>
+                                <strong id="r_comision_valor">$-</strong>
+                            </div>
+                            <div
+                                style="display: flex; justify-content: space-between; margin-bottom: 0.3rem; padding-top: 0.3rem; border-top: 1px dashed rgba(255,255,255,0.2);">
+                                <span>Subtotal Venta:</span>
+                                <strong id="r_subtotal_venta">$-</strong>
+                            </div>
+                            <div
+                                style="display: flex; justify-content: space-between; margin-bottom: 0.8rem; color: #94a3b8;">
+                                <span>I.V.A.:</span>
+                                <strong id="r_iva_valor">$-</strong>
+                            </div>
+
+                            <div
+                                style="display: flex; justify-content: space-between; align-items: baseline; background: rgba(99, 102, 241, 0.15); padding: 0.8rem; border-radius: 6px;">
+                                <span style="font-size: 1.1rem; font-weight: bold; color: white;">Precio Final
+                                    (PVP):</span>
+                                <strong id="r_precio_final"
+                                    style="font-size: 2.2rem; color: var(--primary-color);">$-</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="diagramas-container"
+                        style="display: none; grid-column: 1 / -1; margin-top: 2rem; background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 8px;">
+                        <h3
+                            style="color: var(--primary-color); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; margin-top: 0;">
+                            <i data-feather="layout"></i> Diagramas de Corte Geométrico
+                        </h3>
+                        <div style="display: flex; gap: 2rem; flex-wrap: wrap; margin-top: 1.5rem;">
+                            <div style="flex: 1; min-width: 300px;">
+                                <h4 style="text-align: center; margin-bottom: 1rem; color: #e2e8f0;">Corte de Hoja Madre
+                                    (Proveedor)</h4>
+                                <canvas id="canvas-corte-madre" width="400" height="400"
+                                    style="width: 100%; max-width: 400px; display: block; margin: 0 auto; background: rgba(255,255,255,0.05); border-radius: 4px;"></canvas>
+                            </div>
+                            <div style="flex: 1; min-width: 300px;">
+                                <h4 style="text-align: center; margin-bottom: 1rem; color: #e2e8f0;">Poses en Pliego
+                                    Máquina
+                                    (Útil)</h4>
+                                <canvas id="canvas-poses-pliego" width="400" height="400"
+                                    style="width: 100%; max-width: 400px; display: block; margin: 0 auto; background: rgba(255,255,255,0.05); border-radius: 4px;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contenedor para sugerencias de cantidades -->
+                    <div id="alternativas-container"
+                        style="display: none; grid-column: 1 / -1; margin-top: 1.5rem; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px;">
+                        <h4
+                            style="margin-top: 0; color: #cbd5e1; font-size: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; margin-bottom: 0.8rem;">
+                            <i data-feather="trending-up"
+                                style="width: 16px; height: 16px; vertical-align: middle;"></i> Alternativas de Cantidad
+                        </h4>
+                        <div id="alternativas-lista" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <!-- JS fills this -->
+                        </div>
+                        <div id="alternativas-actions" style="display: none; margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); justify-content: flex-end; gap: 10px; align-items: center; flex-wrap: wrap;">
+                            <span style="color: #94a3b8; font-size: 0.85rem; margin-right: auto;" id="alternativas-actions-info">
+                                Seleccionados: <strong style="color: #10b981;" id="cant-seleccionados">0</strong>
+                            </span>
+                            <button type="button" id="btn-guardar-seleccionados" class="btn" style="background: #10b981; color: white; display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; padding: 0.6rem 1.2rem;">
+                                <i data-feather="save" style="width: 16px; height: 16px;"></i> Guardar Seleccionados
+                            </button>
+                            <button type="button" id="btn-compartir-whatsapp" class="btn" style="background: #25d366; color: white; display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; padding: 0.6rem 1.2rem;">
+                                <i data-feather="message-circle" style="width: 16px; height: 16px;"></i> Compartir por WhatsApp
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Contenedor para alerta de stock -->
+                    <div id="stock-warning-box"
+                        style="display: none; grid-column: 1 / -1; margin-top: 1.5rem; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); padding: 1rem; border-radius: 8px; color: #fcd34d;">
+                        <h4
+                            style="margin-top: 0; margin-bottom: 0.5rem; font-size: 1rem; display: flex; align-items: center; gap: 8px;">
+                            <i data-feather="alert-triangle" style="width: 18px; height: 18px;"></i> Alerta de Stock
+                        </h4>
+                        <p id="stock-warning-text" style="margin: 0; font-size: 0.95rem;">-</p>
+                    </div>
+                </div>
+
+                <div id="save-box"
+                    style="margin-top: 1.5rem; text-align: right; display: none; gap: 10px; justify-content: flex-end;">
+                    <button id="btn-guardar-presupuesto" class="btn btn-primary"
+                        style="background: #10b981; border: none; width: auto; display: inline-flex; align-items: center; gap: 8px;">
+                        <i data-feather="save"></i> Guardar Presupuesto
+                    </button>
+                </div>
+
+                <div id="error-box"
+                    style="display: none; margin-top: 1rem; color: var(--danger-color); padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 8px;">
+                </div>
+            </div>
+
+            <!-- Panel de Eventos Comerciales (Uruguay) -->
+            <div class="glass-panel" id="panel-eventos" style="background: linear-gradient(145deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.8)); border: 1px solid rgba(255,255,255,0.08); margin-bottom: 0; align-self: stretch;">
+                <h3 style="margin-top: 0; display: flex; align-items: center; gap: 8px; font-size: 1.25rem; font-family: 'Outfit', sans-serif; color: #fcd34d;">
+                    <i data-feather="calendar"></i> Fechas Comerciales
+                </h3>
+                <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 1.2rem; line-height: 1.4;">
+                    Calendario comercial de Uruguay para planificar campañas de impresión.
+                </p>
+                <div id="lista-eventos" style="display: flex; flex-direction: column; gap: 0.8rem; max-height: 480px; overflow-y: auto; padding-right: 5px;">
+                    <span style="color: #94a3b8; font-size: 0.9rem;">Cargando calendario...</span>
+                </div>
+            </div>
+
+        </div>
+        <div id="view-historial" class="app-view" style="display: none;">
+
+            <div class="glass-panel">
+                <h2><i data-feather="archive"></i> Historial de Presupuestos</h2>
+
+                <div
+                    style="margin-top: 1.5rem; margin-bottom: -0.5rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
+                    <div
+                        style="flex: 1; display: flex; align-items: center; background: rgba(0,0,0,0.2); padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
+                        <i data-feather="search" style="color: #94a3b8; margin-right: 0.5rem; width: 18px;"></i>
+                        <input type="text" id="buscador-historial" placeholder="Buscar por cliente o descripción..."
+                            style="background: transparent; border: none; color: white; width: 100%; outline: none; font-size: 0.95rem;">
+                    </div>
+                    <button id="btn-unificar-pdf" class="btn btn-primary"
+                        style="background: #10b981; border: none; padding: 0.8rem 1rem; display: flex; align-items: center; gap: 8px;"
+                        onclick="generarPDFUnificadoSeleccionados()">
+                        <i data-feather="layers"></i> Generar PDF Unificado
+                    </button>
+                </div>
+
+                <div class="table-container" style="margin-top: 1.5rem;">
+                    <table id="tabla-historial">
+                        <thead>
+                            <tr>
+                                <th style="width: 40px; text-align: center;"><input type="checkbox"
+                                        id="chk-all-historial" onchange="toggleAllCheckboxes(this)"></th>
+                                <th>Fecha</th>
+                                <th>Descripción / Cliente</th>
+                                <th>Cantidad</th>
+                                <th>Medida</th>
+                                <th>Colores</th>
+                                <th>Precio Final</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="7" style="text-align: center;">Cargando historial...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="error-box"
+                    style="display: none; margin-top: 1rem; color: var(--danger-color); padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 8px;">
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <div id="view-stock" class="app-view" style="display: none;">
+            <div class="glass-panel">
+                <h2><i data-feather="package"></i> Control de Stock (Materiales, Prendas, etc.)</h2>
+                <form id="form-stock" class="form-grid">
+                    <div class="form-group">
+                        <label>Tipo</label>
+                        <select id="i_tipo" required onchange="toggleStockFields(this.value)">
+                            <option value="papel">Papel / Hoja</option>
+                            <option value="bobina">Bobina de Papel</option>
+                            <option value="prenda">Prenda / Unitario</option>
+                            <option value="tinta">Tinta</option>
+                            <option value="chapa">Chapa</option>
+                            <option value="otro">Otro / Bolsas</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre / Marca / Modelo</label>
+                        <input type="text" id="i_nombre" required>
+                    </div>
+                    <div class="form-group" id="fg_gramaje">
+                        <label>Gramaje (solo papel)</label>
+                        <input type="number" id="i_gramaje">
+                    </div>
+                    <div class="form-group" id="fg_ancho">
+                        <label>Ancho (cm)</label>
+                        <input type="number" step="0.1" id="i_ancho">
+                    </div>
+                    <div class="form-group" id="fg_largo">
+                        <label>Largo (cm)</label>
+                        <input type="number" step="0.1" id="i_largo">
+                    </div>
+                    <div class="form-group" id="fg_color" style="display: none;">
+                        <label>Color</label>
+                        <input type="text" id="i_color" placeholder="Ej. Rojo, Blanco">
+                    </div>
+                    <div class="form-group" id="fg_talle" style="display: none;">
+                        <label>Talle / Tamaño</label>
+                        <input type="text" id="i_talle" placeholder="Ej. L, XL, 30x40">
+                    </div>
+                    <div class="form-group" id="fg_material" style="display: none;">
+                        <label>Material / Tela</label>
+                        <input type="text" id="i_material" placeholder="Ej. Algodón, TNT">
+                    </div>
+                    <div class="form-group" id="fg_kg_1000" style="display: none;">
+                        <label>Kg x 1000 (30x40cm)</label>
+                        <input type="number" step="0.01" id="i_kg_1000" placeholder="Ej. 6">
+                    </div>
+                    <div class="form-group">
+                        <label id="lbl_i_costo">Costo del Paquete ($)</label>
+                        <input type="number" step="0.01" id="i_costo" required>
+                    </div>
+                    <div class="form-group" id="fg_unidades">
+                        <label>Unids. por Paquete (1 para prendas)</label>
+                        <input type="number" id="i_unidades" value="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label id="lbl_i_stock_actual">Stock Actual (unids/hojas)</label>
+                        <input type="number" id="i_stock_actual" value="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label id="lbl_i_stock_minimo">Stock Mínimo (Alerta)</label>
+                        <input type="number" id="i_stock_minimo" value="0" required>
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: flex-end; grid-column: span 2;">
+                        <button type="submit" class="btn btn-primary" style="width: 100%;"><i data-feather="save"></i>
+                            Guardar Material</button>
+                    </div>
+                </form>
+
+                <div class="table-container">
+                    <table id="tabla-stock">
+                        <thead>
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Nombre</th>
+                                <th>Atributos</th>
+                                <th>Medida/Grs</th>
+                                <th>Stock</th>
+                                <th>Costo Unit.</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dinámico con JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-admin" class="app-view" style="display: none;">
+
+            <!-- Formulario Parámetros Globales -->
+            <div class="glass-panel">
+                <h2><i data-feather="settings"></i> Configuración Global Comercial</h2>
+                <form id="form-parametros" class="form-grid">
+                    <div class="form-group">
+                        <label>Ganancia por defecto (%)</label>
+                        <input type="number" step="0.1" id="p_ganancia" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Comisión de Vendedor (%)</label>
+                        <input type="number" step="0.1" id="p_comision" required>
+                    </div>
+                    <div class="form-group">
+                        <label>I.V.A. (%)</label>
+                        <input type="number" step="0.1" id="p_iva" required>
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: flex-end;">
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Guardar Parámetros</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Formulario Logo -->
+            <div class="glass-panel">
+                <h2><i data-feather="image"></i> Configuración de PDF (Logo Corporativo)</h2>
+                <form action="api/upload_logo.php" method="POST" enctype="multipart/form-data" class="form-grid"
+                    style="align-items: flex-end;">
+                    <div class="form-group" style="grid-column: 1 / -2;">
+                        <label>Sube tu Logo (Recomendado: PNG Transparente Horizontal)</label>
+                        <input type="file" name="logo" accept="image/png, image/jpeg, image/webp" required
+                            style="padding: 10px; background: rgba(0,0,0,0.2); border-radius: 6px; width: 100%; border: 1px dashed rgba(255,255,255,0.4);">
+                    </div>
+                    <div class="form-group" style="grid-column: -2 / -1;">
+                        <button type="submit" name="submit" class="btn btn-primary" style="width: 100%;"><i
+                                data-feather="upload"></i> Guardar Logo</button>
+                    </div>
+                </form>
+                <script>
+                    const urlParams = new URLSearchParams(window.location.search);
+                    if (urlParams.has('logo_success')) document.write('<p style="color: #a3e635; margin-top: 10px;"><i data-feather="check"></i> ¡Logo actualizado con éxito!</p>');
+                    if (urlParams.has('logo_error')) document.write('<p style="color: #ef4444; margin-top: 10px;"><i data-feather="alert-circle"></i> Error: ' + urlParams.get('logo_error') + '</p>');
+                </script>
+            </div>
+
+            <!-- Formulario Máquinas -->
+            <div class="glass-panel">
+                <h2><i data-feather="printer"></i> Alta de Máquinas</h2>
+                <form id="form-maquina" class="form-grid">
+                    <div class="form-group">
+                        <label>Nombre de Máquina</label>
+                        <input type="text" id="m_nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Formato Max. Ancho (cm)</label>
+                        <input type="number" step="0.1" id="m_fmax_ancho" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Formato Max. Largo (cm)</label>
+                        <input type="number" step="0.1" id="m_fmax_largo" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Formato Min. Ancho (cm)</label>
+                        <input type="number" step="0.1" id="m_fmin_ancho" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Formato Min. Largo (cm)</label>
+                        <input type="number" step="0.1" id="m_fmin_largo" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Medida Pinza (cm)</label>
+                        <input type="number" step="0.1" id="m_pinza" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo de Cálculo</label>
+                        <select id="m_tipo_calculo"
+                            onchange="document.getElementById('m_tinta_container').style.display = (this.value === 'unidades') ? 'block' : 'none'; if(typeof onTipoCalculoChange === 'function') onTipoCalculoChange(this.value);">
+                            <option value="millares">Por Millares (Offset/Guillotina)</option>
+                            <option value="unidades">Por Unidades/Impresión (Serigrafía/DTF)</option>
+                            <option value="rotativa">Por Bobina (Rotativa)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Costo x Millar / Impresión ($)</label>
+                        <input type="number" step="0.01" id="m_costo" required>
+                    </div>
+                    <div class="form-group" id="m_tinta_container" style="display:none;">
+                        <label>Costo Tinta x Unidad ($)</label>
+                        <input type="number" step="0.01" id="m_costo_tinta" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Cargos Fijos / Puesta ($)</label>
+                        <input type="number" step="0.01" id="m_costo_puesta" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Velocidad (Unids/Hr)</label>
+                        <input type="number" id="m_velocidad" value="5000" required>
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: flex-end;">
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Guardar Máquina</button>
+                    </div>
+                </form>
+
+                <div class="table-container">
+                    <table id="tabla-maquinas">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Formato Max</th>
+                                <th>Costo/Millar</th>
+                                <th>Puesta</th>
+                                <th>Veloc.</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dinámico con JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <!-- Formulario Troqueles -->
+            <div class="glass-panel">
+                <h2><i data-feather="target"></i> Alta de Troqueles</h2>
+                <form id="form-troquel" class="form-grid">
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label>Nombre del Troquel</label>
+                        <input type="text" id="t_nombre" placeholder="Ej. Etiqueta Redonda 5cm" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Ancho Plancha (cm)</label>
+                        <input type="number" step="0.1" id="t_ancho" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Largo Plancha (cm)</label>
+                        <input type="number" step="0.1" id="t_largo" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Bocas (Cant. de Poses)</label>
+                        <input type="number" id="t_bocas" required>
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: flex-end; grid-column: span 2;">
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Guardar Troquel</button>
+                    </div>
+                </form>
+
+                <div class="table-container">
+                    <table id="tabla-troqueles">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Ancho</th>
+                                <th>Largo</th>
+                                <th>Bocas</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dinámico con JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <!-- ══════════════════════════════════════════════════════════════
+             VISTA: PROVEEDORES
+        ══════════════════════════════════════════════════════════════ -->
+        <div id="view-proveedores" class="app-view" style="display:none;">
+
+            <!-- Encabezado -->
+            <div class="glass-panel prov-header-panel">
+                <div class="prov-page-title">
+                    <i data-feather="shopping-bag"></i>
+                    <div>
+                        <h2>Proveedores</h2>
+                        <p>Gestioná tus proveedores y buscá insumos directamente desde sus catálogos.</p>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="togglePanelFormProveedor()">
+                    <i data-feather="plus"></i> Nuevo Proveedor
+                </button>
+            </div>
+
+            <!-- Formulario Nuevo / Editar Proveedor (colapsable) -->
+            <div id="panel-form-proveedor" class="glass-panel" style="display:none;">
+                <h3 id="prov-form-titulo">Nuevo Proveedor</h3>
+                <form id="form-proveedor" class="form-grid prov-form-grid">
+                    <div class="form-group">
+                        <label>Nombre del Proveedor *</label>
+                        <input type="text" id="prov-nombre" placeholder="Ej: Sammel, Barley, PaperPlus..." required>
+                    </div>
+                    <div class="form-group">
+                        <label>URL del sitio web *</label>
+                        <input type="url" id="prov-url" placeholder="https://www.proveedor.com.uy" required>
+                    </div>
+                    <div class="form-group">
+                        <label>URL del Logo (opcional)</label>
+                        <input type="url" id="prov-logo" placeholder="https://...logo.png">
+                    </div>
+                    <div class="form-group">
+                        <label>Método de búsqueda automática</label>
+                        <select id="prov-metodo">
+                            <option value="manual">Manual (sin búsqueda automática)</option>
+                            <option value="sammel">Sammel (sammel.com.uy)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="grid-column: 1 / -1;">
+                        <label>Notas / Contacto</label>
+                        <textarea id="prov-notas" rows="2" placeholder="Email, teléfono, condiciones de pago, horarios..."></textarea>
+                    </div>
+                    <div class="form-group" style="display:flex; gap:0.75rem; align-items:flex-end; grid-column: 1 / -1;">
+                        <button type="submit" class="btn btn-primary" style="flex:1;">Guardar Proveedor</button>
+                        <button type="button" class="btn btn-secondary" onclick="resetFormProveedor(); document.getElementById('panel-form-proveedor').style.display='none';" style="width:auto;">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Buscador Global de Catálogos -->
+            <div class="glass-panel" style="margin-bottom: 2rem;">
+                <h3 style="margin-top: 0; margin-bottom: 1rem; font-size: 1.15rem; display: flex; align-items: center; gap: 8px; color: #fcd34d;">
+                    <i data-feather="search" style="color: #fcd34d; width: 20px; height: 20px;"></i> Buscador Global de Catálogos
+                </h3>
+                <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 1.2rem;">
+                    Buscá insumos en tiempo real en todos los catálogos de proveedores automáticos configurados.
+                </p>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <input type="text" id="input-buscar-todos-proveedores" placeholder="Escribí un producto a buscar (ej: coteado 300g, offset, cartulina...)" style="flex: 1; min-width: 250px;">
+                    <button id="btn-buscar-todos-proveedores" class="btn btn-primary" style="min-width: 120px;">
+                        <i data-feather="search"></i> Buscar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Contenedor para Resultados Agrupados -->
+            <div id="resultados-busqueda-global" style="display: none; margin-bottom: 2rem;">
+                <!-- JS insertará aquí una sección por proveedor -->
+            </div>
+
+            <!-- Tarjetas de Proveedores (Admin & Contacto) -->
+            <div class="glass-panel prov-header-panel" style="margin-bottom: 1.25rem; padding: 1.25rem;">
+                <h3 style="margin: 0; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; color: #cbd5e1;">
+                    <i data-feather="users" style="color: var(--primary-color); width: 20px; height: 20px;"></i> Directorio de Proveedores
+                </h3>
+            </div>
+            
+            <div id="grid-proveedores" class="grid-proveedores">
+                <!-- Dinámico con JS -->
+            </div>
+
+        </div>
+        <!-- FIN VISTA PROVEEDORES -->
+
+        <!-- Modal for JSON view (optional extension) -->
+
+        <!-- ══ MODAL: IMPORTAR INSUMO DESDE CATÁLOGO ══ -->
+        <div id="modal-importar" style="display:none;"
+            class="modal-overlay"
+            onclick="if(event.target===this) cerrarModalImportar()">
+            <div class="glass-panel modal-importar-box">
+                <div class="modal-importar-header">
+                    <h3><i data-feather="download"></i> Importar Insumo</h3>
+                    <button class="btn btn-secondary btn-sm" onclick="cerrarModalImportar()">
+                        <i data-feather="x"></i>
+                    </button>
+                </div>
+                <p class="modal-importar-sub">Revisá los datos y establecé el precio antes de importar.</p>
+                <div class="form-grid prov-form-grid">
+                    <div class="form-group" style="grid-column: 1 / -1;">
+                        <label>Nombre</label>
+                        <input type="text" id="imp-nombre">
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo</label>
+                        <select id="imp-tipo">
+                            <option value="papel">Papel</option>
+                            <option value="tinta">Tinta</option>
+                            <option value="chapa">Chapa</option>
+                            <option value="prenda">Prenda</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Gramaje (grs)</label>
+                        <input type="number" id="imp-gramaje" placeholder="Ej: 150">
+                    </div>
+                    <div class="form-group">
+                        <label>Formato Ancho (cm)</label>
+                        <input type="number" step="0.1" id="imp-ancho">
+                    </div>
+                    <div class="form-group">
+                        <label>Formato Largo (cm)</label>
+                        <input type="number" step="0.1" id="imp-largo">
+                    </div>
+                    <div class="form-group">
+                        <label>Marca / Material</label>
+                        <input type="text" id="imp-material">
+                    </div>
+                    <div class="form-group" style="grid-column: 1 / -1;">
+                        <label class="precio-label">💲 Precio unitario (costo) *</label>
+                        <input type="number" step="0.01" id="imp-precio"
+                            placeholder="Ingresá el precio que te cobra el proveedor"
+                            class="input-precio-destacado">
+                    </div>
+                </div>
+                <div class="modal-importar-footer">
+                    <button class="btn btn-secondary" onclick="cerrarModalImportar()">Cancelar</button>
+                    <button id="btn-confirmar-importar" class="btn btn-primary" onclick="confirmarImportar()">
+                        <i data-feather="check"></i> Importar Insumo
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="json-modal"
+            style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;">
+            <div class="glass-panel" style="width: 80%; max-width: 800px; max-height: 80vh; overflow-y: auto;">
+                <div
+                    style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem; margin-bottom: 1rem;">
+                    <h3>Desglose Técnico</h3>
+                    <button onclick="document.getElementById('json-modal').style.display='none'"
+                        class="btn btn-secondary" style="width: auto;">Cerrar</button>
+                </div>
+                <div id="json-content"
+                    style="background: rgba(0,0,0,0.5); padding: 1rem; border-radius: 8px; color: #f8fafc; font-size: 0.95rem; overflow-y: auto;">
+                </div>
+            </div>
+        </div>
+
+
+    </main>
+
+
+
+    <!-- Menú de navegación móvil (se activa en pantallas pequeñas) -->
+    <nav class="mobile-nav">
+        <a href="#" onclick="switchView('calculador'); return false;" class="nav-link active" data-target="calculador">
+            <i data-feather="cpu"></i>
+            <span>Calculador</span>
+        </a>
+        <a href="#" onclick="switchView('historial'); return false;" class="nav-link" data-target="historial">
+            <i data-feather="archive"></i>
+            <span>Historial</span>
+        </a>
+        <a href="#" onclick="switchView('stock'); return false;" class="nav-link" data-target="stock">
+            <i data-feather="package"></i>
+            <span>Stock</span>
+        </a>
+        <a href="#" onclick="switchView('admin'); return false;" class="nav-link" data-target="admin">
+            <i data-feather="settings"></i>
+            <span>Admin</span>
+        </a>
+        <a href="#" onclick="switchView('proveedores'); return false;" class="nav-link" data-target="proveedores">
+            <i data-feather="shopping-bag"></i>
+            <span>Proveedores</span>
+        </a>
+        <a href="#" onclick="logout(); return false;" style="color: #ef4444;">
+            <i data-feather="log-out"></i>
+            <span>Salir</span>
+        </a>
+    </nav>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="js/pdf_generator.js?v=11"></script>
+    <script src="js/calculador.js?v=11"></script>
+    <script>
+        feather.replace();
+    </script>
+
+    <script src="js/historial.js?v=11"></script>
+    <script src="js/stock.js?v=9"></script>
+    <script src="js/admin.js?v=4"></script>
+    <script src="js/proveedores.js?v=11"></script>
+    <script>
+        function switchView(viewId) {
+            document.querySelectorAll('.app-view').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+
+            const viewEl = document.getElementById('view-' + viewId);
+            if (viewEl) viewEl.style.display = 'block';
+            
+            document.querySelectorAll('.nav-link[data-target="' + viewId + '"]').forEach(el => {
+                el.classList.add('active');
+            });
+
+            // Cargar datos según la vista activa
+            if (viewId === 'proveedores' && typeof cargarProveedores === 'function') {
+                cargarProveedores();
+            }
+
+            // Desplazar la ventana al inicio de la página al cambiar de vista
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function togglePanelFormProveedor() {
+            const panel = document.getElementById('panel-form-proveedor');
+            if (panel.style.display === 'none' || panel.style.display === '') {
+                panel.style.display = 'block';
+                panel.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                panel.style.display = 'none';
+                if (typeof resetFormProveedor === 'function') resetFormProveedor();
+            }
+        }
+    </script>
+</body>
+
+
+</html>

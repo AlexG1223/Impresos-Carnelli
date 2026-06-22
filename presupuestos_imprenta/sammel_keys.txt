@@ -1,0 +1,75 @@
+Array
+(
+    [id] => 8845
+    [code] => PLSOHO6150
+    [brand_id] => 38
+    [size_id] => 143
+    [weight_id] => 18
+    [title] => PLOTTER BOND OBRA   B2"
+    [description] => PLOTTER/BOND/OBRA/90GR/0.61X50MT/B2"
+    [created_at] => 2026-06-03 14:03:38
+    [updated_at] => 2026-06-03 14:06:13
+    [deleted_at] => 
+    [data_sheet] => 
+    [sheets_per_package] => 
+    [type_id] => 6
+    [sub_type_id] => Plotter
+    [color_id] => 1
+    [print_type_id] => 4
+    [highlight_new_prod] => 0
+    [highlight_new_until] => 
+    [featured_home] => 0
+    [price] => 0.00
+    [stock] => 0
+    [presentation] => ROLLO
+    [local] => 1
+    [recyclable] => 0
+    [min_qty] => 1
+    [step_qty] => 1
+    [limited_stock_margin] => 0
+    [search_text] => 
+    [family] => 601
+    [image] => storage/uploads/brands/9c6351a17c3bbdbed9997d8dd1491b5b.jpg
+    [filtername] => Plotter
+    [subType_id] => Plotter
+    [typename] => Plotter
+    [ribbon] => 
+    [limited_stock] => 
+    [original_price] => 0
+    [is_coil] => 
+    [brand] => Array
+        (
+            [id] => 38
+            [name] => Diazol
+            [created_at] => 2019-07-17 20:28:40
+            [updated_at] => 2021-03-02 16:56:20
+            [deleted_at] => 
+            [image] => storage/uploads/brands/9c6351a17c3bbdbed9997d8dd1491b5b.jpg
+            [parent_id] => 
+            [lft] => 16
+            [rgt] => 17
+            [depth] => 1
+        )
+
+    [size] => Array
+        (
+            [id] => 143
+            [name] => 0.61X50
+        )
+
+    [weight] => Array
+        (
+            [name] => 90 grs
+            [value] => 90
+        )
+
+    [type] => Array
+        (
+            [id] => 6
+            [name] => Plotter
+            [image] => storage/uploads/types/a0b32c69c8899cfa03fd951ece515330.jpg
+            [highlighted_home] => 0
+            [horizontal_image] => storage/uploads/types/8a24682c3ded4e08e1e242dedefd783b.jpg
+        )
+
+)

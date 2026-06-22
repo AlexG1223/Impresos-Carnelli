@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Presupuestos Imprenta</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background: var(--bg-color);
+        }
+        .login-box {
+            max-width: 400px;
+            width: 90%;
+        }
+    </style>
+</head>
+<body>
+    <div class="glass-panel login-box">
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <img src="img/logo_navbar.png" alt="IMPRESOS CARNELLI" style="height: 50px; margin-bottom: 1rem; object-fit: contain;">
+            <h2 style="margin: 0; color: #f8fafc;">Acceso Protegido</h2>
+        </div>
+        
+        <form id="login-form">
+            <div class="form-group">
+                <label>Usuario</label>
+                <input type="text" id="username" placeholder="Ingrese su usuario" required>
+            </div>
+            <div class="form-group" style="margin-top: 1rem;">
+                <label>Contraseña</label>
+                <input type="password" id="password" placeholder="Ingrese su contraseña" required>
+            </div>
+            <div id="login-error" style="display: none; margin-top: 1rem; color: var(--danger-color); padding: 0.8rem; background: rgba(239, 68, 68, 0.1); border-radius: 8px; font-size: 0.9rem; text-align: center;">
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1.5rem; justify-content: center;">
+                <i data-feather="log-in"></i> Iniciar Sesión
+            </button>
+        </form>
+    </div>
+
+    <script>
+        feather.replace();
+
+        // Check if already logged in
+        fetch('api/check_auth.php').then(r => r.json()).then(data => {
+            if(data.success) {
+                window.location.replace('index.html');
+            }
+        });
+
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = 'Ingresando...';
+            btn.disabled = true;
+
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+
+            try {
+                const res = await fetch('api/login.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: user, password: pass })
+                });
+                const data = await res.json();
+                
+                if(data.success) {
+                    window.location.replace('index.html');
+                } else {
+                    const errBox = document.getElementById('login-error');
+                    errBox.style.display = 'block';
+                    errBox.innerText = data.message || 'Error al iniciar sesión';
+                }
+            } catch(err) {
+                const errBox = document.getElementById('login-error');
+                errBox.style.display = 'block';
+                errBox.innerText = 'Error de conexión al servidor';
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

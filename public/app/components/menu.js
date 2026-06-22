@@ -7,6 +7,7 @@ administracion: {
     <a data-action="usuarios">Gestión de Usuarios</a>
     <a data-action="roles">Roles y Permisos</a>
     <a data-action="ots">Todas las OT</a>
+    <a data-action="presupuestos">Calculadora de Presupuestos</a>
     <a data-action="reportes">Reportes y Estadísticas</a>
     <a data-action="config">Configuración</a>
   `,
@@ -14,6 +15,7 @@ administracion: {
     <a data-action="usuarios">Gestión de Usuarios</a>
     <a data-action="roles">Roles y Permisos</a>
     <a data-action="ots">Todas las OT</a>
+    <a data-action="presupuestos">Calculadora de Presupuestos</a>
     <a data-action="reportes">Reportes y Estadísticas</a>
     <a data-action="config">Configuración</a>
     `
@@ -24,6 +26,7 @@ administracion: {
     
     <a data-action="crearOT">Crear Orden de Trabajo</a>
     <a data-action="clientes">Clientes</a>
+    <a data-action="presupuestos">Calculadora de Presupuestos</a>
     <a data-action="otsVentas">Ver Ordenes</a>
     <a data-action="reportes">Reportes y Estadísticas</a>
     <a data-action="eCommerce">Administrar eCommerce</a>
@@ -33,6 +36,7 @@ administracion: {
     
     <a data-action="crearOT">Crear Orden de Trabajo</a>
     <a data-action="clientes">Clientes</a>
+    <a data-action="presupuestos">Calculadora de Presupuestos</a>
     <a data-action="otsVentas">Ver Ordenes</a>
     <a data-action="reportes">Reportes y Estadísticas</a>
     <a data-action="eCommerce">Administrar eCommerce</a>
