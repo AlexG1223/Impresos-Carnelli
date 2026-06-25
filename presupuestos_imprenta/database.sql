@@ -1,17 +1,8 @@
-DROP DATABASE IF EXISTS imprenta_presupuestos_v2;
-CREATE DATABASE IF NOT EXISTS imprenta_presupuestos_v2 CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+CREATE DATABASE IF NOT EXISTS imprenta_presupuestos_v2;
 USE imprenta_presupuestos_v2;
 
--- Borrar tablas si ya existen (para evitar errores al re-importar)
-DROP TABLE IF EXISTS presupuestos;
-DROP TABLE IF EXISTS troqueles;
-DROP TABLE IF EXISTS parametros_globales;
-DROP TABLE IF EXISTS formatos_impresion;
-DROP TABLE IF EXISTS insumos;
-DROP TABLE IF EXISTS maquinas;
-
 -- Máquinas de impresión
-CREATE TABLE maquinas (
+CREATE TABLE IF NOT EXISTS maquinas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     formato_max_ancho FLOAT NOT NULL,  -- en cm
@@ -28,7 +19,7 @@ CREATE TABLE maquinas (
 );
 
 -- Insumos (Materiales como Papel, Tintas, Chapas)
-CREATE TABLE insumos (
+CREATE TABLE IF NOT EXISTS insumos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     tipo ENUM('papel', 'tinta', 'chapa', 'prenda', 'otro') NOT NULL,
     nombre VARCHAR(100) NOT NULL,
@@ -37,11 +28,17 @@ CREATE TABLE insumos (
     formato_largo FLOAT DEFAULT NULL,  -- Formato de compra (ej. 100cm)
     costo_unidad DECIMAL(10, 2) NOT NULL, -- Costo por resma, kilo, docena, etc.
     unidades_por_paquete INT DEFAULT 1, -- Ej: 500 para una resma de papel, 1 para tinta.
+    stock_actual DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
+    stock_minimo DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
+    color VARCHAR(50) DEFAULT NULL,
+    talle VARCHAR(50) DEFAULT NULL,
+    material VARCHAR(100) DEFAULT NULL,
+    kg_1000 DECIMAL(10, 2) DEFAULT NULL,
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Formatos estándar de impresión que se usan usualmente para validar
-CREATE TABLE formatos_impresion (
+CREATE TABLE IF NOT EXISTS formatos_impresion (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL,
     ancho FLOAT NOT NULL, -- en cm
@@ -71,7 +68,7 @@ INSERT INTO formatos_impresion (nombre, ancho, largo) VALUES
 ('A3', 29.7, 42.0);
 
 -- Parámetros Globales (Solo 1 fila que servirá para la administración general)
-CREATE TABLE parametros_globales (
+CREATE TABLE IF NOT EXISTS parametros_globales (
     id INT PRIMARY KEY DEFAULT 1,
     ganancia DECIMAL(5,2) NOT NULL DEFAULT 30.00,
     comision DECIMAL(5,2) NOT NULL DEFAULT 0.00,
@@ -81,7 +78,7 @@ CREATE TABLE parametros_globales (
 INSERT IGNORE INTO parametros_globales (id, ganancia, comision, iva) VALUES (1, 30.00, 0.00, 22.00);
 
 -- Troqueles
-CREATE TABLE troqueles (
+CREATE TABLE IF NOT EXISTS troqueles (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL,
     ancho DECIMAL(10,2) NOT NULL,
@@ -89,14 +86,8 @@ CREATE TABLE troqueles (
     bocas INT NOT NULL
 );
 
--- Insertar Troqueles de Ejemplo
-INSERT INTO troqueles (nombre, ancho, largo, bocas) VALUES 
-('Troquel Circular 5cm', 5.0, 5.0, 24),
-('Carpeta Presentación', 45.0, 32.0, 1),
-('Caja Fósforo', 12.0, 15.0, 4);
-
 -- Presupuestos Historial
-CREATE TABLE presupuestos (
+CREATE TABLE IF NOT EXISTS presupuestos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     descripcion VARCHAR(255) NOT NULL,
     cliente VARCHAR(255) DEFAULT '',

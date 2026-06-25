@@ -18,8 +18,8 @@ switch ($method) {
         $formato_ancho = isset($data['formato_ancho']) && $data['formato_ancho'] !== '' ? $data['formato_ancho'] : null;
         $formato_largo = isset($data['formato_largo']) && $data['formato_largo'] !== '' ? $data['formato_largo'] : null;
         $unidades = isset($data['unidades_por_paquete']) && $data['unidades_por_paquete'] !== '' ? $data['unidades_por_paquete'] : 1;
-        $stock_actual = isset($data['stock_actual']) && $data['stock_actual'] !== '' ? intval($data['stock_actual']) : 0;
-        $stock_minimo = isset($data['stock_minimo']) && $data['stock_minimo'] !== '' ? intval($data['stock_minimo']) : 0;
+        $stock_actual = isset($data['stock_actual']) && $data['stock_actual'] !== '' ? floatval($data['stock_actual']) : 0.0;
+        $stock_minimo = isset($data['stock_minimo']) && $data['stock_minimo'] !== '' ? floatval($data['stock_minimo']) : 0.0;
         $color = isset($data['color']) && $data['color'] !== '' ? $data['color'] : null;
         $talle = isset($data['talle']) && $data['talle'] !== '' ? $data['talle'] : null;
         $material = isset($data['material']) && $data['material'] !== '' ? $data['material'] : null;
@@ -27,8 +27,8 @@ switch ($method) {
 
         if (isset($data['id']) && $data['id']) {
             $sql = "UPDATE insumos SET tipo=?, nombre=?, gramaje=?, formato_ancho=?, formato_largo=?, costo_unidad=?, unidades_por_paquete=?, stock_actual=?, stock_minimo=?, color=?, talle=?, material=?, kg_1000=? WHERE id=?";
-            $stmt = $pdo->prepare($sql);
             try {
+                $stmt = $pdo->prepare($sql);
                 $stmt->execute([
                     $data['tipo'],
                     $data['nombre'],
@@ -52,8 +52,8 @@ switch ($method) {
         } else {
             $sql = "INSERT INTO insumos (tipo, nombre, gramaje, formato_ancho, formato_largo, costo_unidad, unidades_por_paquete, stock_actual, stock_minimo, color, talle, material, kg_1000) 
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            $stmt = $pdo->prepare($sql);
             try {
+                $stmt = $pdo->prepare($sql);
                 $stmt->execute([
                     $data['tipo'],
                     $data['nombre'],

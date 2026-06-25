@@ -69,7 +69,7 @@ for ($i = 1; $i <= $cantidad; $i++) {
     writeIfExists($pdf, 'LOCALIDAD.:', $orden['cliente_localidad']);
     writeIfExists($pdf, 'DEPARTAMENTO.:', $orden['cliente_departamento']);
     writeIfExists($pdf, 'RUT.:', $orden['cliente_rut']);
-    writeIfExists($pdf, 'OBSERVACIONES.:', $orden['cliente_observaciones']);
+    writeIfExists($pdf, 'OBS.:', $orden['cliente_observaciones']);
 
     $pdf->SetFont('helvetica', 'B', 16);
     $pdf->SetXY(70, 73);
