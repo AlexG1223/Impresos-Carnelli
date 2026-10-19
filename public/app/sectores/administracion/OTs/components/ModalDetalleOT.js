@@ -1,10 +1,19 @@
 export function ModalDetalleOT(ot) {
+  const idOT = ot.id_ot || ot.id;
   return `
     <div class="modal-overlay" id="modalDetalleOT">
       <div class="modal-card">
 
-        <div class="modal-header">
-          <h2>Detalle de OT #${ot.id_ot}</h2>
+        <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center;">
+          <h2>Detalle de OT #${idOT}</h2>
+          <button 
+            type="button" 
+            class="btn-imprimir-modal"
+            onclick="window.open('/public/api/ordenes_trabajo/imprimir.php?id=${idOT}', '_blank')"
+            title="Imprimir Orden de Trabajo"
+          >
+            🖨️ Imprimir OT
+          </button>
         </div>
 
         <div class="modal-body">
@@ -118,7 +127,15 @@ export function ModalDetalleOT(ot) {
 
         </div>
 
-        <div class="modal-footer">
+        <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center;">
+          <button 
+            type="button" 
+            class="btn-imprimir-modal"
+            onclick="window.open('/public/api/ordenes_trabajo/imprimir.php?id=${idOT}', '_blank')"
+            title="Abrir hoja A4 para imprimir la Orden de Trabajo"
+          >
+            🖨️ Imprimir Orden de Trabajo
+          </button>
           <button class="btn-cerrar" id="cerrarModalOT">Cerrar</button>
         </div>
 

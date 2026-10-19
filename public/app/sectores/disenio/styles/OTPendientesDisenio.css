@@ -464,6 +464,17 @@
   background: #e5e7eb;
 }
 
+.btn-accion.btn-imprimir-ot {
+  background: #ede9fe;
+  color: #5b21b6;
+  border: 1px solid #ddd6fe;
+  font-weight: 600;
+}
+
+.btn-accion.btn-imprimir-ot:hover {
+  background: #ddd6fe;
+}
+
 /* ===============================
    RESPONSIVE
 ================================ */

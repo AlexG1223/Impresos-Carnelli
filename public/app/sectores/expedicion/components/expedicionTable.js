@@ -40,6 +40,15 @@ export function expedicionTable(trabajos) {
                   </td>
                   <td class="acciones">
                     <button
+                      type="button"
+                      class="btn-imprimir-expedicion"
+                      onclick="window.open('/public/api/ordenes_trabajo/imprimir.php?id=${ot.id}', '_blank')"
+                      title="Imprimir Orden de Trabajo"
+                      style="border:none; background:#ede9fe; color:#5b21b6; border-radius:6px; padding:6px 8px; cursor:pointer; font-size:14px; margin-right:4px;"
+                    >
+                      🖨️
+                    </button>
+                    <button
                       class="btn-ver-expedicion"
                       data-id="${ot.id}"
                       title="Ver detalle"

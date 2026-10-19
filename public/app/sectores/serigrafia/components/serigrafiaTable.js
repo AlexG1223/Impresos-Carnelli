@@ -43,6 +43,15 @@ export function serigrafiaTable(data) {
                       ? `<button class="btn-iniciar" data-id="${ot.id}" title="Comenzar">▶</button>`
                       : `<button class="btn-finalizar" data-id="${ot.id}" title="Finalizar">✔</button>`
                     }
+                    <button 
+                      type="button" 
+                      class="btn-imprimir-ot-tbl" 
+                      onclick="window.open('/public/api/ordenes_trabajo/imprimir.php?id=${ot.id}', '_blank')" 
+                      title="Imprimir Orden de Trabajo"
+                      style="border:none; background:#ede9fe; color:#5b21b6; border-radius:6px; padding:6px 8px; cursor:pointer; font-size:14px;"
+                    >
+                      🖨️
+                    </button>
                      <button class="btn-ver" data-id="${ot.id}" title="Ver Detalles">👁️</button>
                   </td>
                 </tr>

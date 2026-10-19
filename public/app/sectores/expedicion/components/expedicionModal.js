@@ -91,6 +91,15 @@ export function expedicionModal(detalle) {
           <button id="guardar-expedicion" class="btn-primary">
             Guardar Datos Expedición
           </button>
+          <button 
+            type="button" 
+            id="imprimir-ot-expedicion" 
+            class="btn-secondary"
+            onclick="window.open('/public/api/ordenes_trabajo/imprimir.php?id=${detalle.id_orden}', '_blank')"
+            title="Imprimir Orden de Trabajo"
+          >
+            🖨️ Imprimir OT
+          </button>
           <button id="crear-etiqueta" class="btn-secondary">
             Crear Etiqueta
           </button>

@@ -41,7 +41,10 @@ export function TablaOTs(ots) {
                 </span>
               </td>
               <td class="acciones">
-                <button class="btn-ver" data-id="${ot.id_ot}">
+                <button class="btn-imprimir" data-id="${ot.id_ot}" title="Imprimir Orden de Trabajo">
+                  🖨️
+                </button>
+                <button class="btn-ver" data-id="${ot.id_ot}" title="Ver detalles">
                   👁️
                 </button>
               </td>

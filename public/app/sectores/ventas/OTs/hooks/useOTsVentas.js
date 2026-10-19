@@ -53,6 +53,10 @@ if (!accion) return;
     if (!ot) return;
 
     switch (accion) {
+      case "print":
+        window.open(`/public/api/ordenes_trabajo/imprimir.php?id=${idOT}`, "_blank");
+        break;
+
       case "toggle-pago":
         const pRes = await togglePagoService(idOT);
         if (pRes.success) {

@@ -14,9 +14,17 @@ export function OTDetalleModal(ot) {
       <div class="modal-ot">
         <div class="modal-body-scroll">
 
-          <div class="modal-header">
+          <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center;">
             <h3>OT #${ot.id} - ${ot.cliente_nombre}</h3>
-            <!-- <button class="btn-cerrar-modal">✕</button> -->
+            <button 
+              type="button" 
+              class="btn-accion btn-imprimir-ot"
+              onclick="window.open('/public/api/ordenes_trabajo/imprimir.php?id=${ot.id}', '_blank')"
+              title="Imprimir Orden de Trabajo"
+              style="padding: 6px 12px; font-size: 13px;"
+            >
+              🖨️ Imprimir OT
+            </button>
           </div>
 
           <div class="modal-info">
@@ -89,6 +97,14 @@ export function OTDetalleModal(ot) {
           </div>
 
           <div class="modal-actions">
+            <button 
+              type="button" 
+              class="btn-accion btn-imprimir-ot"
+              onclick="window.open('/public/api/ordenes_trabajo/imprimir.php?id=${ot.id}', '_blank')"
+              title="Imprimir Orden de Trabajo"
+            >
+              🖨️ Imprimir OT
+            </button>
             <button class="btn-accion primaria btn-confirmar-envio">
               Confirmar Envío
             </button>

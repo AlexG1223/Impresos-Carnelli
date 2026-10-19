@@ -25,6 +25,13 @@ export async function useTodasOTs() {
   activarToggleFinalizadas()
 
   container.addEventListener("click", e => {
+    const btnImprimir = e.target.closest(".btn-imprimir");
+    if (btnImprimir) {
+      const idOT = Number(btnImprimir.dataset.id);
+      window.open(`/public/api/ordenes_trabajo/imprimir.php?id=${idOT}`, "_blank");
+      return;
+    }
+
     const btn = e.target.closest(".btn-ver");
     if (!btn) return;
 

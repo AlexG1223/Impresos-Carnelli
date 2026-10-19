@@ -43,9 +43,10 @@ export function TablaOTsVendedor(ots) {
                 <button class="btn-pago ${ot.total_pago == 1 ? 'pagado' : ''}" data-action="toggle-pago" title="${ot.total_pago == 1 ? 'Marcar como pendiente de pago' : 'Marcar como pagada totalmente'}">
                   ${ot.total_pago == 1 ? '💰' : '💸'}
                 </button>
-                <button class="btn-ver" data-action="view">👁️</button>
-                <button class="btn-editar" data-action="edit">✏️</button>
-                <button class="btn-borrar" data-action="delete">🗑️</button>
+                <button class="btn-imprimir" data-action="print" title="Imprimir Orden de Trabajo">🖨️</button>
+                <button class="btn-ver" data-action="view" title="Ver detalles">👁️</button>
+                <button class="btn-editar" data-action="edit" title="Editar">✏️</button>
+                <button class="btn-borrar" data-action="delete" title="Eliminar">🗑️</button>
               </td>
             </tr>
           `).join("")}
