@@ -1176,9 +1176,6 @@ if ($logoPath && file_exists($logoPath)) {
           <div class="section-title">⚙️ Especificaciones Técnicas (Taller / Impresión)</div>
           <div class="specs-toolbar no-print">
             <span class="save-status" id="saveStatus"></span>
-            <button type="button" class="btn-save-specs" id="btnSaveSpecs" title="Guardar especificaciones en el sistema">
-              💾 Guardar
-            </button>
           </div>
         </div>
 
@@ -1536,14 +1533,6 @@ if ($logoPath && file_exists($logoPath)) {
         });
       });
 
-      // Botón manual de guardar
-      const btnSaveSpecs = document.getElementById('btnSaveSpecs');
-      if (btnSaveSpecs) {
-        btnSaveSpecs.addEventListener('click', () => {
-          clearTimeout(saveTimeout);
-          guardarEspecificaciones(false);
-        });
-      }
 
       // Asegurar sincronización en atajo de teclado Ctrl+P
       window.addEventListener('beforeprint', () => {
